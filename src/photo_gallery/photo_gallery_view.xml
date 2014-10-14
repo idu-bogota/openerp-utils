@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+    <!--
+    ===========================================================================
+            Photo
+    ===========================================================================
+    -->
+    <!-- Form -->
+    <record model="ir.ui.view" id="view_photo_form">
+        <field name="name">photo_gallery.photo.form</field>
+        <field name="model">photo_gallery.photo</field>
+        <field name="arch" type="xml">
+            <form string="Photo" version="7.0">
+                <group>
+                    <field name="photo" widget='image' img_width="320" img_height="240" nolabel="1" colspan="4"/>
+                    <field name="name"/>
+                    <field name="datetime"/>
+                    <field name="location"/>
+                    <field name="photographer"/>
+                    <field name="description"/>
+                    <field name="url" readonly="1"/>
+                </group>
+            </form>
+        </field>
+    </record>
+
+    <!-- Tree -->
+    <record model="ir.ui.view" id="view_photo_tree">
+            <field name="name">photo_gallery.photo.tree</field>
+            <field name="model">photo_gallery.photo</field>
+            <field name="arch" type="xml">
+                <tree string="Photo" version="7.0">
+                  <field name="sequence" widget="handle"/>
+                  <field name="name"/>
+                  <field name="photographer"/>
+                  <field name="datetime"/>
+                </tree>
+            </field>
+    </record>
+
+    </data>
+</openerp>
