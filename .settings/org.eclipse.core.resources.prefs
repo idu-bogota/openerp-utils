@@ -1,0 +1,14 @@
+eclipse.preferences.version=1
+encoding//src/photo_gallery/__openerp__.py=utf-8
+encoding//src/photo_gallery/flickr_uploader/flickr_uploader.py=utf-8
+encoding//src/photo_gallery/photo_gallery.py=utf-8
+encoding//src/project_pmi_baseline/__openerp__.py=utf-8
+encoding//src/project_pmi_baseline/project_pmi_baseline.py=utf-8
+encoding//src/project_pmi_wbs/__openerp__.py=utf-8
+encoding//src/project_pmi_wbs/project.py=utf-8
+encoding//src/project_pmi_wbs/project_pmi_wbs.py=utf-8
+encoding//src/project_pmi_wbs/report/workpackage.py=utf-8
+encoding//src/project_pmi_wbs/wizard/create_tjp.py=utf-8
+encoding//src/project_pmi_wbs/wizard/create_wbs_from_file.py=utf-8
+encoding//src/project_pmi_wbs_long_term/__openerp__.py=utf-8
+encoding//src/project_pmi_wbs_long_term/project_pmi_wbs_long_term.py=utf-8
