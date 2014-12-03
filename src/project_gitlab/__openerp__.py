@@ -30,9 +30,14 @@
     """,
     "depends" : [
                  'base',
+                 'project',
                  ],
     "data" : [
         'project_gitlab_view.xml',
     ],
+    'init_xml' : ['project_gitlab_view.xml'],
+    'update_xml': ['project_gitlab_view.xml',
+                   'wizard/sync_gitlab_view.xml',
+                   ],
     "installable": True
 }

@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+    <data>
+        <record id="gitlab_issue_search" model="ir.ui.view">
+            <field name="name">gitlab.issue.search</field>
+            <field name="model">gitlab.issue</field>
+            <field name="arch" type="xml">
+               <search string="Issues">
+                    <field name="name" string="Nombre"/>
+                    <separator/>
+                    <group expand="0" string="Group By...">
+                        <filter string="stage" icon="terp-folder-violet" domain="[]" context="{'group_by':'stage_id'}"/>
+                        <filter string="state" icon="terp-folder-violet" domain="[]" context="{'group_by':'state'}"/>
+                   </group>
+                </search>
+            </field>
+        </record>
+<record model="ir.ui.view" id="gitlab_issue_kanban">
+        <field name="name">gitlab.issue.kanban</field>
+        <field name="model">gitlab.issue</field>
+        <field name="type">kanban</field>
+        <field name="arch" type="xml">
+            <kanban version="7.0" class="oe_background_grey">
+                <field name="state"/>
+                <field name="name"/>
+                <field name="gitlab_id"/>
+                <field name="user_id"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div class="oe_resource_vignette">
+                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.state.value)} oe_kanban_card oe_kanban_global_click">
+                                <div class="oe_resource_image">
+                                   <div class="oe_kanban_project_avatars">
+                                       <img t-att-src="kanban_image('res.users', 'image', record.user_id.raw_value)" 
+                                            t-att-title="record.user_id.value" 
+                                            width="24" height="24"
+                                            class="oe_kanban_avatar"
+                                       />
+                                   </div>
+                                </div>
+                            </div>
+                            <div class="oe_resource_details"> 
+                                <ul>
+                                   <li><field name="state"/></li>
+                                   <li><field name="name"/></li>
+                                   <li><field name="gitlab_id"/></li>
+                                   <li><field name="label_ids"/></li>
+                                 </ul>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+        </record>
+
+<record model="ir.ui.view" id="gitlab_issue_form">
+        <field name="name">gitlab.issue.form</field>
+            <field name="model">gitlab.issue</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="gitlab_issue">
+                    <field name="name"/>
+                    <field name="user_id"/>
+                    <field name="task_id"/>
+                    <field name="state"/>
+                    <group string="GitLab" colspan="4">
+                        <field name="gitlab_id"/>
+                        <field name="gitlab_idd"/>
+                     </group>
+                    <group string="Related" colspan="4">
+                        <field name="milestone_id"/>
+                        <field name="project_id"/>
+                        <field name="label_ids"/>
+                     </group>
+
+                </form>
+          </field>
+    </record>
+
+<record model="ir.ui.view" id="gitlab_project_form">
+        <field name="name">gitlab.project.form</field>
+            <field name="model">gitlab.project</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="gitlab_project">
+                    <field name="name"/>
+                    <field name="namespace_id"/>
+                    <group string="GitLab" colspan="4">
+                        <field name="gitlab_id"/>
+                     </group>
+                    <group string="Issues" colspan="4">
+                        <field name="issue_ids"/>
+                     </group>
+                </form>
+          </field>
+    </record>
+
+<record model="ir.ui.view" id="gitlab_milestone_form">
+        <field name="name">gitlab.milestone.form</field>
+            <field name="model">gitlab.milestone</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="gitlab_milestone">
+                    <field name="name"/>
+                    <group string="GitLab" colspan="4">
+                        <field name="gitlab_id"/>
+                        <field name="gitlab_idd"/>
+                     </group>
+                     <group string="Issues" colspan="4">
+                        <field name="issue_ids"/>
+                     </group>
+                    
+                </form>
+          </field>
+    </record>
+
+<record model="ir.ui.view" id="gitlab_label_form">
+        <field name="name">gitlab.label.form</field>
+            <field name="model">gitlab.label</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="gitlab_label">
+                    <field name="name"/>
+                    <group string="Issues" colspan="4">
+                        <field name="issue_ids"/>
+                     </group>
+                </form>
+          </field>
+    </record>
+
+<record model="ir.ui.view" id="gitlab_stages_form">
+        <field name="name">gitlab.stage.form</field>
+            <field name="model">gitlab.stage</field>
+            <field name="type">form</field>
+            <field name="arch" type="xml">
+                <form string="gitlab stages">
+                    <field name="name"/>
+                    <group string="Issues" colspan="4">
+                        <field name="issue_ids"/>
+                     </group>
+                </form>
+          </field>
+    </record>
+
+    <record model="ir.ui.view" id="gitlab_issue_tree">
+        <field name="name">gitlab.issue.tree</field>
+        <field name="model">gitlab.issue</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="gitlab_issue">
+                <field name="name"/>
+                <field name="state"/>
+                <field name="gitlab_id"/>
+                <field name="gitlab_idd"/>
+                <field name="milestone_id"/>
+                <field name="label_ids"/>
+                <field name="stage_id"/>
+                <field name="project_id"/>
+                <field name="user_id"/>
+                <field name="task_id"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="gitlab_project_tree">
+        <field name="name">gitlab.project.tree</field>
+        <field name="model">gitlab.project</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="gitlab_project">
+                <field name="name"/>
+                <field name="namespace_id"/>
+                <field name="gitlab_id"/>
+                <field name="issue_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="gitlab_milestone_tree">
+        <field name="name">gitlab.milestone.tree</field>
+        <field name="model">gitlab.milestone</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="gitlab_milestone">
+                <field name="name"/>
+                <field name="gitlab_id"/>
+                <field name="gitlab_idd"/>
+                <field name="issue_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="gitlab_label_tree">
+        <field name="name">gitlab.label.tree</field>
+        <field name="model">gitlab.label</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="gitlab_label">
+                <field name="name"/>
+                <field name="issue_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="gitlab_stages_tree">
+        <field name="name">gitlab.stage.tree</field>
+        <field name="model">gitlab.stage</field>
+        <field name="type">tree</field>
+        <field name="arch" type="xml">
+            <tree string="gitlab_stages">
+                <field name="sequence" widget="handle"/>
+                <field name="name"/>
+                <field name="issue_ids"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_gitlab_issue">
+        <field name="name">Issue</field>
+        <field name="res_model">gitlab.issue</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">kanban,tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_gitlab_project">
+        <field name="name">Project</field>
+        <field name="res_model">gitlab.project</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_gitlab_milestone">
+        <field name="name">Milestone</field>
+        <field name="res_model">gitlab.milestone</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_gitlab_label">
+        <field name="name">Label</field>
+        <field name="res_model">gitlab.label</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <record model="ir.actions.act_window" id="action_gitlab_stages">
+        <field name="name">stages</field>
+        <field name="res_model">gitlab.stage</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+
+    <menuitem id="menu_gitlab" name="Gitlab" parent="base.menu_main_pm"/>
+    <menuitem id="menu_gitlab_issue" parent="menu_gitlab" name="Issue" action="action_gitlab_issue"/>
+    <menuitem id="menu_gitlab_project" parent="menu_gitlab" name="Project" action="action_gitlab_project"/>
+    <menuitem id="menu_gitlab_milestone" parent="menu_gitlab" name="Milestone" action="action_gitlab_milestone"/>
+    <menuitem id="menu_gitlab_label" parent="menu_gitlab" name="Label" action="action_gitlab_label"/>
+    <menuitem id="menu_gitlab_stages" parent="menu_gitlab" name="Stages" action="action_gitlab_stages"/>
+
+    </data>
+</openerp>
