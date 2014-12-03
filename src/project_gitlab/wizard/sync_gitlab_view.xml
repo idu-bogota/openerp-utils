@@ -1,0 +1,39 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record id="view_gitlab_wizard_sync_form" model="ir.ui.view">
+        <field name="name">sync GitLab</field>
+        <field name="model">gitlab_wizard.sync</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="sync GitLab" version="7.0">
+                <separator colspan="4"/>
+                <group col="4" colspan="4">
+                    <h1>GitLab Sync</h1>
+                        <field name="host"/>
+                        <label colspan="4" string="Trough this functionality Odoo will be syncronize with gitlab, by creating or updating 
+                            every existing project"
+                    />
+                </group>
+                <footer>
+                    <button name="sync" string="Sync" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_gitlab_wizard_sync" model="ir.actions.act_window">
+        <field name="name">sync GitLab</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gitlab_wizard.sync</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem 
+        action="action_gitlab_wizard_sync"
+        name="Syncronize"
+        id="menuitem_gitlab_wizard_sync"
+        parent="menu_gitlab"
+    />
+</data>
+</openerp>
