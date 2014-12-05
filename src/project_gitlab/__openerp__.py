@@ -38,6 +38,7 @@
     'init_xml' : ['project_gitlab_view.xml'],
     'update_xml': ['project_gitlab_view.xml',
                    'wizard/sync_gitlab_view.xml',
+                   'wizard/user_story_view.xml',
                    ],
     "installable": True
 }

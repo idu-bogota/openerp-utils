@@ -23,10 +23,18 @@ import gitlab
 from openerp import SUPERUSER_ID
 
 def get_connection_gitlab(param_model, cr):
-    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token', default=False)
+    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token2', default=False)
     host = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.host', default=False)
     c = gitlab.Gitlab(host, token)
     return c
+
+class res_users(osv.osv):
+    _inherit = "res.users"
+    _name = "res.users"
+
+    _columns = {
+        'gitlab_id': fields.integer('GitLab ID'),
+    }
 
 
 class gitlab_issue(osv.osv):
@@ -50,7 +58,10 @@ class gitlab_issue(osv.osv):
             if vals.get('stage_id'):
                 stage = self.pool.get('gitlab.stage').browse(cr, uid, vals.get('stage_id'), context=context)
                 for issue in self.browse(cr, uid, ids, context=context):
-                    res = gitlab_conn.editissue(issue.project_id.gitlab_id, issue.gitlab_id, labels='col:' + stage.name)
+                    labels = 'col:' + stage.name
+                    for label in issue.label_ids:
+                        labels = labels + ',' + label.name
+                    res = gitlab_conn.editissue(issue.project_id.gitlab_id, issue.gitlab_id, labels = labels)
         return super(gitlab_issue, self).write(cr, uid, ids, vals, context)
 
 

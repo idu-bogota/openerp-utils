@@ -8,6 +8,7 @@ encoding//src/project_gitlab/extract.py=utf-8
 encoding//src/project_gitlab/project_gitlab.py=utf-8
 encoding//src/project_gitlab/wizard/__init__.py=utf-8
 encoding//src/project_gitlab/wizard/sync_gitlab.py=utf-8
+encoding//src/project_gitlab/wizard/user_story.py=utf-8
 encoding//src/project_pmi_baseline/__openerp__.py=utf-8
 encoding//src/project_pmi_baseline/project_pmi_baseline.py=utf-8
 encoding//src/project_pmi_wbs/__openerp__.py=utf-8

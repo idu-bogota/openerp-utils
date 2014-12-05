@@ -20,22 +20,20 @@
 ##############################################################################
 
 from osv import osv, fields
-import os
 import gitlab
 import logging
-import json
 import re
 from openerp import SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
 def get_connection_gitlab(param_model, cr):
-    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token', default=False)
+    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token2', default=False)
     host = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.host', default=False)
     c = gitlab.Gitlab(host, token)
     return c
 
-class  gitlab_wizard_sync(osv.osv_memory):
+class gitlab_wizard_sync(osv.osv_memory):
     _name = 'gitlab_wizard.sync'
     _description = 'Sincronizar en openerp los proyectos en GitLab'
     _columns = {
@@ -75,6 +73,7 @@ class  gitlab_wizard_sync(osv.osv_memory):
             'login': user['username'],
             'name': user['name'],
             'new_password': user['username'],
+            'gitlab_id': user['id'],
             }
             if not len(user_ids):
                 user_id = user_model.create(cr, uid, user_data)
@@ -127,6 +126,10 @@ class  gitlab_wizard_sync(osv.osv_memory):
             }
             if not len(label_ids):
                 label_id = label_model.create(cr, uid, labels_data)
+                result.append(label_id)
+            else:
+                label_id = label_ids[0]
+                label_model.write(cr, uid, label_id, labels_data)
                 result.append(label_id)
         return [(6, 0, result)]
 

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record id="view_gitlab_wizard_user_story_form" model="ir.ui.view">
+        <field name="name">User Story</field>
+        <field name="model">gitlab_wizard.user_story</field>
+        <field name="type">form</field>
+        <field name="arch" type="xml">
+            <form string="User Story" version="7.0">
+                <separator colspan="4"/>
+                <group col="4" colspan="4">
+                    <field name="us_id"/>
+                    <field name="description"/>
+                    <field name="project_id"/>
+                    <field name="user_id"/>
+                    <field name="label_ids"/>
+                    <field name="stage_id"/>
+                </group>
+                <footer>
+                    <button name="create_issue_project" string="Create" type="object" class="oe_highlight"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+    <record id="action_gitlab_wizard_user_story" model="ir.actions.act_window">
+        <field name="name">User Story</field>
+        <field name="type">ir.actions.act_window</field>
+        <field name="res_model">gitlab_wizard.user_story</field>
+        <field name="view_type">form</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+    <menuitem
+        action="action_gitlab_wizard_user_story"
+        name="User Story"
+        id="menuitem_gitlab_wizard_user_story"
+        parent="menu_gitlab"
+    />
+</data>
+</openerp>
