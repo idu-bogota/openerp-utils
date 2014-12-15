@@ -56,7 +56,6 @@ class gitlab_wizard_sync(osv.osv_memory):
             user_data = {
                 'login': user['username'],
                 'name': user['name'],
-                'new_password': user['username'],
                 'gitlab_id': user['id'],
             }
             if not len(user_ids):
