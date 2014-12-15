@@ -14,8 +14,17 @@
                     <field name="stage_id" string="Stage"/>
                     <field name="user_id" string="User"/>
                     <separator/>
+                    <filter string="Open" name="open" icon="terp-folder-violet"
+                        domain="[('state','in',['opened','reopened'])]"
+                    />
+                    <filter string="Closed" name="closed" icon="terp-folder-violet"
+                        domain="[('state','in',['opened','reopened'])]"
+                    />
+                    <filter string="My Issues" name="my_users" icon="terp-folder-violet"
+                        domain="[('user_id','=',uid)]"
+                    />
                     <group expand="0" string="Group By...">
-                        <filter string="Stage" name="group_by_stage" icon="terp-folder-violet" 
+                        <filter string="Stage" name="group_by_stage" icon="terp-folder-violet"
                             context="{'group_by':'stage_id'}"
                         />
                         <filter string="State" name="group_by_state" icon="terp-folder-violet"
@@ -243,7 +252,7 @@
         <field name="res_model">gitlab.issue</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
-        <field name="context">{'search_default_group_by_stage':1}</field>
+        <field name="context">{'search_default_group_by_stage':1, 'search_default_open': 1}</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_gitlab_project">
