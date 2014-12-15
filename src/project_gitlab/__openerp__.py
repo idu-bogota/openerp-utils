@@ -22,23 +22,21 @@
 {
     "name" : "Project Gitlab integration",
     "version" : "0.1",
-    "author" : "STRT - IDU",
+    "author" : "I+D+I STRT - IDU",
     "website" : "www.idu.gov.co",
     "category" : "project",
     "description": """
         This module integrates project with gitlab via pyapi-gitlab
     """,
     "depends" : [
-                 'base',
-                 'project',
-                 ],
-    "data" : [
-        'project_gitlab_view.xml',
+        'base',
+        'project',
     ],
-    'init_xml' : ['project_gitlab_view.xml'],
-    'update_xml': ['project_gitlab_view.xml',
-                   'wizard/sync_gitlab_view.xml',
-                   'wizard/user_story_view.xml',
-                   ],
+    'data': [
+        'project_gitlab_view.xml',
+        'wizard/sync_gitlab_view.xml',
+        'wizard/user_story_view.xml',
+        'security/ir.model.access.csv',
+    ],
     "installable": True
 }

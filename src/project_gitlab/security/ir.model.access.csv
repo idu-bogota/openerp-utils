@@ -1,0 +1,2 @@
+id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
+project_gitlab_issue_access,project_gitlab.issue,project_gitlab.model_gitlab_issue,"project.group_project_user,project.group_project_manager",1,1,1,1
