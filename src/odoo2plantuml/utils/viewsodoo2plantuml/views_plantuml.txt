@@ -1,0 +1,44 @@
+@startuml
+
+class project_idu.proyecto.gantt << (V,#FF7700) >>{
+    Tipo de vista:  gantt
+    Objeto:  project_idu.proyecto
+    Campo Hijo:  False
+    ID externo:  project_idu.project_idu_proyecto_gantt_view
+}
+
+class project_idu.proyecto.js << (V,#FF7700) >>{
+    Tipo de vista:  project_idu
+    Objeto:  project_idu.proyecto
+    Campo Hijo:  False
+    ID externo:  project_idu.project_idu_proyecto_js_view
+}
+
+class Proyecto IDU << (V,#FF7700) >>{
+    Tipo de vista:  form
+    Objeto:  project_idu.proyecto
+    Campo Hijo:  False
+    ID externo:  project_idu.project_idu_proyecto_form_view
+}
+
+class project_idu.proyecto.kanban << (V,#FF7700) >>{
+    Tipo de vista:  kanban
+    Objeto:  project_idu.proyecto
+    Campo Hijo:  False
+    ID externo:  project_idu.view_project_kanban
+}
+
+class project_idu.proyecto.search << (V,#FF7700) >>{
+    Tipo de vista:  search
+    Objeto:  project_idu.proyecto
+    Campo Hijo:  False
+    ID externo:  project_idu.project_idu_proyecto_search_view
+}
+
+class project_idu.proyecto.tree << (V,#FF7700) >>{
+    Tipo de vista:  tree
+    Objeto:  project_idu.proyecto
+    Campo Hijo:  False
+    ID externo:  project_idu.project_idu_proyecto_tree_view
+}
+@enduml
