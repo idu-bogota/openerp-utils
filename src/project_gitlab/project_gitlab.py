@@ -39,8 +39,10 @@ class res_users(osv.osv):
 
 class gitlab_issue(osv.osv):
     _name = "gitlab.issue"
+    _order = "sequence, name, id"
     _columns = {
         'name': fields.char('Name', size=255, required=True, select=1),
+        'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list."),
         'state': fields.selection([('opened','Abierto'), ('closed','Cerrado'), ('reopened','Re-Abierto')], 'Estado',required=True),
         'gitlab_id': fields.integer('GitLab ID'),
         'gitlab_idd': fields.integer('GitLab idd'),
