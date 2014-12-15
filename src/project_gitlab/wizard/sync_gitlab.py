@@ -28,7 +28,7 @@ from openerp import SUPERUSER_ID
 _logger = logging.getLogger(__name__)
 
 def get_connection_gitlab(param_model, cr):
-    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token2', default=False)
+    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token', default=False)
     host = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.host', default=False)
     c = gitlab.Gitlab(host, token)
     return c
@@ -36,27 +36,11 @@ def get_connection_gitlab(param_model, cr):
 class gitlab_wizard_sync(osv.osv_memory):
     _name = 'gitlab_wizard.sync'
     _description = 'Sincronizar en openerp los proyectos en GitLab'
-    _columns = {
-        'host': fields.char('Host', size=255, required=True, select=1),
-        
-    }
-
-    _defaults = {
-        'host': 'http://mv12cl01/',
-    }
+    _columns = {}
 
     def sync(self, cr, uid, ids, context=None):
         gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
-#            cache_file = 'projects.json'
-        projects = None
-#            if not os.path.isfile(cache_file):
         projects = gitlab_conn.getprojects()
-#                with open(cache_file, 'w') as outfile:
-#                    json.dump(projects, outfile)
-#            else:
-#                json_data = open(cache_file)
-#                projects = json.load(json_data)
-            
         self.gitlab_walk_projects(cr, uid, projects, gitlab_conn)
 
         return {'type': 'ir.actions.act_window_close'}
@@ -70,10 +54,10 @@ class gitlab_wizard_sync(osv.osv_memory):
             user_model = self.pool.get('res.users')
             user_ids = user_model.search(cr, uid, [('login', '=', user['username'])])
             user_data = {
-            'login': user['username'],
-            'name': user['name'],
-            'new_password': user['username'],
-            'gitlab_id': user['id'],
+                'login': user['username'],
+                'name': user['name'],
+                'new_password': user['username'],
+                'gitlab_id': user['id'],
             }
             if not len(user_ids):
                 user_id = user_model.create(cr, uid, user_data)
@@ -92,9 +76,9 @@ class gitlab_wizard_sync(osv.osv_memory):
         project_model = self.pool.get('gitlab.project')
         project_ids = project_model.search(cr, uid, [('gitlab_id', '=', project['id'])])
         project_data = {
-                'name': project['name'],
-                'gitlab_id': project['id'],
-                'namespace_id': project['namespace']['name'],
+            'name': project['name'],
+            'gitlab_id': project['id'],
+            'namespace_id': project['namespace']['name'],
         }
         if not len(project_ids):
             project_id = project_model.create(cr, uid, project_data)
@@ -156,19 +140,15 @@ class gitlab_wizard_sync(osv.osv_memory):
         """
         if isinstance(milestone, dict):
             milestone_model = self.pool.get('gitlab.milestone')
-            milestone_ids = milestone_model.search(cr, uid, [('name','=', milestone['title'])])
+            milestone_ids = milestone_model.search(cr, uid, [('name','=',milestone['title'])])
             milestone_data = {
                 'name': milestone['title'],
                 'gitlab_id': milestone['id'],
                 'gitlab_idd': milestone['iid'],
             }
             if not len(milestone_ids):
+                _logger.debug('Creando milestone con título: {0}'.format(milestone['title']))
                 milestone_id = milestone_model.create(cr, uid, milestone_data)
-                _logger.debug('Creando issue con título: {0}'.format(milestone['title']))
-                try:
-                    milestone_id = milestone_model.create(cr, uid, milestone_data)
-                except Exception as e:
-                    print e
             else:
                 milestone_id = milestone_ids[0]
                 milestone_model.write(cr, uid, milestone_id, milestone_data)
@@ -196,32 +176,16 @@ class gitlab_wizard_sync(osv.osv_memory):
         }
         if not len(issue_ids):
             issue_id = issue_model.create(cr, uid, issue_data)
-#            raise osv.except_osv('Error',"Error updating issue {0}".format(issue.id))
-#            logger.debug('Creando issue con título: {0}'.format(issue['title']))
-#            try:
-#                issue_id = issue_model.create(cr, uid, issue_data)
-#            except Exception as e:
-#                print e
         else:
             issue_id = issue_ids[0]
             issue_model.write(cr, uid, issue_id, issue_data)
-#            raise osv.except_osv('Error',"Error updating issue {0}".format(issue.id))
         return issue_id
 
     def gitlab_walk_projects(self, cr, uid, projects, gitlab_conn):
         for project in projects:
             project_idd = self.create_project(cr, uid, project)
-            issues = None
-#            cache_file = 'issues_{0}.json'.format(project['id'])
-#            if not os.path.isfile(cache_file):
             issues = gitlab_conn.getprojectissues(project['id'])
-#                with open(cache_file, 'w') as outfile:
-#                    json.dump(issues, outfile)
-#            else:
-#                json_data = open(cache_file)
-#                issues = json.load(json_data)
             for issue in issues:
-                _logger.debug('Creando issue: {0}'.format(issue))
                 self.create_issue(cr, uid, issue, project_idd)
 
 gitlab_wizard_sync()

@@ -23,7 +23,7 @@ import gitlab
 from openerp import SUPERUSER_ID
 
 def get_connection_gitlab(param_model, cr):
-    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token2', default=False)
+    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token', default=False)
     host = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.host', default=False)
     c = gitlab.Gitlab(host, token)
     return c

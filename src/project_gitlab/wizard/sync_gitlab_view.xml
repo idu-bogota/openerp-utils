@@ -10,7 +10,6 @@
                 <separator colspan="4"/>
                 <group col="4" colspan="4">
                     <h1>GitLab Sync</h1>
-                        <field name="host"/>
                         <label colspan="4" string="Trough this functionality Odoo will be syncronize with gitlab, by creating or updating 
                             every existing project"
                     />

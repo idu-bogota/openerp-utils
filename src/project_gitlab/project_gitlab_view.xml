@@ -6,16 +6,31 @@
             <field name="model">gitlab.issue</field>
             <field name="arch" type="xml">
                <search string="Issues">
-                    <field name="name" string="Nombre"/>
+                    <field name="name" string="Name"/>
+                    <field name="project_id" string="Project/Repository"/>
+                    <field name="milestone_id" string="Milestone"/>
+                    <field name="label_ids" string="Label"/>
+                    <field name="state" string="State"/>
+                    <field name="stage_id" string="Stage"/>
                     <separator/>
                     <group expand="0" string="Group By...">
-                        <filter string="stage" icon="terp-folder-violet" domain="[]" context="{'group_by':'stage_id'}"/>
-                        <filter string="state" icon="terp-folder-violet" domain="[]" context="{'group_by':'state'}"/>
+                        <filter string="Stage" name="group_by_stage" icon="terp-folder-violet" 
+                            context="{'group_by':'stage_id'}"
+                        />
+                        <filter string="State" name="group_by_state" icon="terp-folder-violet"
+                            context="{'group_by':'state'}"
+                        />
+                        <filter string="Project/repository" name="group_by_repository" icon="terp-folder-violet"
+                            context="{'group_by':'project_id'}"
+                        />
+                        <filter string="Milestone" name="group_by_milestone" icon="terp-folder-violet"
+                            context="{'group_by':'milestone_id'}"
+                        />
                    </group>
                 </search>
             </field>
         </record>
-<record model="ir.ui.view" id="gitlab_issue_kanban">
+    <record model="ir.ui.view" id="gitlab_issue_kanban">
         <field name="name">gitlab.issue.kanban</field>
         <field name="model">gitlab.issue</field>
         <field name="type">kanban</field>
@@ -23,36 +38,38 @@
             <kanban version="7.0" class="oe_background_grey">
                 <field name="state"/>
                 <field name="name"/>
-                <field name="gitlab_id"/>
+                <field name="gitlab_idd"/>
+                <field name="project_id"/>
                 <field name="user_id"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div class="oe_resource_vignette">
-                            <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.state.value)} oe_kanban_card oe_kanban_global_click">
-                                <div class="oe_resource_image">
-                                   <div class="oe_kanban_project_avatars">
-                                       <img t-att-src="kanban_image('res.users', 'image', record.user_id.raw_value)" 
-                                            t-att-title="record.user_id.value" 
-                                            width="24" height="24"
-                                            class="oe_kanban_avatar"
-                                       />
-                                   </div>
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.state.value)} oe_kanban_card oe_kanban_global_click">
+                            <div class="oe_kanban_content">
+                                <div>
+                                    <ul>
+                                       <li><strong>#<field name="gitlab_idd"/> - <field name="name"/></strong></li>
+                                       <li><field name="project_id"/></li>
+                                     </ul>
+                                </div>
+                                <div class="oe_kanban_bottom_right">
+                                    <img t-att-src="kanban_image('res.users', 'image_small', record.user_id.raw_value)"
+                                        t-att-title="record.user_id.value"
+                                        width="24" height="24"
+                                        class="oe_kanban_avatar"
+                                    />
+                                </div>
+                                <div class="oe_kanban_footer_left">
+                                    <field name="state"/>
+                                    <field name="label_ids"/>
                                 </div>
                             </div>
-                            <div class="oe_resource_details"> 
-                                <ul>
-                                   <li><field name="state"/></li>
-                                   <li><field name="name"/></li>
-                                   <li><field name="gitlab_id"/></li>
-                                   <li><field name="label_ids"/></li>
-                                 </ul>
-                            </div>
+                            <div class="oe_clear"/>
                         </div>
                     </t>
                 </templates>
             </kanban>
         </field>
-        </record>
+    </record>
 
 <record model="ir.ui.view" id="gitlab_issue_form">
         <field name="name">gitlab.issue.form</field>
@@ -221,6 +238,7 @@
         <field name="res_model">gitlab.issue</field>
         <field name="view_type">form</field>
         <field name="view_mode">kanban,tree,form</field>
+        <field name="context">{'search_default_group_by_stage':1}</field>
     </record>
 
     <record model="ir.actions.act_window" id="action_gitlab_project">

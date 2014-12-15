@@ -26,7 +26,7 @@
     "website" : "www.idu.gov.co",
     "category" : "project",
     "description": """
-        This module integrates project with gitlab
+        This module integrates project with gitlab via pyapi-gitlab
     """,
     "depends" : [
                  'base',
