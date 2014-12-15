@@ -1,2 +1,11 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
-project_gitlab_issue_access,project_gitlab.issue,project_gitlab.model_gitlab_issue,"project.group_project_user,project.group_project_manager",1,1,1,1
+project_gitlab_issue_access_user,project_gitlab.issue,project_gitlab.model_gitlab_issue,project.group_project_user,1,1,1,1
+project_gitlab_issue_access_manager,project_gitlab.issue,project_gitlab.model_gitlab_issue,project.group_project_manager,1,1,1,1
+project_gitlab_label_access_user,project_gitlab.label,project_gitlab.model_gitlab_label,project.group_project_user,1,1,1,1
+project_gitlab_label_access_manager,project_gitlab.label,project_gitlab.model_gitlab_label,project.group_project_manager,1,1,1,1
+project_gitlab_stage_access_user,project_gitlab.stage,project_gitlab.model_gitlab_stage,project.group_project_user,1,1,1,1
+project_gitlab_stage_access_manager,project_gitlab.stage,project_gitlab.model_gitlab_stage,project.group_project_manager,1,1,1,1
+project_gitlab_project_access_user,project_gitlab.project,project_gitlab.model_gitlab_project,project.group_project_user,1,1,1,1
+project_gitlab_project_access_manager,project_gitlab.project,project_gitlab.model_gitlab_project,project.group_project_manager,1,1,1,1
+project_gitlab_milestone_access_user,project_gitlab.milestone,project_gitlab.model_gitlab_milestone,project.group_project_user,1,1,1,1
+project_gitlab_milestone_access_manager,project_gitlab.milestone,project_gitlab.model_gitlab_milestone,project.group_project_manager,1,1,1,1
