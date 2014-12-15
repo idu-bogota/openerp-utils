@@ -12,6 +12,7 @@
                     <field name="label_ids" string="Label"/>
                     <field name="state" string="State"/>
                     <field name="stage_id" string="Stage"/>
+                    <field name="user_id" string="User"/>
                     <separator/>
                     <group expand="0" string="Group By...">
                         <filter string="Stage" name="group_by_stage" icon="terp-folder-violet" 
@@ -25,6 +26,9 @@
                         />
                         <filter string="Milestone" name="group_by_milestone" icon="terp-folder-violet"
                             context="{'group_by':'milestone_id'}"
+                        />
+                        <filter string="User" name="group_by_user" icon="terp-folder-violet"
+                            context="{'group_by':'user_id'}"
                         />
                    </group>
                 </search>
