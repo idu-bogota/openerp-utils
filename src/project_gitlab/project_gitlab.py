@@ -38,24 +38,31 @@ class res_users(osv.osv):
 
 
 class gitlab_issue(osv.osv):
+    _inherit = [
+        'mail.thread',
+    ]
     _name = "gitlab.issue"
     _order = "sequence, name, id"
     _columns = {
-        'name': fields.char('Name', size=255, required=True, select=1),
+        'name': fields.char('Name', size=255, required=True, select=1, track_visibility='onchange',),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list."),
-        'state': fields.selection([('opened','Abierto'), ('closed','Cerrado'), ('reopened','Re-Abierto')], 'Estado',required=True),
-        'gitlab_id': fields.integer('GitLab ID'),
-        'gitlab_idd': fields.integer('GitLab idd'),
-        'stage_id': fields.many2one('gitlab.stage', 'Stage'),
-        'milestone_id': fields.many2one('gitlab.milestone', 'Milestone'),
-        'project_id': fields.many2one('gitlab.project', 'Project'),
+        'state': fields.selection([('opened','Abierto'), ('closed','Cerrado'), ('reopened','Re-Abierto')],
+            'Estado',
+            required=True,
+            track_visibility='onchange',
+        ),
+        'gitlab_id': fields.integer('GitLab ID', track_visibility='onchange',),
+        'gitlab_idd': fields.integer('GitLab idd', track_visibility='onchange',),
+        'stage_id': fields.many2one('gitlab.stage', 'Stage', track_visibility='onchange',),
+        'milestone_id': fields.many2one('gitlab.milestone', 'Milestone', track_visibility='onchange',),
+        'project_id': fields.many2one('gitlab.project', 'Project', track_visibility='onchange',),
         'label_ids': fields.many2many('gitlab.label', 'gitlab_issue_label', 'issue_id', 'label_ids', 'Labels'),
-        'user_id': fields.many2one('res.users', 'User'),
-        'task_id': fields.many2one('project.task', 'Task'),
+        'user_id': fields.many2one('res.users', 'User', track_visibility='onchange',),
+        'task_id': fields.many2one('project.task', 'Task', track_visibility='onchange',),
     }
 
     def write(self, cr, uid, ids, vals, context=None):
-        if len(vals) == 1 and vals.get('stage_id'):
+        if len(vals) == 1 and (vals.get('stage_id') or vals.get('user_id')):
             gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
             if vals.get('stage_id'):
                 stage = self.pool.get('gitlab.stage').browse(cr, uid, vals.get('stage_id'), context=context)
@@ -64,6 +71,10 @@ class gitlab_issue(osv.osv):
                     for label in issue.label_ids:
                         labels = labels + ',' + label.name
                     res = gitlab_conn.editissue(issue.project_id.gitlab_id, issue.gitlab_id, labels = labels)
+            if vals.get('user_id'):
+                user = self.pool.get('res.users').browse(cr, uid, vals.get('user_id'), context=context)
+                for issue in self.browse(cr, uid, ids, context=context):
+                    res = gitlab_conn.editissue(issue.project_id.gitlab_id, issue.gitlab_id, assignee_id = user.gitlab_id)
         return super(gitlab_issue, self).write(cr, uid, ids, vals, context)
 
 
