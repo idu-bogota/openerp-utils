@@ -61,6 +61,16 @@ class gitlab_issue(osv.osv):
         'task_id': fields.many2one('project.task', 'Task', track_visibility='onchange',),
     }
 
+    def kanban_columns(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
+        stage_model = self.pool.get('gitlab.stage')
+        column_ids = stage_model.search(cr, uid, [], context=context)
+        columns = stage_model.name_get(cr, uid, column_ids, context=context)
+        return columns, {}
+
+    _group_by_full = {
+        'stage_id': kanban_columns,
+    }
+
     def write(self, cr, uid, ids, vals, context=None):
         if len(vals) == 1 and (vals.get('stage_id') or vals.get('user_id')):
             gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
