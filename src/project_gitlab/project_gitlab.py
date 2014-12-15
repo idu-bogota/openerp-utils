@@ -67,6 +67,7 @@ class gitlab_issue(osv.osv):
 
 class gitlab_stage(osv.osv):
     _name = "gitlab.stage"
+    _order = 'sequence ASC, name ASC'
     _columns = {
         'name': fields.char('Name', size=255, required=True, select=1),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list."),
