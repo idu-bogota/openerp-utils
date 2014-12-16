@@ -1,9 +1,6 @@
 @startuml
-
-
 res.partner "*" -- res.company
 res.partner "*" -- product.pricelist
-res.partner "*" -- base_map.city
 res.partner "*" -- res.users
 res.partner "*" -- res.partner.title
 res.partner "*" -- res.country
@@ -13,27 +10,27 @@ res.partner "*" -- res.country.state
 res.partner "*" -- res.partner
 
 
-
-
-base_map.city "*" -- res.country.state
-
 mail.alias "*" -- res.users
 mail.alias "*" -- ir.model
-
 
 product.pricelist "*" -- res.company
 product.pricelist "*" -- res.currency
 
-predios_social.predio "*" -- base_map.lote
 predios_social.predio "*" -- res.users
-predios_social.predio "*" -- predios_base.tipo_afectacion
-predios_social.predio "*" -- predios_base.obras
-predios_social.predio "*" -- base_map.sub_district
-predios_social.predio "*" -- base_map.district
-predios_social.predio "*" -- base_map.cadastral_zone
-
 
 res.country "*" -- res.currency
+
+product.uom "*" -- product.uom.categ
+
+res.currency "*" -- res.company
+
+
+res.company "*" -- res.currency
+res.company "*" -- res.partner
+res.company "*" -- res.country
+res.company "*" -- res.company
+res.company "*" -- product.uom
+res.company "*" -- res.country.state
 
 res.users "*" -- mail.alias
 res.users "*" -- product.pricelist
@@ -47,79 +44,13 @@ res.users "*" -- ir.actions.actions
 res.users "*" -- ir.model
 res.users "*" -- res.country
 res.users "*" -- res.users
-res.users "*" -- base_map.city
 res.users "*" -- res.users
 res.users "*" -- res.country.state
 res.users "*" -- res.partner
 
 
-plan_contratacion_idu.plan_pagos_item "*" -- plan_contratacion_idu.item
-plan_contratacion_idu.plan_pagos_item "*" -- res.currency
-
-
-product.uom "*" -- product.uom.categ
-
-plan_contratacion_idu.wizard.solicitud_cambio "*" -- plan_contratacion_idu.plan
-plan_contratacion_idu.wizard.solicitud_cambio "*" -- plan_contratacion_idu.item
-
-plan_contratacion_idu.report.presupuesto_programados "*" -- plan_contratacion_idu.plan
-plan_contratacion_idu.report.presupuesto_programados "*" -- hr.department
-plan_contratacion_idu.report.presupuesto_programados "*" -- plan_contratacion_idu.item
-
-res.currency "*" -- res.company
-
-
-
-plan_contratacion_idu.plan "*" -- res.currency
-
-plan_contratacion_idu.plan_pagos_giro "*" -- plan_contratacion_idu.item
-plan_contratacion_idu.plan_pagos_giro "*" -- res.currency
-
-plan_contratacion_idu.item "*" -- hr.department
-plan_contratacion_idu.item "*" -- plan_contratacion_idu.item
-plan_contratacion_idu.item "*" -- product.uom
-plan_contratacion_idu.item "*" -- stone_erp_idu.rubro_funcionamiento
-plan_contratacion_idu.item "*" -- plan_contratacion_idu.plan_tipo_proceso
-plan_contratacion_idu.item "*" -- project_idu.clasificador_proyecto
-plan_contratacion_idu.item "*" -- plan_contratacion_idu.plan
-plan_contratacion_idu.item "*" -- stone_erp_idu.centro_costo
-plan_contratacion_idu.item "*" -- res.currency
-plan_contratacion_idu.item "*" -- contrato_idu.contrato
-plan_contratacion_idu.item "*" -- plan_contratacion_idu.fuente
-plan_contratacion_idu.item "*" -- plan_contratacion_idu.plan_tipo_proceso_seleccion
-
-
-plan_contratacion_idu.item_solicitud_cambio "*" -- plan_contratacion_idu.plan
-plan_contratacion_idu.item_solicitud_cambio "*" -- plan_contratacion_idu.item
-plan_contratacion_idu.item_solicitud_cambio "*" -- hr.department
-plan_contratacion_idu.item_solicitud_cambio "*" -- plan_contratacion_idu.item
-
-plan_contratacion_idu.wizard.reporte "*" -- plan_contratacion_idu.plan
-
-res.company "*" -- res.currency
-res.company "*" -- res.partner
-res.company "*" -- res.country
-res.company "*" -- res.company
-res.company "*" -- product.uom
-res.company "*" -- res.country.state
-
-
-
-predios_base.obras "*" -- predios_base.proyecto
-
-
 res.country.state "*" -- res.country
 
-plan_contratacion_idu.report.pagos_programados "*" -- plan_contratacion_idu.plan
-plan_contratacion_idu.report.pagos_programados "*" -- hr.department
-plan_contratacion_idu.report.pagos_programados "*" -- plan_contratacion_idu.item
-
-
-class base_map.district{
-}
-
-class plan_contratacion_idu.wizard.crp{
-}
 
 class res.partner{
     many2one Company
@@ -134,25 +65,12 @@ class res.partner{
     many2one Commercial Entity
 }
 
-class plan_contratacion_idu.wizard.observacion{
-}
-
 class ir.actions.actions{
-}
-
-class predios_base.tipo_afectacion{
-}
-
-class base_map.city{
-    many2one State id
 }
 
 class mail.alias{
     many2one Owner
     many2one Aliased Model
-}
-
-class predios_base.proyecto{
 }
 
 class product.pricelist{
@@ -170,11 +88,28 @@ class predios_social.predio{
     many2one Sector Catastral
 }
 
-class plan_contratacion_idu.fuente{
-}
-
 class res.country{
     many2one Currency
+}
+
+class product.uom{
+    many2one Category
+}
+
+class res.currency{
+    many2one Company
+}
+
+class res.partner.title{
+}
+
+class res.company{
+    many2one Currency
+    many2one Partner
+    many2one Country
+    many2one Parent Company
+    many2one Project Time Unit
+    many2one Fed. State
 }
 
 class res.users{
@@ -196,109 +131,10 @@ class res.users{
     many2one Related Partner
 }
 
-class plan_contratacion_idu.plan_tipo_proceso{
-}
-
-class plan_contratacion_idu.plan_pagos_item{
-    many2one Item Plan de Contratacion
-    many2one Company
-}
-
-class base_map.cadastral_zone{
-}
-
-class product.uom{
-    many2one Category
-}
-
-class plan_contratacion_idu.wizard.solicitud_cambio{
-    many2one Plan
-    many2one Item a cambiar/eliminar
-}
-
-class plan_contratacion_idu.report.presupuesto_programados{
-    many2one Plan Contratacion
-    many2one Dependencia
-    many2one item Plan Contratacion
-}
-
-class res.currency{
-    many2one Company
-}
-
-class plan_contratacion_idu.plan_tipo_proceso_seleccion{
-}
-
-class base_map.sub_district{
-}
-
-class plan_contratacion_idu.plan{
-    many2one Currency
-}
-
-class plan_contratacion_idu.plan_pagos_giro{
-    many2one Item Plan de Contratacion
-    many2one Company
-}
-
-class plan_contratacion_idu.item{
-    many2one Dependencia
-    many2one Item del plan a ser cambiado
-    many2one Unidad Meta Física
-    many2one Codigo Rubro Funcionamiento
-    many2one Tipo Proceso
-    many2one Clasificación Proyecto
-    many2one Plan contractual
-    many2one Codigo Centro de Costo
-    many2one Company
-    many2one Número de Contrato
-    many2one Fuente de Financiación
-    many2one Modalidad de Selección
-}
-
-class res.partner.title{
-}
-
-class plan_contratacion_idu.item_solicitud_cambio{
-    many2one Plan en el que se radica la solicitud de cambio
-    many2one Item con los cambios solicitados
-    many2one Dependencia
-    many2one Item a cambiar
-}
-
-class plan_contratacion_idu.wizard.reporte{
-    many2one Plan de Contratacion
-}
-
-class res.company{
-    many2one Currency
-    many2one Partner
-    many2one Country
-    many2one Parent Company
-    many2one Project Time Unit
-    many2one Fed. State
-}
-
-class plan_contratacion_idu.wizard.nuevo_centro_costo{
-}
-
-class base_map.lote{
-}
-
-class predios_base.obras{
-    many2one Proyecto
-}
-
 class ir.model{
 }
 
 class res.country.state{
     many2one Country
-}
-
-class plan_contratacion_idu.report.pagos_programados{
-    many2one Plan Contratacion
-    many2one Dependencia
-    many2one item Plan Contratacion
 }
 @enduml
