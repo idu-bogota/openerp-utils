@@ -4,19 +4,20 @@ Created on 21/11/2014
 @author: jota
 '''
 import re
+import erppeek
 
 class Model():
 
-    def __init__(self, model, file, detailed_model, model_exclude):
+    def __init__(self, model, file, options, connection):
         self.model = model
         self.file = file
-        self.detailed_model = detailed_model
-        self.model_exclude = model_exclude
+        self.options = options
+        self.connection = connection
     #excluir
     def exclude_of_graphic(self, relacion):
         retorno = True
         
-        entity_to_exclude = self.model_exclude.split(',')
+        entity_to_exclude = self.options.model_exclude.split(',')
         
         for exclude in entity_to_exclude:
             if '*' in exclude:
@@ -31,6 +32,12 @@ class Model():
                     return retorno
         return retorno
     
+    #identificar clases wizard
+    def is_wizard(self, clase):
+        model = self.connection.model('ir.model')
+        record_view = model.browse([ "model = {0}".format(clase) ]).osv_memory
+        return record_view[0]
+    
     #grafica las entida
     def get_plantuml_relation_tags(self):
         for i in self.model:
@@ -38,7 +45,7 @@ class Model():
             for key, campo in campos.iteritems():
                 if campo['type'] == 'many2one':
                     #excluir 
-                    if self.model_exclude:
+                    if self.options.model_exclude:
                         if self.exclude_of_graphic(campo['relation']):
                             self.file.write("{0} \"*\" -- {1}\n".format(i, campo['relation']))
                     else:
@@ -47,15 +54,18 @@ class Model():
     
     def get_plantuml_entity_tags(self):
         for i in self.model:
-            # print i
-            # print self.model[i]
-            self.file.write("\nclass {0}{1}\n".format(i, "{"))
+            #pintar wizard
+            if self.is_wizard(i):
+                self.file.write("\nclass {0} << (W,#0ACEB7) >> {1}\n".format(i, "{"))
+            else:
+                self.file.write("\nclass {0}{1}\n".format(i, "{"))
+            # fin pintar wizard
             campos = self.model[i]
             for key, campo in campos.iteritems():
                 if campo['type'] == 'many2one':
                     self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))
             
-            if(self.detailed_model  == "1"): # todo los campos
+            if(self.options.detailed_model  == "1"): # todo los campos
                 for key, campo in campos.iteritems():
                     if campo['type'] != 'many2one':
                         self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))

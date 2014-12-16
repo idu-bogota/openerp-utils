@@ -206,7 +206,7 @@ def get_details_db(options):
     _logger.debug("\n*** retorno generate_model ***")
     for i in a:
         _logger.debug(i)
-
+    
     # include
     if(options.model_include):
         a = include_entity_of_model_general(options, a)
@@ -222,9 +222,11 @@ def get_details_db(options):
         _logger.debug("\n*** retorno despues del exclude ***")
         for i in a:
             _logger.debug(i)
+            
+    co = get_connection(options)
     
     file = init_graph()
-    pintar = Model(a, file, options.detailed_model, options.model_exclude )
+    pintar = Model(a, file, options, co)
     pintar.get_plantuml_relation_tags()
     pintar.get_plantuml_entity_tags()
     
