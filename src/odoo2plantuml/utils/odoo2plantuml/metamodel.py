@@ -43,6 +43,7 @@ class Model():
         for i in self.model:
             campos = self.model[i]
             for key, campo in campos.iteritems():
+                
                 if campo['type'] == 'many2one':
                     #excluir 
                     if self.options.model_exclude:
@@ -50,6 +51,18 @@ class Model():
                             self.file.write("{0} \"*\" -- {1}\n".format(i, campo['relation']))
                     else:
                         self.file.write("{0} \"*\" -- {1}\n".format(i, campo['relation']))
+                    #fin excluir
+                
+                if campo['type'] == 'many2many':
+                    try:
+                        if campo['m2m_join_table']:
+                            self.file.write("{0} \"0..*\" -- \"0..*\" {1}\n".format(i, campo['relation']))
+                            self.file.write("({0}, {1}) .. {2} \n".format(i, campo['relation'], campo['m2m_join_table']))
+                    except:
+                        #print "los que no tienen tabla de cruce"
+                        #print "{0}     modelo: {1}".format(key, i)
+                        #print campo
+                        pass
             self.file.write("\n")
     
     def get_plantuml_entity_tags(self):
@@ -64,10 +77,17 @@ class Model():
             for key, campo in campos.iteritems():
                 if campo['type'] == 'many2one':
                     self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))
+                 
+                if campo['type'] == 'many2many':
+                    try:
+                        if campo['m2m_join_table']:
+                            self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))
+                    except:
+                        pass
             
             if(self.options.detailed_model  == "1"): # todo los campos
                 for key, campo in campos.iteritems():
-                    if campo['type'] != 'many2one':
+                    if campo['type'] != 'many2one' and campo['type'] != 'many2many':
                         self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))
             
             self.file.write("}\n")
