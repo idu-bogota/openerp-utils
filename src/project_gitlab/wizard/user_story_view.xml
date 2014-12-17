@@ -6,9 +6,13 @@
         <field name="model">gitlab_wizard.user_story</field>
         <field name="type">form</field>
         <field name="arch" type="xml">
-            <form string="User Story" version="7.0">
+            <form string="Crear issues para una historia de usuario" version="7.0">
+                <h1>Crear issues para una historia de usuario</h1>
+                    <label colspan="4" string="Basado en el documento de especificación de requerimientos y las historias de usuario allí especificadas,
+                    se puede utilizar esta herramienta para crear los issues en gitlab necesarios para hacer el seguimiento al desarrollo"
+                />
                 <separator colspan="4"/>
-                <group col="4" colspan="4">
+                <group col="2" colspan="4">
                     <field name="us_id"/>
                     <field name="description"/>
                     <field name="project_id"/>
@@ -23,7 +27,7 @@
         </field>
     </record>
     <record id="action_gitlab_wizard_user_story" model="ir.actions.act_window">
-        <field name="name">User Story</field>
+        <field name="name">Crear issues para historia de usuario</field>
         <field name="type">ir.actions.act_window</field>
         <field name="res_model">gitlab_wizard.user_story</field>
         <field name="view_type">form</field>
@@ -32,7 +36,7 @@
     </record>
     <menuitem
         action="action_gitlab_wizard_user_story"
-        name="User Story"
+        name="Crear issues"
         id="menuitem_gitlab_wizard_user_story"
         parent="menu_gitlab"
     />
