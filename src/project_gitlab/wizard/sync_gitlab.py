@@ -40,7 +40,7 @@ class gitlab_wizard_sync(osv.osv_memory):
 
     def sync(self, cr, uid, ids, context=None):
         gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
-        projects = gitlab_conn.getprojects()
+        projects = gitlab_conn.getprojects(per_page=100)
         self.gitlab_walk_projects(cr, uid, projects, gitlab_conn)
 
         return {'type': 'ir.actions.act_window_close'}
@@ -186,7 +186,7 @@ class gitlab_wizard_sync(osv.osv_memory):
     def gitlab_walk_projects(self, cr, uid, projects, gitlab_conn):
         for project in projects:
             project_idd = self.create_project(cr, uid, project)
-            issues = gitlab_conn.getprojectissues(project['id'])
+            issues = gitlab_conn.getprojectissues(project['id'], per_page=100)
             for issue in issues:
                 self.create_issue(cr, uid, issue, project_idd)
 
