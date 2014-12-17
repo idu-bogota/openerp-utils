@@ -43,7 +43,6 @@ class Model():
         for i in self.model:
             campos = self.model[i]
             for key, campo in campos.iteritems():
-                
                 if campo['type'] == 'many2one':
                     #excluir 
                     if self.options.model_exclude:
@@ -58,7 +57,7 @@ class Model():
                         if campo['m2m_join_table']:
                             self.file.write("{0} \"0..*\" -- \"0..*\" {1}\n".format(i, campo['relation']))
                             self.file.write("({0}, {1}) .. {2} \n".format(i, campo['relation'], campo['m2m_join_table']))
-                            self.file.write("class {0} << (T,#42BDFA) Table >>\n".format(campo['m2m_join_table']))
+                            self.file.write("class {0} << (T,#428AB0) >>\n".format(campo['m2m_join_table']))
                     except:
                         #print "los que no tienen tabla de cruce"
                         #print "{0}     modelo: {1}".format(key, i)

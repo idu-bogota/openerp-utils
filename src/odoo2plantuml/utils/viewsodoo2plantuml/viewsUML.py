@@ -44,12 +44,7 @@ def main():
         parser.error('db_password not given')
     if not options.view_openERP:
         parser.error('view_openERP not given')
-    '''
-    if int(options.view_levels) > 3:    #int(float(a))
-        parser.error('view_levels must be less than 3')
-    if int(options.view_levels) <= 0:    #int(float(a))
-        parser.error('view_levels must be greater than 0')    
-    '''
+
     p = get_details_db(options)
     ## fin main
 # *************** Método para UML ***************#  
@@ -221,7 +216,7 @@ def get_details_db(options):
             _logger.debug(i)
     
     file = init_graph()
-    pintar = Model(model_of_view, file, options.detailed_view)
+    pintar = Model(model_of_view, file, options)
     pintar.get_plantuml_relation_tags()
     pintar.get_plantuml_entity_tags()
     fin_graph(file)
