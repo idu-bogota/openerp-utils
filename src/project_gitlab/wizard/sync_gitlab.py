@@ -62,9 +62,12 @@ class gitlab_wizard_sync(osv.osv_memory):
                 user_id = user_model.create(cr, uid, user_data)
             else:
                 user_id = user_ids[0]
-                user_model.write(cr, uid, user_id, user_data)
+                try:
+                    user_model.write(cr, uid, user_id, user_data)
+                except:
+                    pass
         else:
-            user_id = 0
+            user_id = False
         return user_id
 
     def create_project(self, cr, uid, project):
