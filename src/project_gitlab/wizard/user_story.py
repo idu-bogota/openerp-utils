@@ -45,18 +45,6 @@ class gitlab_wizard_user_story(osv.osv_memory):
         'label_ids': fields.many2many('gitlab.label', 'gitlab_wizard_label', 'wizard_id', 'label_ids', 'Labels'),
     }
 
-    def get_parts_issue_tittle(self, label):
-#^(.*)(\[\w\])(\*\*.*\*\*)(.*)$)
-        """Check if the label is related to a issue kanban stage
-        """
-        regex = re.compile("^(.*)(\[\w\])(\*\*.*\*\*)(.*)$)")
-        found = regex.search(label)
-        if found:
-            parts = found.groups()
-            if(len(parts) == 2):
-                return parts[1]
-        return False
-
     def create_issue_project(self, cr, uid, ids, context=None):
         gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
         #^(.*)(\[\w\])(\*\*.*\*\*)(.*)$
@@ -67,13 +55,13 @@ class gitlab_wizard_user_story(osv.osv_memory):
             found_title = regex_title.findall(issue.us_id)
             for label in issue.label_ids:
                 str_labels = 'col:' + issue.stage_id.name + ',' + label.name
-                regex_criteria = re.compile("^(.*)(\[\w\])(\*\*.*\*\*)(.*)$",re.MULTILINE)
+                regex_criteria = re.compile("^(.*)(\[\w\])\s(\*\*.*\*\*)(.*)$",re.MULTILINE)
                 found_criteria = regex_criteria.findall(issue.description)
                 for criteria in found_criteria:
                     res = gitlab_conn.createissue(
                         issue.project_id.gitlab_id,
                         #[User Story-id][Criteria ID] Criteria title
-                        '[{0}]{1} {2}'.format(found_title[0][1], criteria[1], criteria[2].replace('**','')),
+                        '[{0}] {1} {2}'.format(found_title[0][1], criteria[1], criteria[2].replace('**','')),
                         #User Story\n\n Criteria Title Criteria Description
                         "{0}\n\n - {1} {2}".format(found_title[0][3], criteria[2], criteria[3]),
                         issue.user_id.gitlab_id,
