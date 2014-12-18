@@ -76,7 +76,8 @@ class gitlab_wizard_sync(osv.osv_memory):
         project_data = {
             'name': project['name'],
             'gitlab_id': project['id'],
-            'namespace_id': project['namespace']['name'],
+            'namespace': project['namespace']['name'],
+            'url': project['web_url'],
         }
         if not len(project_ids):
             project_id = project_model.create(cr, uid, project_data)

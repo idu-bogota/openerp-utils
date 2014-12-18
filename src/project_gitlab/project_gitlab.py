@@ -41,6 +41,14 @@ class gitlab_issue(osv.osv):
     _inherit = [
         'mail.thread',
     ]
+
+    def _get_url(self, cr, uid, ids, field, args, context=None):
+        res = {}
+        records = self.browse(cr, uid, ids, context=context)
+        for record in records:
+            res[record.id] = "{0}/issues/{1}".format(record.project_id.url, record.gitlab_idd)
+        return res
+
     _name = "gitlab.issue"
     _order = "sequence, name, id"
     _columns = {
@@ -59,6 +67,12 @@ class gitlab_issue(osv.osv):
         'label_ids': fields.many2many('gitlab.label', 'gitlab_issue_label', 'issue_id', 'label_ids', 'Labels'),
         'user_id': fields.many2one('res.users', 'User', track_visibility='onchange',),
         'task_id': fields.many2one('project.task', 'Task', track_visibility='onchange',),
+        'url': fields.function(
+            _get_url,
+            type="char",
+            string='GitLab URL',
+            store=False,
+        ),
     }
 
     def kanban_columns(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
@@ -102,7 +116,8 @@ class gitlab_project(osv.osv):
     _name = "gitlab.project"
     _columns = {
         'name': fields.char('Name', size=255, required=True, select=1),
-        'namespace_id': fields.char('Namespace', size=255, required=True, select=1),
+        'namespace': fields.char('Namespace', size=255, required=True, select=1),
+        'url': fields.char('url', size=255),
         'gitlab_id': fields.integer('GitLab ID'),
         'issue_ids': fields.one2many(
             'gitlab.issue',

@@ -56,6 +56,7 @@
                 <field name="project_id"/>
                 <field name="user_id"/>
                 <field name="sequence" string="Sequence"/>
+                <field name="url"/>
                 <templates>
                     <t t-name="kanban-box">
                         <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.state.value)} oe_kanban_card oe_kanban_global_click">
@@ -64,6 +65,7 @@
                                     <ul>
                                        <li><strong>#<field name="gitlab_idd"/> - <field name="name"/></strong></li>
                                        <li><field name="project_id"/></li>
+                                       <li><a t-att-href="record.url.raw_value">GitLab</a></li>
                                      </ul>
                                 </div>
                                 <div class="oe_kanban_bottom_right">
@@ -104,6 +106,7 @@
                         <group string="GitLab" colspan="4">
                             <field name="gitlab_id"/>
                             <field name="gitlab_idd"/>
+                            <field name="url" widget="url"/>
                          </group>
                         <group string="Related" colspan="4">
                             <field name="stage_id"/>
@@ -127,7 +130,7 @@
             <field name="arch" type="xml">
                 <form string="gitlab_project">
                     <field name="name"/>
-                    <field name="namespace_id"/>
+                    <field name="namespace"/>
                     <group string="GitLab" colspan="4">
                         <field name="gitlab_id"/>
                      </group>
@@ -212,7 +215,7 @@
         <field name="arch" type="xml">
             <tree string="gitlab_project">
                 <field name="name"/>
-                <field name="namespace_id"/>
+                <field name="namespace"/>
                 <field name="gitlab_id"/>
             </tree>
         </field>
