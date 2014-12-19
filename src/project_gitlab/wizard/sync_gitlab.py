@@ -23,15 +23,11 @@ from osv import osv, fields
 import gitlab
 import logging
 import re
+from project_gitlab.project_gitlab import get_connection_gitlab
 from openerp import SUPERUSER_ID
 
 _logger = logging.getLogger(__name__)
 
-def get_connection_gitlab(param_model, cr):
-    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token', default=False)
-    host = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.host', default=False)
-    c = gitlab.Gitlab(host, token)
-    return c
 
 class gitlab_wizard_sync(osv.osv_memory):
     _name = 'gitlab_wizard.sync'
@@ -80,7 +76,8 @@ class gitlab_wizard_sync(osv.osv_memory):
         project_data = {
             'name': project['name'],
             'gitlab_id': project['id'],
-            'namespace_id': project['namespace']['name'],
+            'namespace': project['namespace']['name'],
+            'url': project['web_url'],
         }
         if not len(project_ids):
             project_id = project_model.create(cr, uid, project_data)

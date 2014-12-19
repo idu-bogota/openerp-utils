@@ -22,40 +22,34 @@
 from osv import osv, fields
 import logging
 from openerp import SUPERUSER_ID
+from project_gitlab.project_gitlab import get_connection_gitlab
 import gitlab
 import re
 
 _logger = logging.getLogger(__name__)
 
-def get_connection_gitlab(param_model, cr):
-    token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token2', default=False)
-    host = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.host', default=False)
-    c = gitlab.Gitlab(host, token)
-    return c
-
 class gitlab_wizard_user_story(osv.osv_memory):
     _name = 'gitlab_wizard.user_story'
     _description = 'Sincronizar en openerp los proyectos en GitLab'
     _columns = {
-        'us_id': fields.char('User Story ID', size=200, required=True, help = 'PQR-01'),
-        'description': fields.text('Description', required=True, help = 'el rol X quiere X para X'),
-        'project_id': fields.many2one('gitlab.project', 'Project'),
-        'stage_id': fields.many2one('gitlab.stage', 'Stage'),
-        'user_id': fields.many2one('res.users', 'User'),
-        'label_ids': fields.many2many('gitlab.label', 'gitlab_wizard_label', 'wizard_id', 'label_ids', 'Labels'),
+        'us_id': fields.text('Historia de usuario', required=True, help = 'Línea completa de la historia de usuario'),
+        'description': fields.text('Criterios de aceptación', required=True, help = 'Criterios de aceptación'),
+        'project_id': fields.many2one('gitlab.project', 'Project/repository', required=True),
+        'stage_id': fields.many2one('gitlab.stage', 'Stage', required=True),
+        'user_id': fields.many2one('res.users', 'User', required=True),
+        'label_ids': fields.many2many('gitlab.label', 'gitlab_wizard_label', 'wizard_id', 'label_ids', 'Labels', required=True),
     }
 
     def create_issue_project(self, cr, uid, ids, context=None):
         gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
-        #^(.*)(\[\w\])(\*\*.*\*\*)(.*)$
-        #^(\-\s)([A-Z]*\-\d*)(\:\s)(.*)$
+
         for issue in self.browse(cr, uid, ids, context=context):
             str_labels = ''
             regex_title = re.compile("^(\-\s)([A-Z]*\-\d*)(\:\s)(.*)$")
+            regex_criteria = re.compile("^(.*)(\[\w\])\s(\*\*.*\*\*)(.*)$",re.MULTILINE)
             found_title = regex_title.findall(issue.us_id)
             for label in issue.label_ids:
                 str_labels = 'col:' + issue.stage_id.name + ',' + label.name
-                regex_criteria = re.compile("^(.*)(\[\w\])\s(\*\*.*\*\*)(.*)$",re.MULTILINE)
                 found_criteria = regex_criteria.findall(issue.description)
                 for criteria in found_criteria:
                     res = gitlab_conn.createissue(
@@ -63,12 +57,11 @@ class gitlab_wizard_user_story(osv.osv_memory):
                         #[User Story-id][Criteria ID] Criteria title
                         '[{0}] {1} {2}'.format(found_title[0][1], criteria[1], criteria[2].replace('**','')),
                         #User Story\n\n Criteria Title Criteria Description
-                        "{0}\n\n - {1} {2}".format(found_title[0][3], criteria[2], criteria[3]),
-                        issue.user_id.gitlab_id,
-                        '',
-                        str_labels
-                )
-#            res = gitlab_conn.createissue(issue.project_id.gitlab_id, issue.us_id, issue.description, issue.user_id.name, '', )
+                        description="{0}\n\n - {1} {2}".format(found_title[0][3], criteria[2], criteria[3]),
+                        assignee_id=issue.user_id.gitlab_id,
+                        labels=str_labels
+                    )
+                    _logger.info(res)
 
         return {'type': 'ir.actions.act_window_close'}
 
