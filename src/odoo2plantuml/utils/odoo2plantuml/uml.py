@@ -1,14 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-
 import ldap
 import logging
-from ldap.filter import filter_format
-import erppeek
 import re
+import erppeek
+from ldap.filter import filter_format
 from optparse import OptionParser
-
 from metamodel import Model
+from erppeek_connection import Connection
 
 logging.basicConfig()
 _logger = logging.getLogger('script')
@@ -59,17 +58,8 @@ def fin_graph(out):
     out.write('@enduml')
     out.close()
 
-def get_connection(options):
-    server = options.host_openERP + ':' +  options.port_openERP
-    database = options.db_name
-    user = options.db_user
-    password = options.db_password
-    insert_employee_id = False
-    c = erppeek.Client(server, database, user, password)
-    return c
-
-def generate_model(entity, model, options):
-    c = get_connection(options)
+def generate_model(entity, model, options, connect):
+    c = connect.get_connection()
     
     if len(model) == 0:
         campos = c.model(entity).fields()
@@ -164,9 +154,9 @@ def exclude_entity_of_model_general(options, model):
             
     return end_model
     
-def include_entity_of_model_general(options, model):
+def include_entity_of_model_general(options, model, connect):
     _logger.debug("\n*** include_entity_of_model_general ***")
-    c = get_connection(options)
+    c = connect.get_connection()
     # separar por comas
     entity_to_include = options.model_include.split(',')
     
@@ -195,13 +185,14 @@ def get_model_of_db_exr(options, models_to_consult, connect):
     return end_record_model
 
 def get_details_db(options):
+    connect = Connection(options)
     
     profundidad = int(options.model_levels)
     a = {}
     
     for i in range(profundidad):
         print "{0}  {1}\n".format("Iteracion numero :", i)
-        a = generate_model(options.model_openERP, a, options)
+        a = generate_model(options.model_openERP, a, options, connect)
 
     _logger.debug("\n*** retorno generate_model ***")
     for i in a:
@@ -209,7 +200,7 @@ def get_details_db(options):
     
     # include
     if(options.model_include):
-        a = include_entity_of_model_general(options, a)
+        a = include_entity_of_model_general(options, a, connect)
 
         _logger.debug("\n*** retorno despues del include ***")
         for i in a:
@@ -222,11 +213,10 @@ def get_details_db(options):
         _logger.debug("\n*** retorno despues del exclude ***")
         for i in a:
             _logger.debug(i)
-            
-    co = get_connection(options)
     
+    c = connect.get_connection()
     file = init_graph()
-    pintar = Model(a, file, options, co)
+    pintar = Model(a, file, options, c)
     pintar.get_plantuml_relation_tags()
     pintar.get_plantuml_entity_tags()
     

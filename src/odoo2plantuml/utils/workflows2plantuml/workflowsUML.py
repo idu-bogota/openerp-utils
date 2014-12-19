@@ -1,11 +1,13 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+
 import ldap
 import logging
-import re
-import erppeek
 from ldap.filter import filter_format
+import erppeek
+import re
 from optparse import OptionParser
+
 from metamodel import Model
 from erppeek_connection import Connection
 
@@ -14,8 +16,7 @@ _logger = logging.getLogger('script')
 
 def main():
     
-    usage = "PlantUml diagram views of Odoo: %prog [options]"
-    #diagrama de las vistas con realacion al modelo que consulta
+    usage = "Connection to Active Directory by LDAP\nusage: %prog [options]"
     parser = OptionParser(usage)
     
     parser.add_option("-N", "--db_name", dest="db_name", help="OpenERP database name")
@@ -24,7 +25,7 @@ def main():
     parser.add_option("-H", "--host_openERP", dest="host_openERP", help="OpenERP server host", default="http://localhost")
     parser.add_option("-J", "--port_openERP", dest="port_openERP", help="OpenERP server port", default="8069")
     
-    parser.add_option("-M", "--model_openERP", dest="model_openERP", help="model relate to view openERP to consult")
+    parser.add_option("-M", "--view_openERP", dest="view_openERP", help="view openERP to consult")
     parser.add_option("-D", "--detailed_view", dest="detailed_view", help="detailed model openERP to consult. value 1 yes, 0 not", default="0")
     parser.add_option("-L", "--view_levels", dest="view_levels", help="level of detail of the model between 1 to 3", default="1")
     
@@ -42,8 +43,8 @@ def main():
         parser.error('db_user not given') 
     if not options.db_password:
         parser.error('db_password not given')
-    if not options.model_openERP:
-        parser.error('model_openERP not given')
+    if not options.view_openERP:
+        parser.error('view_openERP not given')
 
     p = get_details_db(options)
     ## fin main
@@ -57,9 +58,18 @@ def fin_graph(out):
     out.write('@enduml')
     out.close()
 
-def get_view_of_db(options, view_to_consult, connect):
+def get_connection(options):
+    server = options.host_openERP + ':' +  options.port_openERP
+    database = options.db_name
+    user = options.db_user
+    password = options.db_password
+    insert_employee_id = False
+    c = erppeek.Client(server, database, user, password)
+    return c
+
+def get_view_of_db(options, view_to_consult):
     end_record_view = []
-    c = connect.get_connection()
+    c = get_connection(options)
     view = c.model('ir.ui.view')
     record_view = view.browse([ "model = {0}".format(view_to_consult) ])
     for i in record_view:
@@ -67,9 +77,9 @@ def get_view_of_db(options, view_to_consult, connect):
     return end_record_view
 
 # con expresiones regulares
-def get_view_of_db_exr(options, view_to_consult, connect):
+def get_view_of_db_exr(options, view_to_consult):
     end_record_view = []
-    c = connect.get_connection()
+    c = get_connection(options)
     view = c.model('ir.ui.view')
     view_to_consult = view_to_consult.replace('*', '%')  #cambiar el * por el %
     
@@ -79,11 +89,11 @@ def get_view_of_db_exr(options, view_to_consult, connect):
         end_record_view.append(i)
     return end_record_view
 
-def generate_model(model_of_view, options, connect):
+def generate_model(model_of_view, options):
     #_logger.debug("*** generate_model ***")
     if len(model_of_view) == 0:
-        #record_view = view.browse([ "model = {0}".format(options.model_openERP) ])
-        record_view = get_view_of_db(options, options.model_openERP, connect)
+        #record_view = view.browse([ "model = {0}".format(options.view_openERP) ])
+        record_view = get_view_of_db(options, options.view_openERP)
     else:
         record_view = increase_model(model_of_view)
         
@@ -160,19 +170,19 @@ def exclude_entity_of_model_general(options, model):
                     end_list_model.remove(i)
     return end_list_model
 
-def include_entity_of_model_general(options, model, connect):
+def include_entity_of_model_general(options, model):
     _logger.debug("\n***include_entity_of_model_general ***\n")
     entity_to_include = options.view_include.split(',')
     
     for include in entity_to_include:
         if '*' in include:
-            entity = get_view_of_db_exr(options, include, connect)
+            entity = get_view_of_db_exr(options, include)
             # limpiar campos de relacion que esten en el modelo general
             entity = clean_entity_of_model_general(entity, model)
             # asignar las nuevas relaciones al modelo general
             model = assign_new_entity(entity, model)
         else:
-            entity = get_view_of_db(options, include, connect)
+            entity = get_view_of_db(options, include)
             # limpiar campos de relacion que esten en el modelo general
             entity = clean_entity_of_model_general(entity, model)
             # asignar las nuevas relaciones al modelo general
@@ -182,13 +192,15 @@ def include_entity_of_model_general(options, model, connect):
 def get_details_db(options):
     #_logger.debug("*** get_details_db ***")
     connect = Connection(options)
+    c = connect.get_connection()
     
+    '''
     model_of_view = []
     profundidad = int(options.view_levels)
     
     for i in range(profundidad):
         _logger.debug("iteracion numero  {0}\n".format(i))
-        model_of_view = generate_model(model_of_view, options, connect)
+        model_of_view = generate_model(model_of_view, options)
     
     _logger.debug("\n** modelo Generado **\n")
     for i in model_of_view:
@@ -196,7 +208,7 @@ def get_details_db(options):
     
     # include
     if(options.view_include):
-        model_of_view = include_entity_of_model_general(options, model_of_view, connect)
+        model_of_view = include_entity_of_model_general(options, model_of_view)
         _logger.debug("\n*** retorno despues del include ***\n")
         for i in model_of_view:
             _logger.debug(i)
@@ -213,7 +225,7 @@ def get_details_db(options):
     pintar.get_plantuml_relation_tags()
     pintar.get_plantuml_entity_tags()
     fin_graph(file)
-
+    '''
 # *************** Fin Método para UML ***************#  
 if __name__ == '__main__':
     main()
