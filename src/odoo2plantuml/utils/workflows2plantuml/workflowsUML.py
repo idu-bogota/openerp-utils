@@ -15,7 +15,7 @@ logging.basicConfig()
 _logger = logging.getLogger('script')
 
 def main():
-    usage = "Connection to Active Directory by LDAP\nusage: %prog [options]"
+    usage = "planUML diagram of the workflow Odoo: %prog [options]"
     parser = OptionParser(usage)
     
     parser.add_option("-N", "--db_name", dest="db_name", help="OpenERP database name")
@@ -43,7 +43,7 @@ def main():
 
     p = get_details_db(options)
     ## fin main
-
+# *************** Método para Workflows ***************#  
 def init_graph():
     out = open('./workflows_plantuml.txt', 'w+') 
     out.write('@startuml\n')
@@ -87,6 +87,6 @@ def get_details_db(options):
     pintar.get_plantuml_relation_tags()
     fin_graph(file)
     _logger.debug("***Fin workflows UML ***")
-# *************** Fin Método para UML ***************#  
+# *************** Fin Método para Workflows ***************#  
 if __name__ == '__main__':
     main()
