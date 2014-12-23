@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//src/odoo2plantuml/utils/odoo2plantuml/uml.py=utf-8
 encoding//src/odoo2plantuml/utils/viewsodoo2plantuml/viewsUML.py=utf-8
+encoding//src/odoo2plantuml/utils/workflows2plantuml/metamodel_workflows.py=utf-8
 encoding//src/odoo2plantuml/utils/workflows2plantuml/workflowsUML.py=utf-8
 encoding//src/photo_gallery/__openerp__.py=utf-8
 encoding//src/photo_gallery/flickr_uploader/flickr_uploader.py=utf-8

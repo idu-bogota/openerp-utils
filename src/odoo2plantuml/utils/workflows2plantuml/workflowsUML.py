@@ -73,18 +73,28 @@ def get_flow_start(wkf_activity):
         if i.flow_start:
             return i
 
+def get_flow_stop(wkf_activity):
+    list = []
+    for i in wkf_activity:
+        if i.flow_stop:
+            list.append(i)
+    return list
+
 def get_details_db(options):
     #_logger.debug("*** get_details_db ***")
     connect = Connection(options)
     #c = connect.get_connection()
     wkf_activity = get_wkf_activity(options, connect)
     flow_start = get_flow_start(wkf_activity)
+    flow_stop = get_flow_stop(wkf_activity)
     wkf_acti_tras = get_wkf_transition(options, connect, wkf_activity)
     
     #graficar
     file = init_graph()
-    pintar = Model(wkf_acti_tras, file, options, flow_start)
+    pintar = Model(wkf_acti_tras, file, options, flow_start, flow_stop)
     pintar.get_plantuml_relation_tags()
+    pintar.get_plantuml_entity_tags(wkf_activity)
+    pintar.get_plantuml_note_tags()
     fin_graph(file)
     _logger.debug("***Fin workflows UML ***")
 # *************** Fin Método para Workflows ***************#  
