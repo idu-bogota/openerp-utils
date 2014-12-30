@@ -49,12 +49,25 @@ class gitlab_issue(osv.osv):
             res[record.id] = "{0}/issues/{1}".format(record.project_id.url, record.gitlab_idd)
         return res
 
+    def _get_color(self, cr, uid, ids, field, args, context=None):
+        res = {}
+        records = self.browse(cr, uid, ids, context=context)
+        for record in records:
+            color = 0
+            if record.state == 'closed':
+                color = 1
+            elif record.state == 'reopened':
+                color = 2
+            res[record.id] = color
+        return res
+
     _name = "gitlab.issue"
     _order = "sequence, name, id"
     _columns = {
         'name': fields.char('Name', size=255, required=True, select=1, track_visibility='onchange',),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list."),
-        'state': fields.selection([('opened','Abierto'), ('closed','Cerrado'), ('reopened','Re-Abierto')],
+        'state': fields.selection(
+            [('opened','Open'), ('closed','Closed'), ('reopened','Re-Opened')],
             'Estado',
             required=True,
             track_visibility='onchange',
@@ -73,6 +86,12 @@ class gitlab_issue(osv.osv):
             string='GitLab URL',
             store=False,
         ),
+        'kanban_color': fields.function(
+            _get_color,
+            type="integer",
+            string='Kanban Color',
+            store=True,
+        ),
     }
 
     def kanban_columns(self, cr, uid, ids, domain, read_group_order=None, access_rights_uid=None, context=None):
@@ -90,11 +109,14 @@ class gitlab_issue(osv.osv):
             gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
             if vals.get('stage_id'):
                 stage = self.pool.get('gitlab.stage').browse(cr, uid, vals.get('stage_id'), context=context)
+                status = stage.set_issue_status
                 for issue in self.browse(cr, uid, ids, context=context):
                     labels = 'col:' + stage.name
                     for label in issue.label_ids:
                         labels = labels + ',' + label.name
-                    res = gitlab_conn.editissue(issue.project_id.gitlab_id, issue.gitlab_id, labels = labels)
+                    res = gitlab_conn.editissue(issue.project_id.gitlab_id, issue.gitlab_id, labels = labels, state_event = status)
+                    if res:
+                        vals['state'] = res['state']
             if vals.get('user_id'):
                 user = self.pool.get('res.users').browse(cr, uid, vals.get('user_id'), context=context)
                 for issue in self.browse(cr, uid, ids, context=context):
@@ -109,6 +131,10 @@ class gitlab_stage(osv.osv):
         'name': fields.char('Name', size=255, required=True, select=1),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list."),
         'issue_ids': fields.one2many('gitlab.issue', 'stage_id', 'Issues'),
+        'set_issue_status': fields.selection(
+            [('close','Close'), ('reopen','Re-Open')],
+            'Issue set status to',
+        ),
     }
 
 

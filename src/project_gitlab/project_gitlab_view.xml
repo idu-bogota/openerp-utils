@@ -57,9 +57,10 @@
                 <field name="user_id"/>
                 <field name="sequence" string="Sequence"/>
                 <field name="url"/>
+                <field name="kanban_color"/>
                 <templates>
                     <t t-name="kanban-box">
-                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.state.value)} oe_kanban_card oe_kanban_global_click">
+                        <div t-attf-class="oe_kanban_color_#{kanban_getcolor(record.kanban_color.raw_value)} oe_kanban_card oe_kanban_global_click">
                             <div class="oe_kanban_content">
                                 <div>
                                     <ul>
@@ -181,6 +182,7 @@
             <field name="arch" type="xml">
                 <form string="gitlab stages">
                     <field name="name"/>
+                    <field name="set_issue_status"/>
                     <group string="Issues" colspan="4">
                         <field name="issue_ids"/>
                      </group>
@@ -253,6 +255,7 @@
             <tree string="gitlab_stages">
                 <field name="sequence" widget="handle"/>
                 <field name="name"/>
+                <field name="set_issue_status"/>
             </tree>
         </field>
     </record>
