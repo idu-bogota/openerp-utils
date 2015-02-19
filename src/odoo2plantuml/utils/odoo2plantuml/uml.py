@@ -222,6 +222,7 @@ def get_details_db(options):
     
     fin_graph(file)
     
+    _logger.debug("\n*** Proceso Culminado ***")
 # *************** Fin Método para UML ***************#  
 if __name__ == '__main__':
     main()
