@@ -63,7 +63,10 @@ def main():
         _logger.setLevel(10)
 
     if options.generate_file:
-        print "act_from,act_to,condition,group,label\n"
+        print "act_from,act_to,condition,group,label"
+        print 'nuevo,en_progreso,True,pqrs_idu.group_responsable,"Abrir"'
+        print 'en_progreso,cancelado,True,pqrs_idu.group_administrador,"Cancelar"'
+        print 'en_progreso,terminado,tipo==\'canales\',pqrs_idu.group_responsable,"Cerrar"'
         return
 
     if not options.filename:
