@@ -21,7 +21,6 @@ def main():
     parser.add_option("-U", "--db_user",dest="db_user",help="OpenERP database user")
     parser.add_option("-P", "--db_password", dest="db_password", help="OpenERP database password")
     parser.add_option("-H", "--host_openERP", dest="host_openERP", help="OpenERP server host", default="http://localhost")
-    parser.add_option("-J", "--port_openERP", dest="port_openERP", help="OpenERP server port", default="8069")
     
     parser.add_option("-M", "--model_openERP", dest="model_openERP", help="Model openERP to consult")
     parser.add_option("-D", "--detailed_model", dest="detailed_model", help="detailed model openERP to consult. value 1 yes, 0 not", default="0")

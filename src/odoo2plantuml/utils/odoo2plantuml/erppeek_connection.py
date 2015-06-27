@@ -6,7 +6,7 @@ class Connection():
         self.options = options
         
     def get_connection(self):
-        server = self.options.host_openERP + ':' +  self.options.port_openERP
+        server = self.options.host_openERP
         database = self.options.db_name
         user = self.options.db_user
         password = self.options.db_password
