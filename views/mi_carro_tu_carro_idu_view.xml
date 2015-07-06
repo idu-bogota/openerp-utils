@@ -1,0 +1,143 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <menuitem id="mi_carro_tu_carro_nav" name="Mi Carro Tu Carro IDU"/>
+    <menuitem id="mi_carro_tu_carro_menu" name="Compartir Transporte"
+        parent="mi_carro_tu_carro_nav"
+    />
+    <!--
+    =================================================================
+    mi_carro_tu_carro.oferta
+    =================================================================
+    -->
+    <!-- Inicio Filtros -->
+    <record model="ir.ui.view" id="mis_ofertas_search">
+        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="arch" type="xml">
+            <search string="Mis Rutas">
+                <!-- Filtros -->
+                <filter name="user_id" string="Mis Ofertas" 
+                    domain="[('user_id','=','uid)]')]" 
+                    help="Mis Rutas"
+                />
+            </search>
+        </field>
+    </record>
+    <record model="ir.ui.view" id="mi_oferta_form">
+        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" clickable="1"/>
+                </header>
+                <sheet>
+                    <group colspan="2" col="2">
+                        <group name="Datos Oferta" colspan="1">
+                            <separator string="Mapa" colspan="2"/>
+                        </group>
+                        <group name="Datos Oferta" colspan="1">
+                            <separator string="Comparte Tu Viaje" colspan="2"/>
+                            <field name="user_id"
+                                domain="[('id','=',uid)]"
+                                readonly="1"
+                            />
+                            <field name="origen"/>
+                            <field name="destino"/>
+                            <field name="hora_viaje"/>
+                            <field name="tipo_transporte"/>
+                            <field name="vacantes"/>
+                            <field name="costo"/>
+                            <field name="comentario"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="mi_oferta_tree">
+        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="state"/>
+                <field name="origen"/>
+                <field name="destino"/>
+                <field name="hora_viaje"/>
+                <field name="tipo_transporte"/>
+                <field name="vacantes"/>
+                <field name="costo"/>
+                <field name="comentario"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="mi_oferta_action">
+        <field name="name">Mi Carro Tu Carro</field>
+        <field name="res_model">mi_carro_tu_carro.oferta</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="mi_oferta_tree"/>
+    </record>
+    <menuitem id="mi_oferta_menu" parent="mi_carro_tu_carro_menu" name="Mi Ruta" action="mi_oferta_action"/>
+
+    <!--
+    =================================================================
+    mi_carro_tu_carro.oferta  Todas Ofertas Y sin poder modificar
+    =================================================================
+    -->
+    <record model="ir.ui.view" id="ofertas_form">
+        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="arch" type="xml">
+            <form>
+                <field name="state" position="attributes">
+                    <attribute name="invisible">1</attribute>
+                </field>
+                <sheet>
+                    <group colspan="2" col="2">
+                        <group name="Datos Oferta" colspan="1">
+                            <separator string="Mapa" colspan="2"/>
+                        </group>
+                        <group name="Datos Oferta" colspan="1">
+                            <separator string="Comparte Tu Viaje" colspan="2"/>
+                            <field name="user_id"
+                                domain="[('id','=',uid)]"
+                                readonly="1"
+                            />
+                            <field name="origen"/>
+                            <field name="destino"/>
+                            <field name="hora_viaje"/>
+                            <field name="tipo_transporte"/>
+                            <field name="vacantes"/>
+                            <field name="costo"/>
+                            <field name="comentario"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ofertas_tree">
+        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="origen"/>
+                <field name="destino"/>
+                <field name="hora_viaje"/>
+                <field name="tipo_transporte"/>
+                <field name="vacantes"/>
+                <field name="costo"/>
+                <field name="comentario"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="ofertas_action">
+        <field name="name">Ofertas de Viaje</field>
+        <field name="res_model">mi_carro_tu_carro.oferta</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ofertas_tree"/>
+    </record>
+    <menuitem id="ofertas_menu" parent="mi_carro_tu_carro_menu" name="Ofertas de Viaje" action="ofertas_action"/>
+
+</data>
+</openerp>
