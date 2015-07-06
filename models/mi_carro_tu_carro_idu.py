@@ -37,6 +37,7 @@ class mi_carro_tu_carro_oferta(models.Model):
     _description = 'Mi carro tu carro Oferta'
 
     #Fields
+    descripcion = fields.Char('Descripcion')  # minimo de ruta 
     origen = fields.Char('Origen')  # minimo de ruta
     destino = fields.Char('Destino') # max de ruta
     hora_viaje = fields.Datetime('Hora inicio de viaje')

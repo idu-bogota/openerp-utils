@@ -12,6 +12,7 @@
     ],
     "data" : [
         'views/mi_carro_tu_carro_idu_view.xml',
+        'views/ws_micarro_tucarro.xml',
     ],
     "test": [
     ],

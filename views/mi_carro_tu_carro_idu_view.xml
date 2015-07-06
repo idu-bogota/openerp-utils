@@ -41,6 +41,7 @@
                                 domain="[('id','=',uid)]"
                                 readonly="1"
                             />
+                            <field name="descripcion"/>
                             <field name="origen"/>
                             <field name="destino"/>
                             <field name="hora_viaje"/>
@@ -102,6 +103,7 @@
                                 domain="[('id','=',uid)]"
                                 readonly="1"
                             />
+                            <field name="descripcion"/>
                             <field name="origen"/>
                             <field name="destino"/>
                             <field name="hora_viaje"/>
