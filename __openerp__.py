@@ -9,6 +9,7 @@
     "depends" : [
         'base',
         'base_idu',
+        'website',
     ],
     "data" : [
         'views/mi_carro_tu_carro_idu_view.xml',
