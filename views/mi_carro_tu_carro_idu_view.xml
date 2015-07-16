@@ -1,6 +1,12 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
+    <template id="assets_backend" name="petstore_assets" inherit_id="web.assets_backend">
+            <xpath expr="." position="inside">
+                <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+                <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps.js"></script>
+            </xpath>
+    </template>
     <menuitem id="mi_carro_tu_carro_nav" name="Mi Carro Tu Carro IDU"/>
     <menuitem id="mi_carro_tu_carro_menu" name="Compartir Transporte"
         parent="mi_carro_tu_carro_nav"
