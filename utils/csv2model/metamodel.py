@@ -1,12 +1,16 @@
 class Module(object):
     def __init__(self, name):
         self.name = name
-        self.models = {}
+        self._models = {}
+
+    @property
+    def models(self):
+        return self._models.values()
 
     def add_model(self, name):
-        if not name in self.models:
-            self.models[name] = Model(name)
-        return self.models[name]
+        if not name in self._models:
+            self._models[name] = Model(name)
+        return self._models[name]
 
 class Model(object):
     def __init__(self, name):
@@ -14,7 +18,7 @@ class Model(object):
         self.description = name
         self._inherit = None
         self._inherits = None
-        self._attributes = {}
+        self._fields = {}
 
     @property
     def inherit(self):
@@ -35,18 +39,18 @@ class Model(object):
             self._inherits = v.split(',')
 
     @property
-    def attributes(self):
-        return self._attributes
+    def fields(self):
+        return self._fields.values()
 
-    def add_attribute(self, name, line):
-        if not name in self._attributes:
-            self._attributes[name] = Attribute(name)
-        attribute = self._attributes[name]
-        attribute.arguments = line
-        return attribute
+    def add_field(self, name, line):
+        if not name in self._fields:
+            self._fields[name] = Field(name)
+        field = self._fields[name]
+        field.arguments = line
+        return field
 
 
-class Attribute(object):
+class Field(object):
     def __init__(self, name):
         self.name = name
         self._arguments = {}

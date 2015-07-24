@@ -63,10 +63,9 @@ def main():
             model.description = line.description
             model.inherit = line.inherit
             model.inherits = line.inherits
-            attribute = model.add_attribute(line.name, line)
+            field = model.add_field(line.name, line)
 
     template = env.get_template("model_py.tpl")
-    print module.models
     print template.render( {'module': module} )
 
 
