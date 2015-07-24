@@ -3,7 +3,7 @@ class Module(object):
         self.name = name
         self.models = {}
 
-    def add_model(name):
+    def add_model(self, name):
         if not name in self.models:
             self.models[name] = Model(name)
         return self.models[name]
@@ -38,11 +38,11 @@ class Model(object):
     def attributes(self):
         return self._attributes
 
-    def add_attribute(self, name):
+    def add_attribute(self, name, line):
         if not name in self._attributes:
             self._attributes[name] = Attribute(name)
         attribute = self._attributes[name]
-        attribute.arguments(line)
+        attribute.arguments = line
         return attribute
 
 
@@ -71,9 +71,12 @@ class Attribute(object):
 
     _PARAMS_ALLOWED = ['store','related','size','compute']
     def _process_generic_parameters(self, v):
-        params = v.params.split(',')
-        params = { i.split('=')[0]: i.split('=')[1] for i in  params.split(',') }
-        params_allowed = set(_PARAMS_ALLOWED)
+        params = {}
+        for i in v.params.split(','):
+            parts = i.split('=')
+            if len(parts) == 2:
+              params[parts[0]] = parts[1]
+        params_allowed = set(self._PARAMS_ALLOWED)
         params_used = set(params.keys())
 
         if not params_used.issubset(params_allowed):
@@ -95,7 +98,7 @@ class Attribute(object):
         elif v.type == 'char':
             self._arguments['size'] = params['size'] if 'size' in params else 255
         elif v.type in ['many2one', 'many2many']:
-            if 'comodel' in line:
+            if 'comodel' in v:
                 self._arguments['comodel'] = v.comodel
             else:
                 self.report_error('"comodel" required on "{0}" field'.format(v.type))
@@ -108,6 +111,7 @@ class Attribute(object):
         elif v.type == 'one2many':
             if not 'comodel' in v or not v.comodel:
                 self.report_error('"comodel" required on "one2many" field')
+            self._arguments['comodel'] = v.comodel
             parts = self._arguments['comodel'].split(',')
             if len(parts) > 1:
                 self._arguments['comodel'] = parts[0]
@@ -118,8 +122,8 @@ class Attribute(object):
                 ))
 
     def _process_view_arguments(self, v, params):
-        self._set_view_argument(v, 'tree')
-        self._set_view_argument(v, 'form')
+        self._set_view_arguments(v, 'tree')
+        self._set_view_arguments(v, 'form')
         self._set_view_arguments(v, 'search')
         self._set_view_arguments(v, 'search_group_by')
         self._set_view_arguments(v, 'form_tab')

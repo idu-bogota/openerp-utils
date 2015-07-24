@@ -1,8 +1,10 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+import os
 import logging
-import re
 import csv
+from jinja2 import Environment, FileSystemLoader
+from metamodel import Module
 
 from optparse import OptionParser
 
@@ -25,9 +27,11 @@ def main():
     parser = OptionParser(usage)
     parser.add_option("-f", "--filename", dest="filename", help="CSV file")
     parser.add_option("-p", "--prefix", dest="prefix", help="External ID prefix to use", default='')
-    parser.add_option("-m", "--module_name", dest="module", help="Module name", default='')
+    parser.add_option("-m", "--module_name", dest="module_name", help="Module name", default='')
     parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
+    parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder", default=os.path.abspath('templates'))
+    os.path.abspath('templates')
 
     (options, args) = parser.parse_args()
     _logger.setLevel(0)
@@ -46,20 +50,24 @@ def main():
     if not options.prefix:
         parser.error('prefix not given')
 
+    env = Environment(loader=FileSystemLoader(options.templates_dir))
     prefix = options.prefix
 
     module = Module(options.module_name)
-
     with open(options.filename, 'r') as handle:
         reader = csv.DictReader(handle)
         for line in reader:
-            _logger.debug(line)
             line = dict_dot_access(trim_vals(line))
+            _logger.debug(line)
             model = module.add_model(line.model_name)
             model.description = line.description
             model.inherit = line.inherit
             model.inherits = line.inherits
             attribute = model.add_attribute(line.name, line)
+
+    template = env.get_template("model_py.tpl")
+    print module.models
+    print template.render( {'module': module} )
 
 
 if __name__ == '__main__':
