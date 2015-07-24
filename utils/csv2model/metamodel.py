@@ -53,6 +53,7 @@ class Model(object):
 class Field(object):
     def __init__(self, name):
         self.name = name
+        self.type = None
         self._arguments = {}
         self._view_arguments = {}
 
@@ -73,8 +74,9 @@ class Field(object):
         self._process_arguments_by_type(v, params)
         self._process_view_arguments(v, params)
 
-    _PARAMS_ALLOWED = ['store','related','size','compute']
+    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly']
     def _process_generic_parameters(self, v):
+        # Process CSV 'params' column
         params = {}
         for i in v.params.split(','):
             parts = i.split('=')
@@ -88,16 +90,22 @@ class Field(object):
                 params_used - params_allowed,
             ))
         for k in list(params_used):
-            self._arguments[k] = params[k]
+            if not k in ['size', 'domain']: #params allowed, used but not to be included by default in all fields
+                self._arguments[k] = params[k]
 
-        self._arguments['string'] = v.string if 'string' in v and v.string else None
-        self._arguments['required'] = True if 'required' in v and v.required else False
-        self._arguments['help'] = v.help if 'help' in v and v.help else None
+        # Process parameters with its own CSV column
+        self.type = v.type
         self._arguments['type'] = v.type
+        for i in ['required']:
+            if i in v and getattr(v, i):
+                self._arguments[i] = bool(eval(getattr(v, i))) # Convierte 1/0 en True/False
+
+        for i in ['help', 'string']:
+            self._arguments[i] = getattr(v, i) if i in v and getattr(v, i) else None
         return params
 
     def _process_arguments_by_type(self, v, params):
-        if v.type in ['text', 'integer', 'float', 'html']:
+        if v.type in ['text', 'integer', 'float', 'html', 'date', 'datetime']:
             pass
         elif v.type == 'char':
             self._arguments['size'] = params['size'] if 'size' in params else 255
@@ -112,6 +120,7 @@ class Field(object):
                     v.type,
                     v.comodel,
                 ))
+            self._arguments['domain'] = params['domain'] if 'domain' in params and params['domain'] else None
         elif v.type == 'one2many':
             if not 'comodel' in v or not v.comodel:
                 self.report_error('"comodel" required on "one2many" field')
@@ -124,6 +133,7 @@ class Field(object):
                 self.report_error('No extra params accepted on "one2many" comodel:{0}'.format(
                     v.comodel
                 ))
+            self._arguments['domain'] = params['domain'] if 'domain' in params and params['domain'] else None
 
     def _process_view_arguments(self, v, params):
         self._set_view_arguments(v, 'tree')
