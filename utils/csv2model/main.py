@@ -68,6 +68,9 @@ def main():
     template = env.get_template("model_py.tpl")
     print template.render( {'module': module} )
 
+    template = env.get_template("view_xml.tpl")
+    print template.render( {'module': module} )
+
 
 if __name__ == '__main__':
     main()

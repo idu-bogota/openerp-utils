@@ -15,6 +15,8 @@ class Module(object):
 class Model(object):
     def __init__(self, name):
         self.name = name
+        parts = name.split('.')
+        self.short_name = '_'.join(parts[1:])
         self.description = name
         self._inherit = None
         self._inherits = None
@@ -49,6 +51,14 @@ class Model(object):
         field.arguments = line
         return field
 
+    def get_view_fields(self, filter_by):
+        key = '{0}_enabled'.format(filter_by)
+        res = []
+        for f in self._fields.values():
+            if f.view_arguments[key]:
+                res.append(f)
+        return res
+
 
 class Field(object):
     def __init__(self, name):
@@ -63,6 +73,10 @@ class Field(object):
             error,
         )
         raise ValueError(message)
+
+    @property
+    def view_arguments(self):
+        return self._view_arguments
 
     @property
     def arguments(self):
@@ -151,6 +165,6 @@ class Field(object):
         if key in v and v[key]:
             try:
                 self._view_arguments[enabled] = bool(int(v[key]))
-            except ValueError,e:
+            except ValueError, e:
                 self._view_arguments[enabled] = True
                 self._view_arguments[param] = v[key]
