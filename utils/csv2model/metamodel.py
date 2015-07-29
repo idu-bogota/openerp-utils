@@ -1,7 +1,8 @@
 class Module(object):
-    def __init__(self, name):
+    def __init__(self, name, namespace):
         self.name = name
         self._models = {}
+        self.namespace = namespace or name
 
     @property
     def models(self):
@@ -9,13 +10,20 @@ class Module(object):
 
     def add_model(self, name):
         if not name in self._models:
-            self._models[name] = Model(name)
+            self._models[name] = Model(name, self)
         return self._models[name]
 
+    def namespaces(self):
+        namespaces = [ m.namespace for m in self.models ]
+        return list(set(namespaces))
+
+
 class Model(object):
-    def __init__(self, name):
+    def __init__(self, name, module):
         self.name = name
         parts = name.split('.')
+        self.namespace = parts[0]
+        self._module = module
         self.short_name = '_'.join(parts[1:])
         self.description = name
         self._inherit = None
@@ -23,7 +31,13 @@ class Model(object):
         self._fields = {}
 
     @property
+    def module(self):
+        return self._module
+
+    @property
     def inherit(self):
+        if not self._inherit:
+            return False
         return self._inherit
 
     @inherit.setter
@@ -33,7 +47,14 @@ class Model(object):
 
     @property
     def inherits(self):
-        return self._inherits
+        if not self._inherits:
+            return False
+        inherits = {}
+        for i in self._inherits:
+            model_name = i
+            field_name = i.replace('.', '_') + '_id'
+            inherits[model_name] = field_name
+        return inherits
 
     @inherits.setter
     def inherits(self, v):

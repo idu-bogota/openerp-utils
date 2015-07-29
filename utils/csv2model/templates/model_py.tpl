@@ -24,10 +24,11 @@
 
 from openerp import models, fields, api
 
-{%- for model in module.models %}
+{%- for model in module.models if model.namespace == namespace %}
 class {{ model.name | replace('.', '_')}}(models.Model):
     _name = '{{ model.name }}'
-    _description = '{{ model.description or model.name + ' description pending' }}'
+    _description = '{{ model.description or model.name + ' DESCRIPTION PENDING' }}'
+    {{ macro_fields.inheritance(model) }}
 
     # Fields
     {%- for field in model.fields %}

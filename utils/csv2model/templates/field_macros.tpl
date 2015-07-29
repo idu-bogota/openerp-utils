@@ -1,3 +1,16 @@
+{% macro inheritance(model) -%}
+{%- if model.inherit -%}
+    _inherit = {{ model.inherit }}
+{%- endif -%}
+{%- if model.inherits %}
+    _inherits = {
+    {%- for k,v in model.inherits.iteritems() %}
+        '{{ k }}': '{{ v }}',
+    {%- endfor %}
+    }
+{%- endif -%}
+{%- endmacro %}
+
 {% macro arguments(field) -%}
     {%- set add_line = False -%}
     {%- set padding = '' -%}
