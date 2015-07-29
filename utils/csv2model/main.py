@@ -69,6 +69,9 @@ def main():
         template = env.get_template("view_xml.tpl")
         print template.render( {'module': module, 'namespace': namespace} )
 
+    template = env.get_template("acl_csv.tpl")
+    print template.render( {'module': module} )
+
 
 if __name__ == '__main__':
     main()
