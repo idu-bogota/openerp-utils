@@ -123,6 +123,7 @@ class Field(object):
 
     _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends']
     def _process_generic_parameters(self, v):
+        ############################################
         # Process CSV 'params' column
         params = {}
         for i in v.params.split(','):
@@ -140,6 +141,10 @@ class Field(object):
             if not k in ['size', 'domain']: #params allowed, used but not to be included by default in all fields
                 self._arguments[k] = params[k]
 
+        for i in ['depends']:
+            self._arguments[i] = params[i].split('|') if i in params and params[i] else None
+
+        ############################################
         # Process parameters with its own CSV column
         self.type = v.type
         self._arguments['type'] = v.type
@@ -149,9 +154,6 @@ class Field(object):
 
         for i in ['help', 'string']:
             self._arguments[i] = getattr(v, i) if i in v and getattr(v, i) else None
-
-        for i in ['depends']:
-            self._arguments[i] = params[i].split('|') if i in params and params[i] else None
 
         return params
 
