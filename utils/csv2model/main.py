@@ -5,6 +5,7 @@ import logging
 import csv
 from jinja2 import Environment, FileSystemLoader
 from metamodel import Module
+from cookiecutter.main import cookiecutter
 
 from optparse import OptionParser
 
@@ -30,14 +31,16 @@ def main():
     parser.add_option("-m", "--module_name", dest="module_name", help="Module name", default='')
     parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
-    parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder", default=os.path.abspath('templates'))
-    os.path.abspath('templates')
+    parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
+        default=os.path.dirname(os.path.realpath(__file__)) + '/templates'
+    )
+
 
     (options, args) = parser.parse_args()
     _logger.setLevel(0)
     if options.debug:
         _logger.setLevel(10)
-
+    print options.templates_dir
     if options.generate_file:
         print "act_from,act_to,condition,group,label"
         print 'nuevo,en_progreso,True,pqrs_idu.group_responsable,"Abrir"'
@@ -62,15 +65,45 @@ def main():
             model.inherits = line.inherits
             field = model.add_field(line.name, line)
 
+    output = {}
     for namespace in module.namespaces():
+        output[namespace] = {}
         template = env.get_template("model_py.tpl")
-        print template.render( {'module': module, 'namespace': namespace} )
+        output[namespace]['py'] = template.render( {'module': module, 'namespace': namespace} )
 
         template = env.get_template("view_xml.tpl")
-        print template.render( {'module': module, 'namespace': namespace} )
+        output[namespace]['view'] = template.render( {'module': module, 'namespace': namespace} )
+
+    template = env.get_template("openerp_py.tpl")
+    openerp_py = template.render( {'module': module} )
 
     template = env.get_template("acl_csv.tpl")
-    print template.render( {'module': module} )
+    acl_csv = template.render( {'module': module} )
+
+    # Crear estructura del módulo en archivos
+    cookiecutter(
+        options.templates_dir + '/cookiecutter_template/',
+        no_input=True,
+        extra_context={
+            'name': module.name,
+            'namespace': module.namespace,
+            'acl_csv': acl_csv,
+            'model_py': output[module.namespace]['py'],
+            'view_xml': output[module.namespace]['view'],
+            'openerp_py': openerp_py,
+        },
+    )
+    for namespace in module.namespaces():
+        fname_py = '{0}/models/{1}.py'.format(module.name, namespace)
+        fname_view = '{0}/views/{1}_view.xml'.format(module.name, namespace)
+        with open(fname_py, "w") as f:
+            f.write(output[namespace]['py'])
+        with open(fname_view, "w") as f:
+            f.write(output[namespace]['view'])
+
+    # Crear esquema de pruebas unitarias
+    # Crear CSV de datos parametricos
+    # Crear CSV de datos de demo
 
 
 if __name__ == '__main__':
