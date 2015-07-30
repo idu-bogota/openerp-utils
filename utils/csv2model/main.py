@@ -76,9 +76,6 @@ def main():
         output[namespace]['view'] = template.render( {'module': module, 'namespace': namespace} )
 
     for model in module.models:
-        for m in model.fields:
-            print m.name
-            print m.arguments
         output[model.name] = {}
         template = env.get_template("test_py.tpl")
         output[model.name]['test'] = template.render( {'model': model} )
