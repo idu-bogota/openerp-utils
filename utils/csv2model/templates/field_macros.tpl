@@ -21,6 +21,14 @@
         related='{{field.arguments['related']}}',
         {%- set add_line = True -%}
     {%- endif -%}
+    {% if field.arguments['comodel'] %}
+        comodel_name='{{field.arguments['comodel']}}',
+        {%- set add_line = True -%}
+    {%- endif -%}
+    {% if field.arguments['fk_field'] %}
+        inverse_name='{{field.arguments['fk_field']}}',
+        {%- set add_line = True -%}
+    {%- endif -%}
     {% if field.arguments['compute'] %}
         compute='{{field.arguments['compute']}}',
         {%- set add_line = True -%}
