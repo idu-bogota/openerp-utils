@@ -89,12 +89,24 @@
 {% macro compute_method(field) %}
     @api.one
     {% if field.arguments['depends'] %}@api.depends({{ field.arguments['depends'] | replace(']','')| replace('[','') }}){% endif %}
-    def compute_{{ field.name }}(self):
-        pass
+    def _compute_{{ field.name }}(self):
+        self.{{ field.name }} = 'Colocar valor calculado'
 {%- endmacro %}
 
 {% macro onchange_method(field) %}
     @api.onchange('{{ field.name }}')
-    def onchange_{{ field.name }}(self):
+    def _onchange_{{ field.name }}(self):
+    {%- if field.arguments['constrains'] %}
+        try:
+            self.check_{{ field.name }}()
+        Except Exception, e
+            return {
+                'title': "Error de Validación",
+                'warning': {'message': e.message}
+            }
+    {%- else %}
+        # https://www.odoo.com/documentation/8.0/howtos/backend.html#onchange
         pass
+    {%- endif %}
+
 {%- endmacro %}
