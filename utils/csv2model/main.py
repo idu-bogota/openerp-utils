@@ -78,6 +78,12 @@ def main():
     template = env.get_template("openerp_py.tpl")
     openerp_py = template.render( {'module': module} )
 
+    template = env.get_template("test_init_py.tpl")
+    test_init_py = template.render( {'module': module} )
+
+    template = env.get_template("model_init_py.tpl")
+    model_init_py = template.render( {'module': module} )
+
     template = env.get_template("acl_csv.tpl")
     acl_csv = template.render( {'module': module} )
 
@@ -92,6 +98,8 @@ def main():
             'model_py': output[module.namespace]['py'],
             'view_xml': output[module.namespace]['view'],
             'openerp_py': openerp_py,
+            'test_init_py': test_init_py,
+            'model_init_py': model_init_py,
         },
     )
     for namespace in module.namespaces():

@@ -1,0 +1,1 @@
+{{ cookiecutter.test_init_py }}

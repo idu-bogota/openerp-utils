@@ -24,7 +24,7 @@
 
 from openerp import models, fields, api
 
-{%- for model in module.models if model.namespace == namespace %}
+{% for model in module.models if model.namespace == namespace %}
 class {{ model.name | replace('.', '_')}}(models.Model):
     _name = '{{ model.name }}'
     _description = '{{ model.description or model.name + ' DESCRIPTION PENDING' }}'
