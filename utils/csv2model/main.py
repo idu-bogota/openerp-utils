@@ -75,6 +75,18 @@ def main():
         template = env.get_template("view_xml.tpl")
         output[namespace]['view'] = template.render( {'module': module, 'namespace': namespace} )
 
+    for model in module.models:
+        for m in model.fields:
+            print m.name
+            print m.arguments
+        output[model.name] = {}
+        template = env.get_template("test_py.tpl")
+        output[model.name]['test'] = template.render( {'model': model} )
+        template = env.get_template("test_yml.tpl")
+        output[model.name]['yml'] = template.render( {'model': model} )
+        template = env.get_template("data_csv.tpl")
+        output[model.name]['data'] = template.render( {'model': model} )
+
     template = env.get_template("openerp_py.tpl")
     openerp_py = template.render( {'module': module} )
 
@@ -109,6 +121,22 @@ def main():
             f.write(output[namespace]['py'])
         with open(fname_view, "w") as f:
             f.write(output[namespace]['view'])
+
+    for model in module.models:
+        if model.namespace == module.namespace and model.menu == 'conf':
+            fname_csv = '{0}/data/{1}.csv'.format(module.name, model.name)
+            with open(fname_csv, "w") as f:
+                f.write(output[model.name]['data'])
+        elif model.namespace == module.namespace and model.menu == 'conf':
+            fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
+            with open(fname_csv, "w") as f:
+                f.write(output[model.name]['data'])
+            fname_yml = '{0}/tests/{1}.yml'.format(module.name, model.name.replace('.', '_'))
+            with open(fname_yml, "w") as f:
+                f.write(output[model.name]['yml'])
+            fname_test = '{0}/tests/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
+            with open(fname_test, "w") as f:
+                f.write(output[model.name]['test'])
 
     # Crear esquema de pruebas unitarias
     # Crear CSV de datos parametricos

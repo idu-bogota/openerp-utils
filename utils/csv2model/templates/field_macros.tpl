@@ -85,3 +85,16 @@
 {% macro datetime(field) -%}
     {{ field.name }} = fields.Datetime({{ arguments(field) }})
 {%- endmacro %}
+
+{% macro compute_method(field) %}
+    @api.one
+    {% if field.arguments['depends'] %}@api.depends({{ field.arguments['depends'] | replace(']','')| replace('[','') }}){% endif %}
+    def compute_{{ field.name }}(self):
+        pass
+{%- endmacro %}
+
+{% macro onchange_method(field) %}
+    @api.onchange('{{ field.name }}')
+    def onchange_{{ field.name }}(self):
+        pass
+{%- endmacro %}

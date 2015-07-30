@@ -121,7 +121,7 @@ class Field(object):
         self._process_arguments_by_type(v, params)
         self._process_view_arguments(v, params)
 
-    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly']
+    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends']
     def _process_generic_parameters(self, v):
         # Process CSV 'params' column
         params = {}
@@ -143,12 +143,16 @@ class Field(object):
         # Process parameters with its own CSV column
         self.type = v.type
         self._arguments['type'] = v.type
-        for i in ['required']:
+        for i in ['required', 'onchange', 'unique', 'constrains']:
             if i in v and getattr(v, i):
                 self._arguments[i] = bool(eval(getattr(v, i))) # Convierte 1/0 en True/False
 
         for i in ['help', 'string']:
             self._arguments[i] = getattr(v, i) if i in v and getattr(v, i) else None
+
+        for i in ['depends']:
+            self._arguments[i] = params[i].split('|') if i in params and params[i] else None
+
         return params
 
     def _process_arguments_by_type(self, v, params):

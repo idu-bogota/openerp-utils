@@ -39,4 +39,12 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     {{  macro_fields|attr(field.type)(field) }}
     {%- endfor %}
 
+    {%- for field in model.fields if field.arguments['compute'] %}
+    {{  macro_fields | attr('compute_method')(field) }}
+    {%- endfor %}
+
+    {%- for field in model.fields if field.arguments['onchange'] %}
+    {{  macro_fields | attr('onchange_method')(field) }}
+    {%- endfor %}
+
 {% endfor %}
