@@ -28,11 +28,23 @@ class Model(object):
         self.description = name
         self._inherit = None
         self._inherits = None
+        self._menu = None
         self._fields = {}
 
     @property
     def module(self):
         return self._module
+
+    @property
+    def menu(self):
+        if not self._menu:
+            return False
+        return self._menu
+
+    @menu.setter
+    def menu(self, v):
+        if not self._menu and v in ['main', 'conf']:
+            self._menu = v
 
     @property
     def inherit(self):

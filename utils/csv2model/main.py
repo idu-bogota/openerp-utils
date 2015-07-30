@@ -63,6 +63,7 @@ def main():
             model.description = line.description
             model.inherit = line.inherit
             model.inherits = line.inherits
+            model.menu = line.menu
             field = model.add_field(line.name, line)
 
     output = {}

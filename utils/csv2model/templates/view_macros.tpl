@@ -75,15 +75,19 @@
 {%- endmacro -%}
 
 {% macro menuitem(model) %}
+    {%- if model.menu %}
     <record model="ir.actions.act_window" id="{{ model.short_name | replace('.','_') }}_action">
         <field name="name">{{ model.name }}</field>
         <field name="res_model">{{ model.name }}</field>
         <field name="view_mode">tree,form</field>
     </record>
+    {%- set parent_prefix = model.module.name | replace('.','_') %}
+    {%- set parent = parent_prefix + '_conf_menu' if model.menu == 'conf' else parent_prefix + '_menu' %}
     <menuitem id="{{ model.short_name | replace('.','_') }}_menu"
-        parent="{{ model.short_name | replace('.','_') }}_menu"
+        parent="{{ parent }}"
         name="{{ model.description or model.short_name }}" action="{{ model.short_name | replace('.','_') }}_action"
     />
+    {% endif -%}
 {%- endmacro -%}
 
 {% macro inherited_view(model) %}
