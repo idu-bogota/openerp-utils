@@ -69,34 +69,23 @@
 {%- endmacro %}
 
 {% macro compute_method(field) %}
-    @api.one
-    {% if field.arguments['depends'] %}@api.depends({{ field.arguments['depends'] | replace(']','')| replace('[','') }}){% endif %}
-    def _compute_{{ field.name }}(self):
-        self.{{ field.name }} = 'Colocar valor calculado'
-{%- endmacro %}
-
-{% macro onchange_method(field) %}
-    @api.onchange('{{ field.name }}')
-    def _onchange_{{ field.name }}(self):
-    {%- if field.arguments['constrains'] %}
-        try:
-            self._check_{{ field.name }}()
-        Except Exception, e
-            return {
-                'title': "Error de Validación",
-                'warning': {'message': e.message}
-            }
-    {%- else %}
-        # https://www.odoo.com/documentation/8.0/howtos/backend.html#onchange
-        pass
-    {%- endif %}
-
-{%- endmacro %}
+        vals_upd = {
+            {% for field_name in field.arguments['depends'] %}
+            '{{ field_name }}': 'Valor a usarse para calculo',
+            {%- endfor %}
+        }
+        {{ field.model.short_name }}.write(vals_update)
+        self.assertEqual({{ field.model.short_name }}.{{ field.name }}, 'Valor Esperado')
+{%- endmacro -%}
 
 {% macro constrains_method(field) %}
-    @api.one
-    @api.constrains('{{ field.name }}')
-    def _check_{{ field.name }}(self):
-        if self.{{ field.name }} == 'Condición de Validation':
-            raise ValidationError("MENSAJE DE ERROR DE VALIDACIÓN")
+        vals_upd = {
+            '{{ field.name }}': 'Valor a usarse para romper la validación',
+        }
+        try:
+            {{ field.model.short_name }}.write(vals_update)
+        except ValidationError, e:
+            pass
+        else:
+            self.fail('No se generó exception de validación para "{{ field.name }}"')
 {%- endmacro %}

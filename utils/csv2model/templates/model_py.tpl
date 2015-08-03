@@ -23,6 +23,7 @@
 ##############################################################################
 
 from openerp import models, fields, api
+from openerp.exceptions import ValidationError
 
 {% for model in module.models if model.namespace == namespace %}
 class {{ model.name | replace('.', '_')}}(models.Model):
