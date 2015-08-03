@@ -40,7 +40,7 @@ def main():
     _logger.setLevel(0)
     if options.debug:
         _logger.setLevel(10)
-    print options.templates_dir
+
     if options.generate_file:
         print "act_from,act_to,condition,group,label"
         print 'nuevo,en_progreso,True,pqrs_idu.group_responsable,"Abrir"'
@@ -81,8 +81,6 @@ def main():
         output[model.name] = {}
         template = env.get_template("test_py.tpl")
         output[model.name]['test'] = template.render( {'model': model} )
-        template = env.get_template("test_yml.tpl")
-        output[model.name]['yml'] = template.render( {'model': model} )
         template = env.get_template("data_csv.tpl")
         output[model.name]['data'] = template.render( {'model': model} )
 

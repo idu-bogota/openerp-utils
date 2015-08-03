@@ -68,9 +68,13 @@
     {{ text(field) }}
 {%- endmacro %}
 
+{% macro selection(field) -%}
+    {{ text(field) }}
+{%- endmacro %}
+
+
 {% macro compute_method(field) %}
-        vals_upd = {
-            {% for field_name in field.arguments['depends'] %}
+        vals_upd = {{ '{' }}{% for field_name in field.arguments['depends'] %}
             '{{ field_name }}': 'Valor a usarse para calculo',
             {%- endfor %}
         }

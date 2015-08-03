@@ -66,6 +66,13 @@
         domain='{{field.arguments['domain']}}',
         {%- set add_line = True -%}
     {%- endif -%}
+    {% if field.arguments['selection'] %}
+        selection=[{% for i in field.arguments['selection'] %}
+            {{ i }},
+        {%- endfor %}
+        ]
+        {%- set add_line = True -%}
+    {%- endif -%}
     {% if add_line %}
     {# Adicionar un padding #}
     {%- endif -%}
@@ -109,6 +116,9 @@
 
 {% macro datetime(field) -%}
     {{ field.name }} = fields.Datetime({{ arguments(field) }})
+{%- endmacro %}
+{% macro selection(field) -%}
+    {{ field.name }} = fields.Selection({{ arguments(field) }})
 {%- endmacro %}
 
 {% macro compute_method(field) %}

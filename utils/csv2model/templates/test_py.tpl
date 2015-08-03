@@ -10,8 +10,7 @@ _logger = logging.getLogger('TEST')
 class Test_{{ model.name | replace('.','_') }}(common.SingleTransactionCase):
     def test_crud_validaciones(self):
         {{ model.short_name }}_model = self.env['{{ model.name }}']
-        vals = {
-        {% for field in model.fields if not field.arguments['compute'] and not field.arguments['related'] %}
+        vals = {{ '{' }}{% for field in model.fields if not field.arguments['compute'] and not field.arguments['related'] %}
             {{  macro_fields|attr(field.type)(field) }}
         {%- endfor %}
         }

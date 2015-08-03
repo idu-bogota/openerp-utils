@@ -151,7 +151,7 @@ class Field(object):
         self._process_arguments_by_type(v, params)
         self._process_view_arguments(v, params)
 
-    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends']
+    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends', 'selection']
     def _process_generic_parameters(self, v):
         ############################################
         # Process CSV 'params' column
@@ -168,7 +168,7 @@ class Field(object):
                 params_used - params_allowed,
             ))
         for k in list(params_used):
-            if not k in ['size', 'domain']: #params allowed, used but not to be included by default in all fields
+            if not k in ['size', 'domain', 'selection']: #params allowed, used but not to be included by default in all fields
                 self._arguments[k] = params[k]
 
         for i in ['depends']:
@@ -190,6 +190,12 @@ class Field(object):
     def _process_arguments_by_type(self, v, params):
         if v.type in ['text', 'integer', 'float', 'html', 'date', 'datetime']:
             pass
+        elif v.type == 'selection':
+            if 'selection' in params:
+                parts = params['selection'].split('|')
+                self._arguments['selection'] = [('{}'.format(i).lower().replace(' ','_'), '{}'.format(i)) for i in parts]
+            else:
+                self._arguments['selection'] = None
         elif v.type == 'char':
             self._arguments['size'] = params['size'] if 'size' in params else 255
         elif v.type in ['many2one', 'many2many']:
@@ -248,5 +254,7 @@ class Field(object):
             return "'{0}'".format(fake.date())
         elif self.type in ['datetime']:
             return "'{0}'".format(fake.date_time())
+        elif self.type in ['selection']:
+            return "'{}'".format(random.choice(self.arguments['selection'])[0])
         else:
             return "'{0}'".format(fake.sentence())
