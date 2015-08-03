@@ -16,22 +16,8 @@ class Test_{{ model.name | replace('.','_') }}(common.SingleTransactionCase):
         {%- endfor %}
         }
         {{ model.shortname }} = {{ model.shortname }}_model.create(vals)
-        self.assertEqual(
-            user_oci_id,
-            plan.user_id.id,
-            'Usuario del Plan no es el asignado'
-        )
-        self.assertEqual(
-            user_oci_id,
-            plan.wbs_root_id.user_id.id,
-            'Usuario del Plan.wbs_root_id no es el asignado'
-        )
-        self.assertEqual(
-            user_oci_id,
-            plan.project_id.user_id.id,
-            'Usuario del Plan.project_id no es el asignado'
-        )
-
+        # Por cada constrain crear una prueba
+        # Por cada campo computed crear una prueba
 
 
 if __name__ == '__main__':
