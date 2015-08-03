@@ -1,3 +1,6 @@
+import random
+from faker import Factory #pip install fake-factory
+
 class Module(object):
     def __init__(self, name, namespace):
         self.name = name
@@ -81,7 +84,7 @@ class Model(object):
 
     def add_field(self, name, line):
         if not name in self._fields:
-            self._fields[name] = Field(name)
+            self._fields[name] = Field(name, self)
         field = self._fields[name]
         field.arguments = line
         return field
@@ -120,8 +123,9 @@ class Model(object):
             self._overwrite_write = bool(eval(v)) # Convierte 1/0 en True/False
 
 class Field(object):
-    def __init__(self, name):
+    def __init__(self, name, model):
         self.name = name
+        self.model = model
         self.type = None
         self._arguments = {}
         self._view_arguments = {}
@@ -233,3 +237,16 @@ class Field(object):
             except ValueError, e:
                 self._view_arguments[enabled] = True
                 self._view_arguments[param] = v[key]
+
+    def generate_value(self):
+        fake = Factory.create()
+        if self.type in ['integer']:
+            return random.randint(0, 100000000)
+        elif self.type in ['float']:
+            return random.uniform(0, 100000000)
+        elif self.type in ['date']:
+            return "'{0}'".format(fake.date())
+        elif self.type in ['datetime']:
+            return "'{0}'".format(fake.date_time())
+        else:
+            return "'{0}'".format(fake.sentence())
