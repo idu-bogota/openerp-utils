@@ -130,17 +130,13 @@ def main():
             fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
             with open(fname_csv, "w") as f:
                 f.write(output[model.name]['data'])
-            fname_yml = '{0}/test/{1}.yml'.format(module.name, model.name.replace('.', '_'))
-            with open(fname_yml, "w") as f:
-                f.write(output[model.name]['yml'])
             fname_test = '{0}/test/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
 
-    # Crear esquema de pruebas unitarias
+    # Soportar Campos de Seleccion
     # Valores por defecto (_CURRENT_USER_, _CONTEXT_, valor)
     # validaciones por defecto (_POSITIVE_, _CERO_POSITIVE_)
-    # Soportar Campos de Seleccion
     # Crear CSV de datos parametricos
     # Crear CSV de datos de demo
 

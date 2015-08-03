@@ -12,8 +12,7 @@
         'views/{{ namespace }}_view.xml',{% endfor %}{% for model in module.models if model.namespace == module.namespace and model.menu == 'conf' %}
         'data/{{ model.name }}.csv',{% endfor %}
     ],
-    'test': [{% for model in module.models if model.namespace == module.namespace and model.menu != 'conf' %}
-        'tests/{{ model.name | replace('.', '_') }}.yml',{% endfor %}
+    'test': [
     ],
     'demo': [{% for model in module.models if model.namespace == module.namespace and model.menu != 'conf' %}
         'demo/{{ model.name }}.csv',{% endfor %}
