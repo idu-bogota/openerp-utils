@@ -29,6 +29,8 @@ class Model(object):
         self._inherit = None
         self._inherits = None
         self._menu = None
+        self._overwrite_create = None
+        self._overwrite_write = None
         self._fields = {}
 
     @property
@@ -92,6 +94,30 @@ class Model(object):
                 res.append(f)
         return res
 
+    def get_unique_fields(self):
+        res = []
+        for f in self._fields.values():
+            if f.arguments['unique']:
+                res.append(f)
+        return res
+
+    @property
+    def overwrite_create(self):
+        return self._overwrite_create
+
+    @overwrite_create.setter
+    def overwrite_create(self, v):
+        if not self._overwrite_create and v:
+            self._overwrite_create = bool(eval(v)) # Convierte 1/0 en True/False
+
+    @property
+    def overwrite_write(self):
+        return self._overwrite_write
+
+    @overwrite_write.setter
+    def overwrite_write(self, v):
+        if not self._overwrite_write and v:
+            self._overwrite_write = bool(eval(v)) # Convierte 1/0 en True/False
 
 class Field(object):
     def __init__(self, name):

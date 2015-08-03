@@ -64,6 +64,8 @@ def main():
             model.inherit = line.inherit
             model.inherits = line.inherits
             model.menu = line.menu
+            model.overwrite_create = line.overwrite_create
+            model.overwrite_write = line.overwrite_write
             field = model.add_field(line.name, line)
 
     output = {}
@@ -136,6 +138,8 @@ def main():
                 f.write(output[model.name]['test'])
 
     # Crear esquema de pruebas unitarias
+    # Valores por defecto (_CURRENT_USER_, _CONTEXT_, valor)
+    # validaciones por defecto (_POSITIVE_, _CERO_POSITIVE_)
     # Crear CSV de datos parametricos
     # Crear CSV de datos de demo
 

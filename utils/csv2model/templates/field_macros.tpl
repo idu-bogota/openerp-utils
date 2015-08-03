@@ -11,6 +11,31 @@
 {%- endif -%}
 {%- endmacro %}
 
+{%- macro overwrite_create_write(model) -%}
+{%- if model.overwrite_create -%}
+    @api.model
+    def create(self, vals):
+        {{ model.short_name }} = super({{ model.name | replace('.', '_')}}, self).create(vals)
+        return {{ model.short_name }}
+{% endif -%}
+{% if model.overwrite_write %}
+    @api.one
+    def write(self, vals):
+        res = super({{ model.name | replace('.', '_')}}, self).write(vals)
+        return res
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro sql_constraints(model) -%}
+   {%- if model.get_unique_fields() %}
+    _sql_constraints = [
+    {%- for f in model.get_unique_fields() %}
+        ('unique_{{ f.name }}','unique({{ f.name }})','Este {{ f.string or f.name }} ya está registrado'),
+    {%- endfor %}
+    ]
+    {% endif -%}
+{% endmacro -%}
+
 {% macro arguments(field) -%}
     {%- set add_line = False -%}
     {%- set padding = '' -%}
@@ -30,7 +55,7 @@
         {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['compute'] %}
-        compute='{{field.arguments['compute']}}',
+        compute='_compute_{{ field.name }}',
         {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['help'] %}
@@ -98,7 +123,7 @@
     def _onchange_{{ field.name }}(self):
     {%- if field.arguments['constrains'] %}
         try:
-            self.check_{{ field.name }}()
+            self._check_{{ field.name }}()
         Except Exception, e
             return {
                 'title': "Error de Validación",
@@ -109,4 +134,12 @@
         pass
     {%- endif %}
 
+{%- endmacro %}
+
+{% macro constrains_method(field) %}
+    @api.one
+    @api.constrains('{{ field.name }}')
+    def _check_{{ field.name }}(self):
+        if self.{{ field.name }} == 'Condición de Validation':
+            raise ValidationError("MENSAJE DE ERROR DE VALIDACIÓN")
 {%- endmacro %}

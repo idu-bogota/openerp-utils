@@ -39,12 +39,19 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     {{  macro_fields|attr(field.type)(field) }}
     {%- endfor %}
 
+    {{ macro_fields.sql_constraints(model) }}
+    {{ macro_fields.overwrite_create_write(model) }}
     {%- for field in model.fields if field.arguments['compute'] %}
     {{  macro_fields | attr('compute_method')(field) }}
+    {%- endfor %}
+
+    {%- for field in model.fields if field.arguments['constrains'] %}
+    {{  macro_fields | attr('constrains_method')(field) }}
     {%- endfor %}
 
     {%- for field in model.fields if field.arguments['onchange'] %}
     {{  macro_fields | attr('onchange_method')(field) }}
     {%- endfor %}
+
 
 {% endfor %}
