@@ -251,13 +251,15 @@ class Field(object):
         elif self.type in ['float']:
             return random.uniform(0, 100000000)
         elif self.type in ['date']:
-            return "'{0}'".format(fake.date())
+            return '"{0}"'.format(fake.date())
         elif self.type in ['datetime']:
-            return "'{0}'".format(fake.date_time())
+            return '"{0}"'.format(fake.date_time())
         elif self.type in ['selection']:
-            return "'{}'".format(random.choice(self.arguments['selection'])[0])
+            return '"{}"'.format(random.choice(self.arguments['selection'])[0])
+        elif self.type in ['many2one', 'one2many', 'many2many']:
+            return ''
         else:
-            return "'{0}'".format(fake.sentence())
+            return '"{0}"'.format(fake.sentence())
 
     def generate_default(self):
         default = self.arguments['default']
