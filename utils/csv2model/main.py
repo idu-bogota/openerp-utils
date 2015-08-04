@@ -132,8 +132,6 @@ def main():
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
 
-    # Soportar Campos de Seleccion
-    # Valores por defecto (_CURRENT_USER_, _CONTEXT_, valor)
     # validaciones por defecto (_POSITIVE_, _CERO_POSITIVE_)
     # Crear CSV de datos parametricos
     # Crear CSV de datos de demo

@@ -151,7 +151,7 @@ class Field(object):
         self._process_arguments_by_type(v, params)
         self._process_view_arguments(v, params)
 
-    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends', 'selection']
+    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends', 'selection', 'default']
     def _process_generic_parameters(self, v):
         ############################################
         # Process CSV 'params' column
@@ -258,3 +258,16 @@ class Field(object):
             return "'{}'".format(random.choice(self.arguments['selection'])[0])
         else:
             return "'{0}'".format(fake.sentence())
+
+    def generate_default(self):
+        default = self.arguments['default']
+        if default == '_CURRENT_USER_':
+            return "lambda self: self._context.get('uid', False)"
+        elif default == '_CONTEXT_':
+            return "lambda self: self._context.get('{0}', None)".format(self.name)
+        elif default == '_CURRENT_' and self.type == 'date':
+            return "fields.Date.today"
+        elif default == '_CURRENT_' and self.type == 'datetime':
+            return "fields.Datetime.now"
+        else:
+            return default

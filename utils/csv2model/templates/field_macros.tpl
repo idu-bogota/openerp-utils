@@ -73,6 +73,10 @@
         ]
         {%- set add_line = True -%}
     {%- endif -%}
+    {% if field.arguments['default'] %}
+        default={{ field.generate_default() }},
+        {%- set add_line = True -%}
+    {%- endif -%}
     {% if add_line %}
     {# Adicionar un padding #}
     {%- endif -%}
