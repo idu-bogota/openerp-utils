@@ -102,6 +102,10 @@
     {{ field.name }} = fields.Char({{ arguments(field) }})
 {%- endmacro %}
 
+{% macro boolean(field) -%}
+    {{ field.name }} = fields.Boolean({{ arguments(field) }})
+{%- endmacro %}
+
 {% macro integer(field) -%}
     {{ field.name }} = fields.Integer({{ arguments(field) }})
 {%- endmacro %}

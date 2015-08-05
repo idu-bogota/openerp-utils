@@ -42,10 +42,8 @@ def main():
         _logger.setLevel(10)
 
     if options.generate_file:
-        print "act_from,act_to,condition,group,label"
+        print "model_name,menu,description,inherits,inherit,overwrite_write,overwrite_create,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab"
         print 'nuevo,en_progreso,True,pqrs_idu.group_responsable,"Abrir"'
-        print 'en_progreso,cancelado,True,pqrs_idu.group_administrador,"Cancelar"'
-        print 'en_progreso,terminado,tipo==\'canales\',pqrs_idu.group_responsable,"Cerrar"'
         return
 
     if not options.filename:
@@ -131,11 +129,6 @@ def main():
             fname_test = '{0}/test/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
-
-    # validaciones por defecto (_POSITIVE_, _CERO_POSITIVE_)
-    # Crear CSV de datos parametricos
-    # Crear CSV de datos de demo
-
 
 if __name__ == '__main__':
     main()

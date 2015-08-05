@@ -188,7 +188,7 @@ class Field(object):
         return params
 
     def _process_arguments_by_type(self, v, params):
-        if v.type in ['text', 'integer', 'float', 'html', 'date', 'datetime']:
+        if v.type in ['text', 'integer', 'float', 'html', 'date', 'datetime', 'boolean']:
             pass
         elif v.type == 'selection':
             if 'selection' in params:

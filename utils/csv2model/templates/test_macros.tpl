@@ -48,6 +48,10 @@
     {{ text(field) }}
 {%- endmacro %}
 
+{% macro boolean(field) -%}
+    {{ text(field) }}
+{%- endmacro %}
+
 {% macro integer(field) -%}
     {{ text(field) }}
 {%- endmacro %}
