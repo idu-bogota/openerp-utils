@@ -21,6 +21,8 @@
 from osv import fields, osv
 import gitlab
 from openerp import SUPERUSER_ID
+from datetime import datetime
+from datetime import timedelta
 
 def get_connection_gitlab(param_model, cr):
     token = param_model.get_param(cr, SUPERUSER_ID, 'gitlab.token', default=False)
@@ -66,6 +68,9 @@ class gitlab_issue(osv.osv):
     _columns = {
         'name': fields.char('Name', size=255, required=True, select=1, track_visibility='onchange',),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list."),
+        'due_date': fields.datetime('Due Date', track_visibility='onchange',),
+        'start_date': fields.datetime('Start Date', track_visibility='onchange',),
+        'finish_date': fields.datetime('Finish Date', track_visibility='onchange',),
         'state': fields.selection(
             [('opened','Open'), ('closed','Closed'), ('reopened','Re-Opened')],
             'Estado',
@@ -104,6 +109,12 @@ class gitlab_issue(osv.osv):
         'stage_id': kanban_columns,
     }
 
+    def set_due_date(self, cr, uid, ids, *args):
+        """Set due date tomorrow
+        """
+        tomorrow = datetime.now() + timedelta(days=1)
+        return self.write(cr, uid, ids, {'due_date': tomorrow.strftime("%Y-%m-%d %H:%M:%S")})
+
     def write(self, cr, uid, ids, vals, context=None):
         if len(vals) == 1 and (vals.get('stage_id') or vals.get('user_id')):
             gitlab_conn = get_connection_gitlab(self.pool.get('ir.config_parameter'), cr)
@@ -117,6 +128,13 @@ class gitlab_issue(osv.osv):
                     res = gitlab_conn.editissue(issue.project_id.gitlab_id, issue.gitlab_id, labels = labels, state_event = status)
                     if res:
                         vals['state'] = res['state']
+                        if status == 'close' and not issue.finish_date:
+                            vals['finish_date'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        if status == 'reopen' and not issue.start_date:
+                            vals['start_date'] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+                        if status == 'reopen':
+                            vals['finish_date'] = False
+
             if vals.get('user_id'):
                 user = self.pool.get('res.users').browse(cr, uid, vals.get('user_id'), context=context)
                 for issue in self.browse(cr, uid, ids, context=context):
