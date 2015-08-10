@@ -14,7 +14,7 @@
      <menuitem id="{{ module.name }}_conf_menu" parent="{{ module.name }}_nav"
         name="Configuración"
      />
-     {% endif -%}
+{% endif -%}
 {%- for model in module.models if model.namespace == namespace %}
     <!--
     =================================================================
@@ -22,7 +22,7 @@
     {{model.description}}{% endif %}
     =================================================================
     -->
-    {% if namespace == module.namespace -%}
+    {%- if namespace == module.namespace -%}
         {{ macro_fields.basic_views(model) }}
         {{ macro_fields.menuitem(model) }}
     {%- else -%}

@@ -75,7 +75,7 @@
 {%- endmacro -%}
 
 {% macro menuitem(model) %}
-    {%- if model.menu %}
+    {%- if model.menu -%}
     <record model="ir.actions.act_window" id="{{ model.short_name | replace('.','_') }}_action">
         <field name="name">{{ model.name }}</field>
         <field name="res_model">{{ model.name }}</field>
@@ -87,7 +87,7 @@
         parent="{{ parent }}"
         name="{{ model.description or model.short_name }}" action="{{ model.short_name | replace('.','_') }}_action"
     />
-    {% endif -%}
+{% endif -%}
 {%- endmacro -%}
 
 {% macro inherited_view(model) %}
