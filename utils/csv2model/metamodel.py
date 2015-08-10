@@ -117,6 +117,13 @@ class Model(object):
                 res.append(f)
         return res
 
+    def get_form_tabs(self):
+        res = []
+        for f in self._fields.values():
+            if f.view_arguments['form_tab_enabled']:
+                res.append(f.view_arguments['form_tab_param'])
+        return list(set(res))
+
     @property
     def overwrite_create(self):
         return self._overwrite_create
