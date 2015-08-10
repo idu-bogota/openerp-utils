@@ -11,34 +11,27 @@
 {%- endif -%}
 {%- endmacro %}
 
-{%- macro overwrite_create(model) -%}
-{%- if model.overwrite_create %}
+{%- macro overwrite_create(model) %}
     @api.model
     def create(self, vals):
         {{ model.short_name }} = super({{ model.name | replace('.', '_')}}, self).create(vals)
         return {{ model.short_name }}
-{%- endif -%}
 {%- endmacro -%}
 
-{%- macro overwrite_write(model) -%}
-{%- if model.overwrite_write %}
+{%- macro overwrite_write(model) %}
     @api.one
     def write(self, vals):
         res = super({{ model.name | replace('.', '_')}}, self).write(vals)
         return res
-{%- endif -%}
 {%- endmacro -%}
 
 {%- macro sql_constraints(model) -%}
-   {%- if model.get_unique_fields() %}
-
     _sql_constraints = [
     {%- for f in model.get_unique_fields() %}
         ('unique_{{ f.name }}', 'unique({{ f.name }})', 'Este {{ f.string or f.name }} ya está registrado'),
     {%- endfor %}
     ]
-{% endif -%}
-{% endmacro -%}
+{%- endmacro -%}
 
 {% macro arguments(field) -%}
     {%- set add_line = False -%}

@@ -38,9 +38,16 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     #}
     {{ macro_fields|attr(field.type)(field) }}
     {%- endfor -%}
+    {%- if model.get_unique_fields() %}
+
     {{ macro_fields.sql_constraints(model) }}
-    {{ macro_fields.overwrite_create(model) }}
-    {{ macro_fields.overwrite_write(model) }}
+    {%- endif %}
+    {%- if model.overwrite_create %}
+{{ macro_fields.overwrite_create(model) }}
+    {%- endif %}
+    {%- if model.overwrite_write %}
+{{ macro_fields.overwrite_write(model) }}
+    {%- endif %}
     {%- for field in model.fields if field.arguments['compute'] -%}
     {{  macro_fields | attr('compute_method')(field) }}
     {%- endfor %}
