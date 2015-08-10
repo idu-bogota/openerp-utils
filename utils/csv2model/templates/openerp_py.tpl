@@ -1,5 +1,5 @@
 {
-    'name':  '{{ module.name }}',
+    'name': '{{ module.name }}',
     'version': '1.0',
     'depends': [
         'base',

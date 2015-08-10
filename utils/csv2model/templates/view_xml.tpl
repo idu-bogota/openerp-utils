@@ -24,11 +24,10 @@
     -->
     {%- if namespace == module.namespace -%}
         {{ macro_fields.basic_views(model) }}
-        {{ macro_fields.menuitem(model) }}
     {%- else -%}
         {{ macro_fields.inherited_view(model) }}
-        {{ macro_fields.menuitem(model) }}
     {%- endif -%}
+    {{ macro_fields.menuitem(model) }}
 {% endfor %}
 
 </data>
