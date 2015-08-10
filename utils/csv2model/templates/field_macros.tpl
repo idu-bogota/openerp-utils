@@ -137,7 +137,7 @@
     {%- if field.arguments['constrains'] %}
         try:
             self._check_{{ field.name }}()
-        Except Exception, e:
+        except Exception, e:
             return {
                 'title': "Error de Validación",
                 'warning': {'message': e.message}

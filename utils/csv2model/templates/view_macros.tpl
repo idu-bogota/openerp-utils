@@ -94,7 +94,7 @@
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_search">
         <field name="name">{{ model.name }}.search.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="{{ model.name }}_search" />
+        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_search" />
         <field name="arch" type="xml">
             <field name="name" position="after">
             {%- for field in model.get_view_fields('search') %}
@@ -111,7 +111,7 @@
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_form">
         <field name="name">{{ model.name }}.form.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="{{ model.name }}_form" />
+        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_form" />
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <group string="Extendidos en {{ model.module.name }}">
@@ -125,7 +125,7 @@
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_tree">
         <field name="name">{{ model.name }}.tree.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="{{ model.name }}_tree" />
+        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_tree" />
         <field name="arch" type="xml">
             <field name="name" position="after">
             {%- for field in model.get_view_fields('tree') %}
