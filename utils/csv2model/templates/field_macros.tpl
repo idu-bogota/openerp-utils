@@ -1,5 +1,5 @@
-{% macro inheritance(model) -%}
-{%- if model.inherit -%}
+{% macro inheritance(model) %}
+{%- if model.inherit %}
     _inherit = {{ model.inherit }}
 {%- endif -%}
 {%- if model.inherits %}
@@ -11,14 +11,17 @@
 {%- endif -%}
 {%- endmacro %}
 
-{%- macro overwrite_create_write(model) -%}
-{%- if model.overwrite_create -%}
+{%- macro overwrite_create(model) -%}
+{%- if model.overwrite_create %}
     @api.model
     def create(self, vals):
         {{ model.short_name }} = super({{ model.name | replace('.', '_')}}, self).create(vals)
         return {{ model.short_name }}
-{% endif -%}
-{% if model.overwrite_write %}
+{%- endif -%}
+{%- endmacro -%}
+
+{%- macro overwrite_write(model) -%}
+{%- if model.overwrite_write %}
     @api.one
     def write(self, vals):
         res = super({{ model.name | replace('.', '_')}}, self).write(vals)
@@ -28,20 +31,26 @@
 
 {%- macro sql_constraints(model) -%}
    {%- if model.get_unique_fields() %}
+
     _sql_constraints = [
     {%- for f in model.get_unique_fields() %}
-        ('unique_{{ f.name }}','unique({{ f.name }})','Este {{ f.string or f.name }} ya está registrado'),
+        ('unique_{{ f.name }}', 'unique({{ f.name }})', 'Este {{ f.string or f.name }} ya está registrado'),
     {%- endfor %}
     ]
-    {% endif -%}
+{% endif -%}
 {% endmacro -%}
 
 {% macro arguments(field) -%}
     {%- set add_line = False -%}
-    {%- set padding = '' -%}
-    {%- if field.arguments['string'] %}{{ padding }}string='{{ field.arguments['string'] }}',{% set padding = ' ' %}{% endif -%}
-    {%- if field.arguments['required'] %}{{ padding }}required=True,{% set padding = ' ' %}{% endif -%}
-    {%- if field.arguments['size'] %}{{ padding }}size={{field.arguments['size']}},{% set padding = ' ' %}{% endif -%}
+    {%- if field.arguments['string'] %}
+        string='{{ field.arguments['string'] }}',
+    {%- endif -%}
+    {%- if field.arguments['required'] %}
+        required=True,
+    {%- endif -%}
+    {%- if field.arguments['size'] %}
+        size={{field.arguments['size']}},
+    {%- endif -%}
     {% if field.arguments['related'] %}
         related='{{field.arguments['related']}}',
         {%- set add_line = True -%}
@@ -130,19 +139,21 @@
 {%- endmacro %}
 
 {% macro compute_method(field) %}
-    @api.one
-    {% if field.arguments['depends'] %}@api.depends({{ field.arguments['depends'] | replace(']','')| replace('[','') }}){% endif %}
+
+    @api.one{% if field.arguments['depends'] %}
+    @api.depends({{ field.arguments['depends'] | replace(']','')| replace('[','') }}){% endif %}
     def _compute_{{ field.name }}(self):
         self.{{ field.name }} = 'Colocar valor calculado'
 {%- endmacro %}
 
 {% macro onchange_method(field) %}
+
     @api.onchange('{{ field.name }}')
     def _onchange_{{ field.name }}(self):
     {%- if field.arguments['constrains'] %}
         try:
             self._check_{{ field.name }}()
-        Except Exception, e
+        Except Exception, e:
             return {
                 'title': "Error de Validación",
                 'warning': {'message': e.message}
@@ -150,11 +161,11 @@
     {%- else %}
         # https://www.odoo.com/documentation/8.0/howtos/backend.html#onchange
         pass
-    {%- endif %}
-
+    {%- endif -%}
 {%- endmacro %}
 
 {% macro constrains_method(field) %}
+
     @api.one
     @api.constrains('{{ field.name }}')
     def _check_{{ field.name }}(self):

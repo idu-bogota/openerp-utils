@@ -28,8 +28,7 @@ from openerp.exceptions import ValidationError
 {% for model in module.models if model.namespace == namespace %}
 class {{ model.name | replace('.', '_')}}(models.Model):
     _name = '{{ model.name }}'
-    _description = '{{ model.description or model.name + ' DESCRIPTION PENDING' }}'
-    {{ macro_fields.inheritance(model) }}
+    _description = '{{ model.description or model.name + ' DESCRIPTION PENDING' }}'{{ macro_fields.inheritance(model) }}
 
     # Fields
     {%- for field in model.fields %}
@@ -37,22 +36,19 @@ class {{ model.name | replace('.', '_')}}(models.Model):
         Llama al macro que tiene el mismo nombre del field.type
         y pasa el field como argumento
     #}
-    {{  macro_fields|attr(field.type)(field) }}
-    {%- endfor %}
-
+    {{ macro_fields|attr(field.type)(field) }}
+    {%- endfor -%}
     {{ macro_fields.sql_constraints(model) }}
-    {{ macro_fields.overwrite_create_write(model) }}
-    {%- for field in model.fields if field.arguments['compute'] %}
+    {{ macro_fields.overwrite_create(model) }}
+    {{ macro_fields.overwrite_write(model) }}
+    {%- for field in model.fields if field.arguments['compute'] -%}
     {{  macro_fields | attr('compute_method')(field) }}
     {%- endfor %}
-
-    {%- for field in model.fields if field.arguments['constrains'] %}
+    {%- for field in model.fields if field.arguments['constrains'] -%}
     {{  macro_fields | attr('constrains_method')(field) }}
     {%- endfor %}
-
-    {%- for field in model.fields if field.arguments['onchange'] %}
+    {%- for field in model.fields if field.arguments['onchange'] -%}
     {{  macro_fields | attr('onchange_method')(field) }}
     {%- endfor %}
-
 
 {% endfor %}

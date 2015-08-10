@@ -78,11 +78,13 @@
 
 
 {% macro compute_method(field) %}
+        {% if field.arguments['depends'] %}
         vals_upd = {{ '{' }}{% for field_name in field.arguments['depends'] %}
             '{{ field_name }}': 'Valor a usarse para calculo',
             {%- endfor %}
         }
         {{ field.model.short_name }}.write(vals_update)
+        {% endif %}
         self.assertEqual({{ field.model.short_name }}.{{ field.name }}, 'Valor Esperado')
 {%- endmacro -%}
 
