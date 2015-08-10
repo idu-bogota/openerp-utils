@@ -29,13 +29,24 @@ class Model(object):
         self.namespace = parts[0]
         self._module = module
         self.short_name = '_'.join(parts[1:])
-        self.description = name
+        self._description = None
         self._inherit = None
         self._inherits = None
         self._menu = None
         self._overwrite_create = None
         self._overwrite_write = None
         self._fields = {}
+
+    @property
+    def description(self):
+        if not self._description:
+            return self.name
+        return self._description
+
+    @description.setter
+    def description(self, v):
+        if not self._description and len(v):
+            self._description = v
 
     @property
     def module(self):
