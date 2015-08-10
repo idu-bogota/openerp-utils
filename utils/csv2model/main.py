@@ -130,5 +130,12 @@ def main():
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
 
+    # TODO: Limpiar espacios en blanco
+    # TODO: Respetar orden del CSV para creación de campos
+    # TODO: __openerp__.py organizar archivo para que archivo con module.namespace cargue primero
+    # TODO: Quitar ',' al final de las lineas en archivos CSV
+    # TODO: Generar TABs en form view con nombres
+    # TODO: Adicionar nombre no técnico al módulo
+
 if __name__ == '__main__':
     main()
