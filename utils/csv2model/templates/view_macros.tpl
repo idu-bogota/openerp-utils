@@ -49,13 +49,15 @@
                     {%- endfor %}
                     </group>
                     <notebook>
-                        <page string='--TAB--'>
+                        {% for tab in model.get_form_tabs() if tab != 'None' %}
+                        <page string='{{ tab }}'>
                             <group>
-                            {%- for field in model.get_view_fields('form') if field.view_arguments['form_tab_enabled'] %}
+                            {%- for field in model.get_view_fields('form') if field.view_arguments['form_tab_enabled'] and field.view_arguments['form_tab_param'] == tab %}
                                 {{  form_field(field) }}
                             {%- endfor %}
                             </group>
                         </page>
+                        {% endfor %}
                     </notebook>
                 </sheet>
             </form>

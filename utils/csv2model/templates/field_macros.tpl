@@ -65,7 +65,7 @@
         selection=[{% for i in field.arguments['selection'] %}
             {{ i }},
         {%- endfor %}
-        ]
+        ],
     {%- endif -%}
     {% if field.arguments['default'] %}
         default={{ field.generate_default() }},
