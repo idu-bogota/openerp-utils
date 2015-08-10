@@ -22,6 +22,7 @@ class Module(object):
 
 
 class Model(object):
+    sequence = 0
     def __init__(self, name, module):
         self.name = name
         parts = name.split('.')
@@ -80,11 +81,12 @@ class Model(object):
 
     @property
     def fields(self):
-        return self._fields.values()
+        return sorted(self._fields.values(), key=lambda x: x.sequence)
 
     def add_field(self, name, line):
         if not name in self._fields:
-            self._fields[name] = Field(name, self)
+            Model.sequence += 1
+            self._fields[name] = Field(name, self, Model.sequence)
         field = self._fields[name]
         field.arguments = line
         return field
@@ -95,7 +97,7 @@ class Model(object):
         for f in self._fields.values():
             if f.view_arguments[key]:
                 res.append(f)
-        return res
+        return sorted(res, key=lambda x: x.sequence)
 
     def get_unique_fields(self):
         res = []
@@ -123,7 +125,8 @@ class Model(object):
             self._overwrite_write = bool(eval(v)) # Convierte 1/0 en True/False
 
 class Field(object):
-    def __init__(self, name, model):
+    def __init__(self, name, model, sequence):
+        self.sequence = sequence
         self.name = name
         self.model = model
         self.type = None
