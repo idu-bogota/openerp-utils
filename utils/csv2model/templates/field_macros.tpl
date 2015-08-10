@@ -34,7 +34,6 @@
 {%- endmacro -%}
 
 {% macro arguments(field) -%}
-    {%- set add_line = False -%}
     {%- if field.arguments['string'] %}
         string='{{ field.arguments['string'] }}',
     {%- endif -%}
@@ -46,40 +45,32 @@
     {%- endif -%}
     {% if field.arguments['related'] %}
         related='{{field.arguments['related']}}',
-        {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['comodel'] %}
         comodel_name='{{field.arguments['comodel']}}',
-        {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['fk_field'] %}
         inverse_name='{{field.arguments['fk_field']}}',
-        {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['compute'] %}
         compute='_compute_{{ field.name }}',
-        {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['help'] %}
         help='{{field.arguments['help']}}',
-        {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['domain'] %}
         domain='{{field.arguments['domain']}}',
-        {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['selection'] %}
         selection=[{% for i in field.arguments['selection'] %}
             {{ i }},
         {%- endfor %}
         ]
-        {%- set add_line = True -%}
     {%- endif -%}
     {% if field.arguments['default'] %}
         default={{ field.generate_default() }},
-        {%- set add_line = True -%}
     {%- endif -%}
-    {% if add_line %}
+    {% if True %}
     {# Adicionar un padding #}
     {%- endif -%}
 {%- endmacro -%}
