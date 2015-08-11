@@ -2,8 +2,9 @@ import random
 from faker import Factory #pip install fake-factory
 
 class Module(object):
-    def __init__(self, name, namespace):
+    def __init__(self, name, namespace, string):
         self.name = name
+        self.string = string or name
         self._models = {}
         self.namespace = namespace or name
 

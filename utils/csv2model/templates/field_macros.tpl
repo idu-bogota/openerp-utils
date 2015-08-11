@@ -127,7 +127,7 @@
     @api.one{% if field.arguments['depends'] %}
     @api.depends({{ field.arguments['depends'] | replace(']','')| replace('[','') }}){% endif %}
     def _compute_{{ field.name }}(self):
-        self.{{ field.name }} = 'Colocar valor calculado'
+        self.{{ field.name }} = {{ field.generate_value() }}
 {%- endmacro %}
 
 {% macro onchange_method(field) %}

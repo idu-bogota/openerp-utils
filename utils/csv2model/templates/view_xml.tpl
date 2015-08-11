@@ -8,9 +8,9 @@
     Menú
     =================================================================
     -->
-     <menuitem id="{{ module.name }}_nav" name="{{ module.name }}"/>
+     <menuitem id="{{ module.name }}_nav" name="{{ module.string }}"/>
 
-     <menuitem id="{{ module.name }}_menu" name="{{ module.name }}" parent="{{ module.name }}_nav"/>
+     <menuitem id="{{ module.name }}_menu" name="{{ module.string }}" parent="{{ module.name }}_nav"/>
      <menuitem id="{{ module.name }}_conf_menu" parent="{{ module.name }}_nav"
         name="Configuración"
      />

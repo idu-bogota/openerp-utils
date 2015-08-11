@@ -28,7 +28,8 @@ def main():
     parser = OptionParser(usage)
     parser.add_option("-f", "--filename", dest="filename", help="CSV file")
     parser.add_option("-n", "--module_namespace", dest="module_namespace", help="Module namespace", default=False)
-    parser.add_option("-m", "--module_name", dest="module_name", help="Module name", default='')
+    parser.add_option("-m", "--module_name", dest="module_name", help="Module technical name", default='')
+    parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
     parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
     parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
@@ -47,11 +48,11 @@ def main():
         return
 
     if not options.filename:
-        parser.error('filename not given')
+        parser.error('CSV filename not given')
 
     env = Environment(loader=FileSystemLoader(options.templates_dir))
 
-    module = Module(options.module_name, options.module_namespace)
+    module = Module(options.module_name, options.module_namespace, options.module_string)
     with open(options.filename, 'r') as handle:
         reader = csv.DictReader(handle)
         for line in reader:
@@ -129,13 +130,6 @@ def main():
             fname_test = '{0}/test/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
-
-    # TODO: Limpiar espacios en blanco
-    # TODO: Respetar orden del CSV para creación de campos
-    # TODO: __openerp__.py organizar archivo para que archivo con module.namespace cargue primero
-    # TODO: Quitar ',' al final de las lineas en archivos CSV
-    # TODO: Generar TABs en form view con nombres
-    # TODO: Adicionar nombre no técnico al módulo
 
 if __name__ == '__main__':
     main()
