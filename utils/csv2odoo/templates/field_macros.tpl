@@ -40,6 +40,9 @@
     {%- if field.arguments['required'] %}
         required=True,
     {%- endif -%}
+    {%- if field.arguments['readonly'] %}
+        readonly=True,
+    {%- endif -%}
     {%- if field.arguments['size'] %}
         size={{field.arguments['size']}},
     {%- endif -%}
@@ -59,7 +62,7 @@
         help='{{field.arguments['help']}}',
     {%- endif -%}
     {% if field.arguments['domain'] %}
-        domain='{{field.arguments['domain']}}',
+        domain="{{field.arguments['domain']}}",
     {%- endif -%}
     {% if field.arguments['selection'] %}
         selection=[{% for i in field.arguments['selection'] %}

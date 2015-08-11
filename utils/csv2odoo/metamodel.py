@@ -178,13 +178,13 @@ class Field(object):
         ############################################
         # Process CSV 'params' column
         params = {}
-        for i in v.params.split(','):
-            parts = i.split('=')
+        for i in v.params.split(';'):
+            parts = i.split(':')
             if len(parts) == 2:
               params[parts[0]] = parts[1]
+
         params_allowed = set(self._PARAMS_ALLOWED)
         params_used = set(params.keys())
-
         if not params_used.issubset(params_allowed):
             self.report_error('Parameters not recognized: {0}'.format(
                 params_used - params_allowed,
@@ -289,9 +289,9 @@ class Field(object):
             return "lambda self: self._context.get('uid', False)"
         elif default == '_CONTEXT_':
             return "lambda self: self._context.get('{0}', None)".format(self.name)
-        elif default == '_CURRENT_' and self.type == 'date':
+        elif default == '_NOW_' and self.type == 'date':
             return "fields.Date.today"
-        elif default == '_CURRENT_' and self.type == 'datetime':
+        elif default == '_NOW_' and self.type == 'datetime':
             return "fields.Datetime.now"
         else:
             return default
