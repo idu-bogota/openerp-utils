@@ -5,12 +5,30 @@ Este es un script que permite crear un módulo para Odoo v8.0 utilizando la espe
 
 El script puede ser personalizado ajustando las plantillas disponibles, las cuales pueden ser pasadas como parámetro al script.
 
+El script hace la generación de:
+
+- Estructura de módulo Odoo
+- Código de los modelos en python
+- Vistas XML de los modelos
+- Métodos base para constrains, campos calculados
+- Plantilla de pruebas unitarias en python
+- Archivos de carga de datos de demostración y de configuración inicial
+
+Este código generado puede ser usado para el desarrollo inicial del módulo y debe ser personalizado para completar la implementación del módulo y limpiar/ajustas las cosas que no sean necesarias
+
+También sirve para estandarizar la forma en la que se escribe el código siguiendo en lo posible PEP8
+
 USO
 ---
 
 Para correr el script solo debe ejecutar:
 
     python ~/git/openerp-utils/utils/csv2odoo/main.py -f ARCHIVO.csv  -m 'NOMBRE_TECNICO_MODULO' -n NAMESPACE_DE_LOS_MODELOS -s 'NOMBRE DEL MÓDULO'
+
+Para conocer las opciones disponibles ejecutar:
+
+    python ~/git/openerp-utils/utils/csv2odoo/main.py -h
+
 
 Estructura del archivo CSV
 --------------------------
@@ -62,12 +80,12 @@ Las cabeceras del archivo son:
 - overwrite_write: Indica si se crea un metodo write que sobreescribe al padre
 - overwrite_create: Indica si se crea un metodo create que sobreescribe al padre
 
-Con el archivo de ejemplo se puede generar el módulo, pero este no va a iniciar ya que:
+Con el archivo de ejemplo se puede generar el módulo, pero este no va a instalar ya que:
 
 1. Los valores de campos relacionales no se crean en los datos de demostración (demo/*.csv) y de configuracion (data/*.csv) y ya que son requeridos en el modelo va a dar error.
-2. La vista del modelo extendido res.partner se genera pero no apunta a un ID válido, así que se debe ajustar primero o no cargar.
+2. La vista del modelo extendido res.partner se genera pero no apunta a un ID de vistas no válido, así que se debe ajustar primero o debe no cargarse al instalar.
 
-Para que el modulo sea instalable para revisarlo, puede generar el código y en el archivo __openerp__.py comentar las lineas como se muestra a continuación:
+Para que el modulo sea instalable sin hacer modificaciones adicionales, usted puede generar el código y modificar el archivo __openerp__.py comentando las lineas que se muestran a continuación:
 
     'data': [
         'security/security.xml',
