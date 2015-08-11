@@ -43,8 +43,7 @@ def main():
         _logger.setLevel(10)
 
     if options.generate_file:
-        print """model_name,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,
-inherits,inherit,overwrite_write,overwrite_create
+        print """model_name,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create
 petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,0,0,1,1,1,0,0,main,Pet,,mail.thread,,
 petstore.pet,state,selection,selection:Draft|Open|Closed;default:'draft',,Estado,Estados de la mascota,1,0,0,0,1,statusbar,1,1,0,,,,,,
 petstore.pet,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,
