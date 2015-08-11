@@ -13,7 +13,14 @@
 {%- endmacro -%}
 
 {% macro form_field(field) -%}
-    {%- if field.view_arguments['form_param'] -%}
+    {%- if field.view_arguments['form_param'] == '_ATTRS_' -%}
+        <field name="{{field.name}}"
+            attrs="{
+                'invisible': [('{{field.name}}', '=', 'CHANGE ME')],
+                'required': [('{{field.name}}', '=', 'CHANGE ME')],
+            }"
+        />
+    {%- elif field.view_arguments['form_param'] -%}
         <field name="{{field.name}}" widget="{{field.view_arguments['form_param']}}" />
     {%- else -%}
         <field name="{{field.name}}" />
@@ -49,7 +56,7 @@
                     {%- endfor %}
                     </group>
                     <notebook>
-                        {% for tab in model.get_form_tabs() if tab != 'None' %}
+                        {%- for tab in model.get_form_tabs() if tab != 'None' %}
                         <page string='{{ tab }}'>
                             <group>
                             {%- for field in model.get_view_fields('form') if field.view_arguments['form_tab_enabled'] and field.view_arguments['form_tab_param'] == tab %}
@@ -57,7 +64,7 @@
                             {%- endfor %}
                             </group>
                         </page>
-                        {% endfor %}
+                        {%- endfor %}
                     </notebook>
                 </sheet>
             </form>
@@ -96,7 +103,7 @@
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_search">
         <field name="name">{{ model.name }}.search.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="{{ model.name }}_search" />
+        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_search" />
         <field name="arch" type="xml">
             <field name="name" position="after">
             {%- for field in model.get_view_fields('search') %}
@@ -113,7 +120,7 @@
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_form">
         <field name="name">{{ model.name }}.form.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="{{ model.name }}_form" />
+        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_form" />
         <field name="arch" type="xml">
             <field name="name" position="after">
                 <group string="Extendidos en {{ model.module.name }}">
@@ -127,7 +134,7 @@
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_tree">
         <field name="name">{{ model.name }}.tree.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="{{ model.name }}_tree" />
+        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_tree" />
         <field name="arch" type="xml">
             <field name="name" position="after">
             {%- for field in model.get_view_fields('tree') %}
