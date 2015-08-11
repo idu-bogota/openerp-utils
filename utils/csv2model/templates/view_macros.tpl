@@ -49,9 +49,14 @@
         <field name="model">{{ model.name }}</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                {%- for field in model.get_view_fields('form') if field.name in ['state', 'stage_id'] %}
+                    {{  form_field(field) }}
+                {%- endfor %}
+                </header>
                 <sheet>
                     <group>
-                    {%- for field in model.get_view_fields('form') if not field.view_arguments['form_tab_enabled'] %}
+                    {%- for field in model.get_view_fields('form') if not field.view_arguments['form_tab_enabled'] and not field.name in ['state', 'stage_id'] %}
                         {{  form_field(field) }}
                     {%- endfor %}
                     </group>

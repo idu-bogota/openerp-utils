@@ -28,7 +28,6 @@
         {{ macro_fields.inherited_view(model) }}
     {%- endif -%}
     {{ macro_fields.menuitem(model) }}
-{% endfor %}
-
+{%- endfor %}
 </data>
 </openerp>
