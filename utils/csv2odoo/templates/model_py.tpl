@@ -38,6 +38,15 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     #}
     {{ macro_fields|attr(field.type)(field) }}
     {%- endfor -%}
+{%- if model.inherits %}
+  {%- for k,v in model.inherits.iteritems() %}
+    {{ v }} = fields.Many2one(
+        comodel_name="{{ v }}",
+        ondelete='restrict',
+        required=True,
+    ),
+  {%- endfor %}
+{%- endif -%}
     {%- if model.get_unique_fields() %}
 
     {{ macro_fields.sql_constraints(model) }}

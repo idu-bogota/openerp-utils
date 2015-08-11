@@ -55,6 +55,9 @@
     {% if field.arguments['fk_field'] %}
         inverse_name='{{field.arguments['fk_field']}}',
     {%- endif -%}
+    {% if field.arguments['ondelete'] %}
+        ondelete='{{field.arguments['ondelete']}}',
+    {%- endif -%}
     {% if field.arguments['compute'] %}
         compute='_compute_{{ field.name }}',
     {%- endif -%}

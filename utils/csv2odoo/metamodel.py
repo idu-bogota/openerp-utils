@@ -173,7 +173,7 @@ class Field(object):
         self._process_arguments_by_type(v, params)
         self._process_view_arguments(v, params)
 
-    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends', 'selection', 'default']
+    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends', 'selection', 'default', 'ondelete']
     def _process_generic_parameters(self, v):
         ############################################
         # Process CSV 'params' column
@@ -190,7 +190,7 @@ class Field(object):
                 params_used - params_allowed,
             ))
         for k in list(params_used):
-            if not k in ['size', 'domain', 'selection']: #params allowed, used but not to be included by default in all fields
+            if not k in ['size', 'domain', 'selection', 'ondelete']: #params allowed, used but not to be included by default in all fields
                 self._arguments[k] = params[k]
 
         for i in ['depends']:
@@ -232,6 +232,7 @@ class Field(object):
                     v.comodel,
                 ))
             self._arguments['domain'] = params['domain'] if 'domain' in params and params['domain'] else None
+            self._arguments['ondelete'] = params['ondelete'] if 'ondelete' in params and params['ondelete'] else 'restrict'
         elif v.type == 'one2many':
             if not 'comodel' in v or not v.comodel:
                 self.report_error('"comodel" required on "one2many" field')
@@ -245,6 +246,7 @@ class Field(object):
                     v.comodel
                 ))
             self._arguments['domain'] = params['domain'] if 'domain' in params and params['domain'] else None
+            self._arguments['ondelete'] = params['ondelete'] if 'ondelete' in params and params['ondelete'] else 'restrict'
 
     def _process_view_arguments(self, v, params):
         self._set_view_arguments(v, 'tree')

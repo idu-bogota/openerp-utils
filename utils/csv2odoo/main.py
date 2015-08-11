@@ -43,8 +43,18 @@ def main():
         _logger.setLevel(10)
 
     if options.generate_file:
-        print "model_name,menu,description,inherits,inherit,overwrite_write,overwrite_create,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab"
-        print 'nuevo,en_progreso,True,pqrs_idu.group_responsable,"Abrir"'
+        print """model_name,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,
+print inherits,inherit,overwrite_write,overwrite_create
+print petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,0,0,1,1,1,0,0,main,Pet,,mail.thread,,
+print petstore.pet,state,selection,selection:Draft|Open|Closed;default:'draft',,Estado,Estados de la mascota,1,0,0,0,1,statusbar,1,1,0,,,,,,
+print petstore.pet,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,
+print petstore.pet,age,float,compute:True;depends:birth_date,,Edad,Edad en Años,0,0,0,0,1,1,1,0,0,,,,,,
+print petstore.pet,birth_date,date,default:_NOW_,,Fecha de nacimiento,Fecha de nacimiento,0,0,0,0,1,1,1,0,0,,,,,,
+print petstore.pet,breed_id,many2one,,petstore.breed,Raza,Raza de la mascota,1,0,0,0,1,1,1,1,Raza,,,,,,
+print petstore.pet,partner_id,many2one,"domain:[('is_company','=',False)]",res.partner,Dueño,Dueño de la mascota,1,0,0,0,1,1,1,1,Dueño,,,,,,
+print petstore.breed,name,char,size:100,,Nombre,Nombre de la raza,1,1,0,0,1,1,1,0,0,conf,Raza de Mascotas,,,,
+print petstore.breed,pet_ids,one2many,readonly:True,"petstore.pet,breed_id",Mascotas,Mascotas registradas para esta raza,0,0,0,0,0,1,0,0,0,,,,,,
+print res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas regitradas a este Partner,0,0,0,0,0,1,0,0,0,main,,,res.partner,,"""
         return
 
     if not options.filename:
