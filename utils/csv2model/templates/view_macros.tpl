@@ -1,6 +1,14 @@
 {% macro search_field(field) -%}
             <field name="{{field.name}}" />
-            {%- if field.view_arguments['search_param'] %}
+            {%- if field.type == 'selection' %}
+                {%- for opt in field.arguments['selection'] %}
+                <filter name="filtro_{{field.name}}_{{ opt[0] }}"
+                    string="{{ opt[1] }}"
+                    help="Filtrar {{field.arguments['string'] or field.name}} {{ opt[1] }}"
+                    domain="[('{{ field.name }}', '=', '{{ opt[0] }}')]"
+                />
+                {%- endfor -%}
+            {%- elif field.view_arguments['search_param'] %}
                 <filter name="filtro_{{field.name}}"
                     string="Filtro para {{field.arguments['string'] or field.name}}"
                     domain="{{field.view_arguments['search_param']}}"
