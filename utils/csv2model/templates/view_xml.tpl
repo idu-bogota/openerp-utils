@@ -26,7 +26,7 @@
         {{ macro_fields.basic_views(model) }}
     {%- else -%}
         {{ macro_fields.inherited_view(model) }}
-    {%- endif -%}
+    {%- endif %}
     {{ macro_fields.menuitem(model) }}
 {%- endfor %}
 </data>
