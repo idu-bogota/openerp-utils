@@ -13,7 +13,14 @@
 {%- endmacro -%}
 
 {% macro form_field(field) -%}
-    {%- if field.view_arguments['form_param'] -%}
+    {%- if field.view_arguments['form_param'] == '_ATTRS_' -%}
+        <field name="{{field.name}}"
+            attrs="{
+                'invisible': [('{{field.name}}', '=', 'CHANGE ME')],
+                'required': [('{{field.name}}', '=', 'CHANGE ME')],
+            }"
+        />
+    {%- elif field.view_arguments['form_param'] -%}
         <field name="{{field.name}}" widget="{{field.view_arguments['form_param']}}" />
     {%- else -%}
         <field name="{{field.name}}" />
@@ -49,7 +56,7 @@
                     {%- endfor %}
                     </group>
                     <notebook>
-                        {% for tab in model.get_form_tabs() if tab != 'None' %}
+                        {%- for tab in model.get_form_tabs() if tab != 'None' %}
                         <page string='{{ tab }}'>
                             <group>
                             {%- for field in model.get_view_fields('form') if field.view_arguments['form_tab_enabled'] and field.view_arguments['form_tab_param'] == tab %}
@@ -57,7 +64,7 @@
                             {%- endfor %}
                             </group>
                         </page>
-                        {% endfor %}
+                        {%- endfor %}
                     </notebook>
                 </sheet>
             </form>
