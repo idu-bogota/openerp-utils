@@ -311,6 +311,9 @@ class Field(object):
 class Group(object):
     def __init__(self, name, module):
         self.name = name
+        parts = name.split('.')
+        self.namespace = parts[0]
+        self.short_name = parts[1]
         self.module = module
         self._acls = {}
 
@@ -318,27 +321,69 @@ class Group(object):
     def acls(self):
         return self._models.values()
 
-    def add_acl(self, name, create, read, update, delete):
-        if not name in self._acls:
-            self._acls[name] = Acl(name, self)
-        return self._acls[name]
+    def add_acl(self, model_name, create, read, update, delete):
+        if not model_name in self._acls:
+            self._acls[model_name] = Acl(self, model_name, create, read, update, delete)
+        return self._acls[model_name]
 
 class Acl(object):
     def __init__(self, group, model, create, read, update, delete):
+        self._params = {}
         self.model = model
         self.create = create
         self.read = read
         self.update = update
         self.delete = delete
 
+    def _set_params(self, operation, v):
+        self._params[operation] = {}
+        try:
+            self._params[operation]['enabled'] = bool(int(v))
+        except ValueError, e:
+            self._params[operation]['enabled'] = True
+            self._params[operation]['param'] = v
+
+    @property
+    def params(self):
+        return self._params
+
     @property
     def create(self):
-        return _create
+        if 'create' in self._params:
+            return self._params['create']
+        return {'enabled': False, 'param': None}
 
     @create.setter
     def create(self, v):
-        try:
-            self._view_arguments[enabled] = bool(int(v[key]))
-        except ValueError, e:
-            self._view_arguments[enabled] = True
-            self._view_arguments[param] = v[key]
+        self._set_params('create', v)
+
+    @property
+    def read(self):
+        if 'read' in self._params:
+            return self._params['read']
+        return {'enabled': False, 'param': None}
+
+    @read.setter
+    def read(self, v):
+        self._set_params('read', v)
+
+    @property
+    def update(self):
+        if 'update' in self._params:
+            return self._params['update']
+        return {'enabled': False, 'param': None}
+
+    @update.setter
+    def update(self, v):
+        self._set_params('update', v)
+
+    @property
+    def delete(self):
+        if 'delete' in self._params:
+            return self._params['delete']
+        return {'enabled': False, 'param': None}
+
+    @delete.setter
+    def delete(self, v):
+        self._set_params('delete', v)
+
