@@ -23,45 +23,7 @@ def trim_vals(vals):
             vals[key] = value.strip()
     return vals
 
-def main():
-    usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
-    parser = OptionParser(usage)
-    parser.add_option("-f", "--filename", dest="filename", help="CSV file")
-    parser.add_option("-n", "--module_namespace", dest="module_namespace", help="Module namespace", default=False)
-    parser.add_option("-m", "--module_name", dest="module_name", help="Module technical name", default='')
-    parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
-    parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
-    parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
-    parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
-        default=os.path.dirname(os.path.realpath(__file__)) + '/templates'
-    )
-
-
-    (options, args) = parser.parse_args()
-    _logger.setLevel(0)
-    if options.debug:
-        _logger.setLevel(10)
-
-    if options.generate_file:
-        print """model_name,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create
-petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,0,0,1,1,1,0,0,main,Pet,,mail.thread,,
-petstore.pet,state,selection,selection:Draft|Open|Closed;default:'draft',,Estado,Estados de la mascota,1,0,0,0,1,statusbar,1,1,0,,,,,,
-petstore.pet,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,
-petstore.pet,age,float,compute:True;depends:birth_date,,Edad,Edad en Años,0,0,0,0,1,1,1,0,0,,,,,,
-petstore.pet,birth_date,date,default:_NOW_,,Fecha de nacimiento,Fecha de nacimiento,0,0,0,0,1,1,1,0,0,,,,,,
-petstore.pet,breed_id,many2one,,petstore.breed,Raza,Raza de la mascota,1,0,0,0,1,1,1,1,Raza,,,,,,
-petstore.pet,partner_id,many2one,"domain:[('is_company','=',False)]",res.partner,Dueño,Dueño de la mascota,1,0,0,0,1,1,1,1,Dueño,,,,,,
-petstore.breed,name,char,size:100,,Nombre,Nombre de la raza,1,1,0,0,1,1,1,0,0,conf,Raza de Mascotas,,,,
-petstore.breed,pet_ids,one2many,readonly:True,"petstore.pet,breed_id",Mascotas,Mascotas registradas para esta raza,0,0,0,0,0,1,0,0,0,,,,,,
-res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas regitradas a este Partner,0,0,0,0,0,1,0,0,0,main,,,res.partner,,"""
-        return
-
-    if not options.filename:
-        parser.error('CSV filename not given')
-
-    env = Environment(loader=FileSystemLoader(options.templates_dir))
-
-    module = Module(options.module_name, options.module_namespace, options.module_string)
+def generate_metamodel(options, module):
     with open(options.filename, 'r') as handle:
         reader = csv.DictReader(handle)
         for line in reader:
@@ -76,6 +38,7 @@ res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas regitr
             model.overwrite_write = line.overwrite_write
             field = model.add_field(line.name, line)
 
+def generate_module_content(options, env, module):
     output = {}
     for namespace in module.namespaces():
         output[namespace] = {}
@@ -139,6 +102,50 @@ res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas regitr
             fname_test = '{0}/test/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
+
+
+def main():
+    usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
+    parser = OptionParser(usage)
+    parser.add_option("-f", "--filename", dest="filename", help="CSV file")
+    parser.add_option("-n", "--module_namespace", dest="module_namespace", help="Module namespace", default=False)
+    parser.add_option("-m", "--module_name", dest="module_name", help="Module technical name", default='')
+    parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
+    parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
+    parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
+    parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
+        default=os.path.dirname(os.path.realpath(__file__)) + '/templates'
+    )
+
+
+    (options, args) = parser.parse_args()
+    _logger.setLevel(0)
+    if options.debug:
+        _logger.setLevel(10)
+
+    if options.generate_file:
+        print """model_name,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create
+petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,0,0,1,1,1,0,0,main,Pet,,mail.thread,,
+petstore.pet,state,selection,selection:Draft|Open|Closed;default:'draft',,Estado,Estados de la mascota,1,0,0,0,1,statusbar,1,1,0,,,,,,
+petstore.pet,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,
+petstore.pet,age,float,compute:True;depends:birth_date,,Edad,Edad en Años,0,0,0,0,1,1,1,0,0,,,,,,
+petstore.pet,birth_date,date,default:_NOW_,,Fecha de nacimiento,Fecha de nacimiento,0,0,0,0,1,1,1,0,0,,,,,,
+petstore.pet,breed_id,many2one,,petstore.breed,Raza,Raza de la mascota,1,0,0,0,1,1,1,1,Raza,,,,,,
+petstore.pet,partner_id,many2one,"domain:[('is_company','=',False)]",res.partner,Dueño,Dueño de la mascota,1,0,0,0,1,1,1,1,Dueño,,,,,,
+petstore.breed,name,char,size:100,,Nombre,Nombre de la raza,1,1,0,0,1,1,1,0,0,conf,Raza de Mascotas,,,,
+petstore.breed,pet_ids,one2many,readonly:True,"petstore.pet,breed_id",Mascotas,Mascotas registradas para esta raza,0,0,0,0,0,1,0,0,0,,,,,,
+res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas regitradas a este Partner,0,0,0,0,0,1,0,0,0,main,,,res.partner,,"""
+        return
+
+    if not options.filename:
+        parser.error('CSV filename not given')
+
+    env = Environment(loader=FileSystemLoader(options.templates_dir))
+
+    module = Module(options.module_name, options.module_namespace, options.module_string)
+    generate_metamodel(options, module)
+    generate_module_content(options, env, module)
+
 
 if __name__ == '__main__':
     main()
