@@ -319,7 +319,7 @@ class Group(object):
 
     @property
     def acls(self):
-        return self._models.values()
+        return self._acls
 
     def add_acl(self, model_name, create, read, update, delete):
         if not model_name in self._acls:
@@ -327,16 +327,21 @@ class Group(object):
         return self._acls[model_name]
 
 class Acl(object):
-    def __init__(self, group, model, create, read, update, delete):
+    def __init__(self, group, model, create, read, write, delete):
         self._params = {}
+        self._model = None
+        self.group = group
         self.model = model
         self.create = create
         self.read = read
-        self.update = update
+        self.write = write
         self.delete = delete
 
     def _set_params(self, operation, v):
-        self._params[operation] = {}
+        self._params[operation] = {
+            'enabled': False,
+            'param': None,
+        }
         try:
             self._params[operation]['enabled'] = bool(int(v))
         except ValueError, e:
@@ -346,6 +351,14 @@ class Acl(object):
     @property
     def params(self):
         return self._params
+
+    @property
+    def model(self):
+        return self._model
+
+    @model.setter
+    def model(self, v):
+        self._model = self.group.module.add_model(v)
 
     @property
     def create(self):
@@ -368,14 +381,14 @@ class Acl(object):
         self._set_params('read', v)
 
     @property
-    def update(self):
-        if 'update' in self._params:
-            return self._params['update']
+    def write(self):
+        if 'write' in self._params:
+            return self._params['write']
         return {'enabled': False, 'param': None}
 
-    @update.setter
-    def update(self, v):
-        self._set_params('update', v)
+    @write.setter
+    def write(self, v):
+        self._set_params('write', v)
 
     @property
     def delete(self):
@@ -387,3 +400,12 @@ class Acl(object):
     def delete(self, v):
         self._set_params('delete', v)
 
+
+    def domain_force(self, action):
+        domain = getattr(self, action)['param']
+        if domain == '_OWN_':
+            return "(['user_id', '=', user.id])"
+        elif domain == '_ALL_':
+            return "([1, '=', 1])"
+        else:
+            return "[{0}]".format(domain)

@@ -119,15 +119,19 @@ def generate_metamodel_security(options, module):
             )
 
 def generate_module_security(options, env, module):
-    # Crear XML group
+
     template = env.get_template("security_xml.tpl")
     content = template.render( {'module': module} )
     fname = '{0}/security/security.xml'.format(module.name)
     with open(fname, "w") as f:
         f.write(content)
 
-    # Crear XML domain
-    # Crear CSV
+    template = env.get_template("acl_csv.tpl")
+    content = template.render( {'module': module} )
+    fname = '{0}/security/ir.model.access.csv'.format(module.name)
+    with open(fname, "w") as f:
+        f.write(content)
+
     # Crear Pruebas unitarias domain
 
 def main():
