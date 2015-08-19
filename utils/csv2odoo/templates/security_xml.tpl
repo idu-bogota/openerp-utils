@@ -12,9 +12,15 @@ Groups Definition
         <field name="visible" eval="1" />
     </record>
 {%- for group in module.groups if group.namespace == module.name %}
-    <record id="group_{{ group.name }}" model="res.groups">
+    <record id="group_{{ group.short_name }}" model="res.groups">
         <field name="name">{{ group.short_name }}</field>
         <field name="category_id" ref="{{ module.name }}.category_{{ module.name }}"/>
+        <!-- <field name="implied_ids"
+            eval="[
+                (4, ref('base.group_no_one')),
+                (4, ref('base.group_user'))
+            ]"
+        />-->
     </record>
 {%- endfor %}
 </data>
