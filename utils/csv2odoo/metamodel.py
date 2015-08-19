@@ -6,6 +6,7 @@ class Module(object):
         self.name = name
         self.string = string or name
         self._models = {}
+        self._groups = {}
         self.namespace = namespace or name
 
     @property
@@ -16,6 +17,15 @@ class Module(object):
         if not name in self._models:
             self._models[name] = Model(name, self)
         return self._models[name]
+
+    @property
+    def groups(self):
+        return self._groups.values()
+
+    def add_group(self, name):
+        if not name in self._groups:
+            self._groups[name] = Group(name, self)
+        return self._groups[name]
 
     def namespaces(self):
         namespaces = [ m.namespace for m in self.models ]
@@ -297,3 +307,38 @@ class Field(object):
             return "fields.Datetime.now"
         else:
             return default
+
+class Group(object):
+    def __init__(self, name, module):
+        self.name = name
+        self.module = module
+        self._acls = {}
+
+    @property
+    def acls(self):
+        return self._models.values()
+
+    def add_acl(self, name, create, read, update, delete):
+        if not name in self._acls:
+            self._acls[name] = Acl(name, self)
+        return self._acls[name]
+
+class Acl(object):
+    def __init__(self, group, model, create, read, update, delete):
+        self.model = model
+        self.create = create
+        self.read = read
+        self.update = update
+        self.delete = delete
+
+    @property
+    def create(self):
+        return _create
+
+    @create.setter
+    def create(self, v):
+        try:
+            self._view_arguments[enabled] = bool(int(v[key]))
+        except ValueError, e:
+            self._view_arguments[enabled] = True
+            self._view_arguments[param] = v[key]

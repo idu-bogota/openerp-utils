@@ -103,11 +103,33 @@ def generate_module_content(options, env, module):
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
 
+def generate_metamodel_security(options, module):
+    with open(options.filename_security, 'r') as handle:
+        reader = csv.DictReader(handle)
+        for line in reader:
+            line = dict_dot_access(trim_vals(line))
+            _logger.debug(line)
+            group = module.add_group(line.group)
+            group.add_acl(
+                line.model_name,
+                line.create,
+                line.read,
+                line.update,
+                line.delete,
+            )
+
+def generate_module_security(options, env, module):
+    pass
+    # Crear XML group
+    # Crear XML domain
+    # Crear CSV
+    # Crear Pruebas unitarias domain
 
 def main():
     usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
     parser = OptionParser(usage)
     parser.add_option("-f", "--filename", dest="filename", help="CSV file")
+    parser.add_option("-S", "--filename_security", dest="filename_security", help="CSV file security", default=False)
     parser.add_option("-n", "--module_namespace", dest="module_namespace", help="Module namespace", default=False)
     parser.add_option("-m", "--module_name", dest="module_name", help="Module technical name", default='')
     parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
@@ -145,6 +167,11 @@ res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas regitr
     module = Module(options.module_name, options.module_namespace, options.module_string)
     generate_metamodel(options, module)
     generate_module_content(options, env, module)
+
+    if options.filename_security:
+        generate_metamodel_security(options, module)
+        generate_module_security(options, env, module)
+
 
 
 if __name__ == '__main__':
