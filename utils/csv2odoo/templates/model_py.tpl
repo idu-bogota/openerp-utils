@@ -41,10 +41,10 @@ class {{ model.name | replace('.', '_')}}(models.Model):
 {%- if model.inherits %}
   {%- for k,v in model.inherits.iteritems() %}
     {{ v }} = fields.Many2one(
-        comodel_name="{{ v }}",
+        comodel_name="{{ k }}",
         ondelete='restrict',
         required=True,
-    ),
+    )
   {%- endfor %}
 {%- endif -%}
     {%- if model.get_unique_fields() %}
