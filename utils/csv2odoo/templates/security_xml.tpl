@@ -36,7 +36,7 @@
         <field name="name">{{ group.name }} {{ model_name }} Read</field>
         <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
         <field name="domain_force">{{ acl.domain_force('read') }}</field>
-        <field name="groups" eval="[(4, ref('{{ acl.group_name }}'))]"/>
+        <field name="groups" eval="[(4, ref('{{ acl.group_name() }}'))]"/>
         <field name="perm_read" eval="True"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_write" eval="False"/>
@@ -48,7 +48,7 @@
         <field name="name">{{ group.name }} {{ model_name }} Create</field>
         <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
         <field name="domain_force">{{ acl.domain_force('create') }}</field>
-        <field name="groups" eval="[(4, ref('{{ acl.group_name }}'))]"/>
+        <field name="groups" eval="[(4, ref('{{ acl.group_name() }}'))]"/>
         <field name="perm_read" eval="False"/>
         <field name="perm_create" eval="True"/>
         <field name="perm_write" eval="False"/>
@@ -60,7 +60,7 @@
         <field name="name">{{ group.name }} {{ model_name }} Write</field>
         <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
         <field name="domain_force">{{ acl.domain_force('write') }}</field>
-        <field name="groups" eval="[(4, ref('{{ acl.group_name }}'))]"/>
+        <field name="groups" eval="[(4, ref('{{ acl.group_name() }}'))]"/>
         <field name="perm_read" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_write" eval="True"/>
@@ -72,7 +72,7 @@
         <field name="name">{{ group.name }} {{ model_name }} Delete</field>
         <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
         <field name="domain_force">{{ acl.domain_force('delete') }}</field>
-        <field name="groups" eval="[(4, ref('{{ acl.group_name }}'))]"/>
+        <field name="groups" eval="[(4, ref('{{ acl.group_name() }}'))]"/>
         <field name="perm_read" eval="False"/>
         <field name="perm_create" eval="False"/>
         <field name="perm_write" eval="False"/>

@@ -401,6 +401,12 @@ class Acl(object):
         self._set_params('delete', v)
 
 
+    def group_name(self):
+        return "{0}.group_{1}".format(
+            self.group.namespace,
+            self.group.short_name.replace('.', '_'),
+        )
+
     def domain_force(self, action):
         domain = getattr(self, action)['param']
         if domain == '_OWN_':

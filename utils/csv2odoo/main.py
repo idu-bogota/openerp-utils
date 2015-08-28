@@ -106,10 +106,17 @@ def generate_module_content(options, env, module):
 def generate_metamodel_security(options, module):
     with open(options.filename_security, 'r') as handle:
         reader = csv.DictReader(handle)
+        last_group_name = None
         for line in reader:
             line = dict_dot_access(trim_vals(line))
             _logger.debug(line)
-            group = module.add_group(line.group)
+            group = None
+            if line.group:
+                group = module.add_group(line.group)
+                last_group_name = line.group
+            elif last_group_name and not line.group:
+                group = module.add_group(last_group_name)
+
             group.add_acl(
                 line.model_name,
                 line.create,
