@@ -13,6 +13,7 @@ El script hace la generación de:
 - Métodos base para constrains, campos calculados
 - Plantilla de pruebas unitarias en python
 - Archivos de carga de datos de demostración y de configuración inicial
+- Archivos de configuración de seguridad
 
 Este código generado puede ser usado para el desarrollo inicial del módulo y debe ser personalizado para completar la implementación del módulo y limpiar/ajustas las cosas que no sean necesarias
 
@@ -23,7 +24,7 @@ USO
 
 Para correr el script solo debe ejecutar:
 
-    python ~/git/openerp-utils/utils/csv2odoo/main.py -f ARCHIVO.csv  -m 'NOMBRE_TECNICO_MODULO' -n NAMESPACE_DE_LOS_MODELOS -s 'NOMBRE DEL MÓDULO'
+    python ~/git/openerp-utils/utils/csv2odoo/main.py -f ARCHIVO.csv  -m 'NOMBRE_TECNICO_MODULO' -n NAMESPACE_DE_LOS_MODELOS -s 'NOMBRE DEL MÓDULO' -S ARCHIVO_seguridad.csv
 
 Para conocer las opciones disponibles ejecutar:
 

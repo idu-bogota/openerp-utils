@@ -28,7 +28,7 @@ class Module(object):
         return self._groups[name]
 
     def namespaces(self):
-        namespaces = [ m.namespace for m in self.models ]
+        namespaces = [ m.namespace for m in self.models if m.namespace ]
         return list(set(namespaces))
 
 

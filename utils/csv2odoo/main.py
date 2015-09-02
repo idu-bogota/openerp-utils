@@ -26,10 +26,17 @@ def trim_vals(vals):
 def generate_metamodel(options, module):
     with open(options.filename, 'r') as handle:
         reader = csv.DictReader(handle)
+        last_model_name = None
         for line in reader:
             line = dict_dot_access(trim_vals(line))
             _logger.debug(line)
-            model = module.add_model(line.model_name)
+            model = None
+            if line.model_name:
+                model = module.add_model(line.model_name)
+                last_model_name = line.model_name
+            elif last_model_name and not line.model_name:
+                model = module.add_model(last_model_name)
+
             model.description = line.description
             model.inherit = line.inherit
             model.inherits = line.inherits
@@ -82,6 +89,7 @@ def generate_module_content(options, env, module):
             'model_init_py': model_init_py,
         },
     )
+
     for namespace in module.namespaces():
         fname_py = '{0}/models/{1}.py'.format(module.name, namespace)
         fname_view = '{0}/views/{1}_view.xml'.format(module.name, namespace)
@@ -139,7 +147,12 @@ def generate_module_security(options, env, module):
     with open(fname, "w") as f:
         f.write(content)
 
-    # Crear Pruebas unitarias domain
+    template = env.get_template("test_domain_py.tpl")
+    for group in module.groups:
+        fname_test = '{0}/test/test_domain_{1}.py'.format(module.name, group.name.replace('.', '_'))
+        content = template.render( {'group': group} )
+        with open(fname_test, "w") as f:
+            f.write(content)
 
 def main():
     usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
