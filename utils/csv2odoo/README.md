@@ -85,7 +85,6 @@ Las cabeceras del archivo son:
 Con el archivo de ejemplo se puede generar el módulo, pero este no va a instalar ya que:
 
 1. Los valores de campos relacionales no se crean en los datos de demostración (demo/*.csv) y de configuracion (data/*.csv) y ya que son requeridos en el modelo va a dar error.
-2. La vista del modelo extendido res.partner se genera pero no apunta a un ID de vistas no válido, así que se debe ajustar primero o debe no cargarse al instalar.
 
 Para que el modulo sea instalable sin hacer modificaciones adicionales, usted puede generar el código y modificar el archivo __openerp__.py comentando las lineas que se muestran a continuación:
 
@@ -93,7 +92,7 @@ Para que el modulo sea instalable sin hacer modificaciones adicionales, usted pu
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/petstore_view.xml',
-        #'views/res_view.xml',
+        'views/res_view.xml',
         'data/petstore.breed.csv',
     ],
     'test': [
