@@ -80,6 +80,7 @@ Las cabeceras del archivo son:
 - inherit: Indica los modelos de los cuales se hereda (herencia de clase) o se extienden (herencia de prototipo)
 - overwrite_write: Indica si se crea un metodo write que sobreescribe al padre
 - overwrite_create: Indica si se crea un metodo create que sobreescribe al padre
+- views: Indica si se desea crear una vista nueva "new", si no se desea crear o extender una vista "none" y extend, si se quiere crear una vista que extienda de otra. Cuando una vista es extendida se puede indicar que tipo de vistas extender indicando el id de la vista original y el campo sobre el cual aplicar la extensión. ej. "extend:form=id_vista_form_a_extender|fieldname_a_usar_para_la_extension,tree=vista_id|campo,search=vista_id|campo". Si no se desea extender alguna vista simplemente se quita: "extend:tree=vista_id|campo" esto solo crea una extensión de la vista tree. Si se deja solo extend el crea vistas por defecto para que manualmente se ajusten.
 
 Con el archivo de ejemplo se puede generar el módulo, pero este no va a instalar ya que:
 

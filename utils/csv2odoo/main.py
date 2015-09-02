@@ -178,17 +178,18 @@ def main():
         _logger.setLevel(10)
 
     if options.generate_file:
-        print """model_name,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create
-petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,0,0,1,1,1,0,0,main,Pet,,mail.thread,,
-petstore.pet,state,selection,selection:Draft|Open|Closed;default:'draft',,Estado,Estados de la mascota,1,0,0,0,1,statusbar,1,1,0,,,,,,
-petstore.pet,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,
-petstore.pet,age,float,compute:True;depends:birth_date,,Edad,Edad en Años,0,0,0,0,1,1,1,0,0,,,,,,
-petstore.pet,birth_date,date,default:_NOW_,,Fecha de nacimiento,Fecha de nacimiento,0,0,0,0,1,1,1,0,0,,,,,,
-petstore.pet,breed_id,many2one,,petstore.breed,Raza,Raza de la mascota,1,0,0,0,1,1,1,1,Raza,,,,,,
-petstore.pet,partner_id,many2one,"domain:[('is_company','=',False)]",res.partner,Dueño,Dueño de la mascota,1,0,0,0,1,1,1,1,Dueño,,,,,,
-petstore.breed,name,char,size:100,,Nombre,Nombre de la raza,1,1,0,0,1,1,1,0,0,conf,Raza de Mascotas,,,,
-petstore.breed,pet_ids,one2many,readonly:True,"petstore.pet,breed_id",Mascotas,Mascotas registradas para esta raza,0,0,0,0,0,1,0,0,0,,,,,,
-res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas regitradas a este Partner,0,0,0,0,0,1,0,0,0,main,,,res.partner,,"""
+        print """model_name,name,type,params,comodel,string,help,required,unique,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create,views
+petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,0,0,1,1,1,0,0,main,Pet,,mail.thread,1,1,new
+,state,selection,selection:Draft|Open|Closed;default:'draft',,Estado,Estados de la mascota,1,0,0,0,1,statusbar,1,1,0,,,,,,,
+,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,,
+,age,float,compute:True;depends:birth_date,,Edad,Edad en Años,0,0,0,0,1,1,1,0,0,,,,,,,
+,birth_date,date,default:_NOW_,,Fecha de nacimiento,Fecha de nacimiento,0,0,0,0,1,1,1,0,0,,,,,,,
+,breed_id,many2one,,petstore.breed,Raza,Raza de la mascota,1,0,0,0,1,1,1,1,Raza,,,,,,,
+,partner_id,many2one,"domain:[('is_company','=',False)]",res.partner,Dueño,Dueño de la mascota,1,0,0,0,1,1,1,1,Dueño,,,,,,,
+petstore.breed,name,char,size:100,,Nombre,Nombre de la raza,1,1,0,0,1,1,1,0,0,conf,Raza de Mascotas,,,,,new
+,pet_ids,one2many,readonly:True,"petstore.pet,breed_id",Mascotas,Mascotas registradas para esta raza,0,0,0,0,0,1,0,0,0,,,,,,,
+res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas registradas a este Partner,0,0,0,0,0,1,0,0,0,main,,,res.partner,,,"extend:form=base.view_partner_form|category_id,tree=base.view_partner_tree|email,search=base.view_res_partner_filter|parent_id"
+res.users,pet_ids,one2many,,"petstore.pet,user_id",Mascotas a cargo,,0,0,0,0,0,0,0,0,0,main,,,res.users,,,none"""
         return
 
     if not options.filename:

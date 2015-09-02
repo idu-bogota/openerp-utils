@@ -101,7 +101,6 @@ class Model(object):
                             extend_view[key].append('name') #Set field 'name' to extend by default
 
                     conf['extend_view'] = extend_view
-            print conf
             self._view_configuration = conf
 
     @property
