@@ -37,7 +37,7 @@
 
 {% macro basic_views(model) %}
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_search">
-        <field name="name">{{ model.name }}.search</field>
+        <field name="name">{{ model.name }}.search{% if model.namespace != model.module.namespace %}.{{ model.module.name }}{% endif %}</field>
         <field name="model">{{ model.name }}</field>
         <field name="arch" type="xml">
             <search>
@@ -53,7 +53,7 @@
         </field>
     </record>
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_form">
-        <field name="name">{{ model.name }}.form</field>
+        <field name="name">{{ model.name }}.form{% if model.namespace != model.module.namespace %}.{{ model.module.name }}{% endif %}</field>
         <field name="model">{{ model.name }}</field>
         <field name="arch" type="xml">
             <form>
@@ -89,7 +89,7 @@
         </field>
     </record>
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_tree">
-        <field name="name">{{ model.name }}.tree</field>
+        <field name="name">{{ model.name }}.tree{% if model.namespace != model.module.namespace %}.{{ model.module.name }}{% endif %}</field>
         <field name="model">{{ model.name }}</field>
         <field name="arch" type="xml">
             <tree>
@@ -118,14 +118,15 @@
 {%- endmacro -%}
 
 {% macro inherited_view(model) %}
+{% if 'search' in model.view_configuration['extend_view'].keys() %}
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_search">
         <field name="name">{{ model.name }}.search.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_search" />
+        <field name="inherit_id" ref="{{ model.view_configuration['extend_view']['search'][0] }}" />
         <field name="arch" type="xml">
-            <field name="name" position="after">
+            <field name="{{ model.view_configuration['extend_view']['search'][1] }}" position="after">
             {%- for field in model.get_view_fields('search') %}
-                {{  search_field(field) }}
+                {{ search_field(field) }}
             {%- endfor %}
             </field>
             <group position="inside">
@@ -135,12 +136,14 @@
             </group>
         </field>
     </record>
+{%- endif -%}
+{% if 'form' in model.view_configuration['extend_view'].keys() %}
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_form">
         <field name="name">{{ model.name }}.form.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_form" />
+        <field name="inherit_id" ref="{{ model.view_configuration['extend_view']['form'][0] }}" />
         <field name="arch" type="xml">
-            <field name="name" position="after">
+            <field name="{{ model.view_configuration['extend_view']['form'][1] }}" position="after">
                 <group string="Extendidos en {{ model.module.name }}">
                 {%- for field in model.get_view_fields('form') %}
                     {{  form_field(field) }}
@@ -149,16 +152,19 @@
             </field>
         </field>
     </record>
+{%- endif -%}
+{% if 'tree' in model.view_configuration['extend_view'].keys() %}
     <record model="ir.ui.view" id="{{ model.short_name | replace('.','_') }}_tree">
         <field name="name">{{ model.name }}.tree.{{ model.module.namespace }}</field>
         <field name="model">{{ model.name }}</field>
-        <field name="inherit_id" ref="CHANGE_ME_{{ model.name }}_tree" />
+        <field name="inherit_id" ref="{{ model.view_configuration['extend_view']['tree'][0] }}" />
         <field name="arch" type="xml">
-            <field name="name" position="after">
+            <field name="{{ model.view_configuration['extend_view']['tree'][1] }}" position="after">
             {%- for field in model.get_view_fields('tree') %}
                 {{  form_field(field) }}
             {%- endfor %}
             </field>
         </field>
     </record>
+{%- endif -%}
 {%- endmacro -%}

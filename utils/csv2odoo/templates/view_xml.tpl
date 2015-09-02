@@ -22,9 +22,9 @@
     {{model.description}}{% endif %}
     =================================================================
     -->
-    {%- if namespace == module.namespace -%}
+    {%- if model.view_configuration['create_view'] == 'new'-%}
         {{ macro_fields.basic_views(model) }}
-    {%- else -%}
+    {%- elif model.view_configuration['create_view'] == 'extend' -%}
         {{ macro_fields.inherited_view(model) }}
     {%- endif %}
     {{ macro_fields.menuitem(model) }}

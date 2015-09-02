@@ -47,6 +47,62 @@ class Model(object):
         self._overwrite_create = None
         self._overwrite_write = None
         self._fields = {}
+        self._view_configuration = {}
+
+    @property
+    def view_configuration(self):
+        if not self._view_configuration:
+            conf = {
+                'create_view': None,
+                'extend_view': {},
+            }
+            if self.namespace == self._module.namespace:
+                conf['create_view'] = 'new'
+            else:
+                conf['create_view'] = 'extend'
+                conf['extend_view'] = {
+                    'form': [ self.name + '_FORM_ID_CHANGEME', 'name'],
+                    'tree': [ self.name + '_TREE_ID_CHANGEME', 'name'],
+                    'search': [ self.name + '_SEARCH_ID_CHANGEME', 'name'],
+                }
+        return self._view_configuration
+
+    @view_configuration.setter
+    def view_configuration(self, v):
+        """ Process a lines like:
+        new # Create new views
+        none # Don't create views
+        extend # Extend view using defaults
+        extend:form=view_id_f|fieldname,tree=view_id_t|fieldname,search=view_id_s|fieldname
+        extend:form=view_id_f,tree=view_id_t,search=view_id_s # create just tree and search view
+        extend:form=view_id_f # Create just form view
+        """
+        conf = {
+            'create_view': 'new',
+            'extend_view': {
+                'form': [ self.name.replace('.', '_') + '_FORM_ID_CHANGEME', 'name'],
+                'tree': [ self.name.replace('.', '_') + '_TREE_ID_CHANGEME', 'name'],
+                'search': [ self.name.replace('.', '_') + '_SEARCH_ID_CHANGEME', 'name'],
+            },
+        }
+        if not self._view_configuration and len(v):
+            parts = v.split(':')
+            if parts[0].strip().lower() == 'none':
+                conf['create_view'] = 'none'
+            if parts[0].strip().lower() == 'extend':
+                conf['create_view'] = 'extend'
+                if len(parts) == 2:
+                    extend_parts = parts[1].split(',')
+                    extend_view = {}
+                    for extend_part in extend_parts:
+                        key, values = extend_part.split('=')
+                        extend_view[key] = values.split('|')
+                        if len(extend_view[key]) == 1:
+                            extend_view[key].append('name') #Set field 'name' to extend by default
+
+                    conf['extend_view'] = extend_view
+            print conf
+            self._view_configuration = conf
 
     @property
     def description(self):

@@ -36,7 +36,7 @@ def generate_metamodel(options, module):
                 last_model_name = line.model_name
             elif last_model_name and not line.model_name:
                 model = module.add_model(last_model_name)
-
+            model.view_configuration = line.views
             model.description = line.description
             model.inherit = line.inherit
             model.inherits = line.inherits
