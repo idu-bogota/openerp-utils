@@ -99,14 +99,15 @@ def generate_module_content(options, env, module):
             f.write(output[namespace]['view'])
 
     for model in module.models:
-        if model.namespace == module.namespace and model.menu == 'conf':
+        if model.namespace == module.namespace and model.menu == 'conf' and not options.no_generate_csv_data:
             fname_csv = '{0}/data/{1}.csv'.format(module.name, model.name)
             with open(fname_csv, "w") as f:
                 f.write(output[model.name]['data'])
         elif model.namespace == module.namespace and model.menu != 'conf':
-            fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
-            with open(fname_csv, "w") as f:
-                f.write(output[model.name]['data'])
+            if not options.no_generate_csv_data:
+                fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
+                with open(fname_csv, "w") as f:
+                    f.write(output[model.name]['data'])
             fname_test = '{0}/test/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
@@ -164,6 +165,7 @@ def main():
     parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
     parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
+    parser.add_option("-c", "--no_generate_csv_data", action="store_true", dest='no_generate_csv_data', help='Don\'t generate csv files on demo and data', default=False)
     parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
         default=os.path.dirname(os.path.realpath(__file__)) + '/templates'
     )
@@ -171,6 +173,7 @@ def main():
 
     (options, args) = parser.parse_args()
     _logger.setLevel(0)
+
     if options.debug:
         _logger.setLevel(10)
 
