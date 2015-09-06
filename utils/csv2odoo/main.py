@@ -164,6 +164,7 @@ def main():
     parser.add_option("-m", "--module_name", dest="module_name", help="Module technical name", default='')
     parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
     parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
+    parser.add_option("-G", "--generate_security_file", action="store_true", dest="generate_security_file", default=False, help="Generate CSV Template for Security")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
     parser.add_option("-c", "--no_generate_csv_data", action="store_true", dest='no_generate_csv_data', help='Don\'t generate csv files on demo and data', default=False)
     parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
@@ -189,8 +190,15 @@ petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,1,0,0,1,1,1,0,0,
 petstore.breed,name,char,size:100,,Nombre,Nombre de la raza,1,1,1,0,0,1,1,1,0,0,conf,Raza de Mascotas,,,,,new
 ,pet_ids,one2many,readonly:True,"petstore.pet,breed_id",Mascotas,Mascotas registradas para esta raza,0,0,0,0,0,0,1,0,0,0,,,,,,,
 res.partner,pet_ids,one2many,,"petstore.pet,partner_id",Mascotas,Mascotas registradas a este Partner,0,0,0,0,0,0,1,0,0,0,main,,,res.partner,,,"extend:form=base.view_partner_form|category_id,tree=base.view_partner_tree|email,search=base.view_res_partner_filter|parent_id"
-res.users,pet_ids,one2many,,"petstore.pet,user_id",Mascotas a cargo,,0,0,0,0,0,0,0,0,0,0,main,,,res.users,,,none
-"""
+res.users,pet_ids,one2many,,"petstore.pet,user_id",Mascotas a cargo,,0,0,0,0,0,0,0,0,0,0,main,,,res.users,,,none"""
+        return
+
+    if options.generate_security_file:
+        print """model_name,group,create,read,write,delete
+petstore.pet,base.group_user,0,"('partner_id','=', user.partner_id.id)",0,0
+petstore.pet,petstore.vet,_OWN_,_ALL_,_OWN_,0
+petstore.pet,petstore.admin,1,1,1,1
+petstore.breed,petstore.admin,1,_ALL_,1,1"""
         return
 
     if not options.filename:

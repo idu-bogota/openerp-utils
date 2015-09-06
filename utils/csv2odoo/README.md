@@ -24,7 +24,7 @@ USO
 
 Para correr el script solo debe ejecutar:
 
-    python ~/git/openerp-utils/utils/csv2odoo/main.py -f ARCHIVO.csv  -m 'NOMBRE_TECNICO_MODULO' -n NAMESPACE_DE_LOS_MODELOS -s 'NOMBRE DEL MÓDULO' -S ARCHIVO_seguridad.csv
+    python ~/git/openerp-utils/utils/csv2odoo/main.py -f ARCHIVO.csv  -m 'NOMBRE_TECNICO_MODULO' -n NAMESPACE_DE_LOS_MODELOS -s 'NOMBRE DEL MÓDULO'
 
 Para conocer las opciones disponibles ejecutar:
 
@@ -101,3 +101,25 @@ Para que el modulo sea instalable sin hacer modificaciones adicionales, usted pu
         #'demo/petstore.pet.csv',
     ],
 
+
+Control de Acceso
+-----------------
+
+También se puede adicionar un archivo CSV que indique el esquema general de control de acceso, este genera el archivo ir.model.access.csv y el archivo security.xml que incluye la definición de grupos y dominios de acceso.
+
+Puede generar un archivo de ejemplo:
+
+    python ~/git/openerp-utils/utils/csv2odoo/main.py -G > petstore_security.csv
+
+Para generar el módulo incluyendo la generación del esquema de control de acceso puede ejecutar:
+
+    python ~/git/openerp-utils/utils/csv2odoo/main.py -f ARCHIVO.csv  -m 'NOMBRE_TECNICO_MODULO' -n NAMESPACE_DE_LOS_MODELOS -s 'NOMBRE DEL MÓDULO' -S ARCHIVO_seguridad.csv
+
+La estructura del archivo CSV de seguridad es:
+
+- model_name: Nombre del modelo al cual se le aplicará la regla de acceso
+- group: Nombre del grupo de seguridad a crearse y al que le aplicará la regla. Puede usar nombres de grupos ya existentes para asignar controles.
+- create: Indica con 1 o 0 si se le da acceso al modelo a los miembros del grupo. Se puede definir un dominio para que se cree una regla de dominio para la operación de creación, puede invocar reglas preestablecidas como _ALL_ (acceder a todos los regitros) y _OWN_ (Acceder solo a los registros propios)
+- read: Indica con 1 o 0 si se le da acceso al modelo a los miembros del grupo. Se puede definir un dominio para que se cree una regla de dominio para la operación de creación, puede invocar reglas preestablecidas como _ALL_ (acceder a todos los regitros) y _OWN_ (Acceder solo a los registros propios)
+- write: Indica con 1 o 0 si se le da acceso de actualización al modelo a los miembros del grupo. Se puede definir un dominio para que se cree una regla de dominio para la operación de actualización, puede invocar reglas preestablecidas como _ALL_ (acceder a todos los regitros) y _OWN_ (Acceder solo a los registros propios)
+- delete: Indica con 1 o 0 si se le da acceso de eliminación al modelo a los miembros del grupo. Se puede definir un dominio para que se cree una regla de dominio para la operación de eliminación, puede invocar reglas preestablecidas como _ALL_ (acceder a todos los regitros) y _OWN_ (Acceder solo a los registros propios)
