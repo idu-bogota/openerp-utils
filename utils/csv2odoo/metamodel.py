@@ -265,7 +265,7 @@ class Field(object):
         # Process parameters with its own CSV column
         self.type = v.type
         self._arguments['type'] = v.type
-        for i in ['required', 'onchange', 'unique', 'constrains']:
+        for i in ['required', 'onchange', 'unique', 'constrains', 'tracking']:
             if i in v and getattr(v, i):
                 self._arguments[i] = bool(eval(getattr(v, i))) # Convierte 1/0 en True/False
 

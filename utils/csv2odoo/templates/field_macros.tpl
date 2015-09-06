@@ -43,6 +43,9 @@
     {%- if field.arguments['readonly'] %}
         readonly=True,
     {%- endif -%}
+    {%- if field.arguments['tracking'] %}
+        track_visibility='onchange',
+    {%- endif -%}
     {%- if field.arguments['size'] %}
         size={{field.arguments['size']}},
     {%- endif -%}
