@@ -123,3 +123,26 @@ La estructura del archivo CSV de seguridad es:
 - read: Indica con 1 o 0 si se le da acceso al modelo a los miembros del grupo. Se puede definir un dominio para que se cree una regla de dominio para la operación de creación, puede invocar reglas preestablecidas como _ALL_ (acceder a todos los regitros) y _OWN_ (Acceder solo a los registros propios)
 - write: Indica con 1 o 0 si se le da acceso de actualización al modelo a los miembros del grupo. Se puede definir un dominio para que se cree una regla de dominio para la operación de actualización, puede invocar reglas preestablecidas como _ALL_ (acceder a todos los regitros) y _OWN_ (Acceder solo a los registros propios)
 - delete: Indica con 1 o 0 si se le da acceso de eliminación al modelo a los miembros del grupo. Se puede definir un dominio para que se cree una regla de dominio para la operación de eliminación, puede invocar reglas preestablecidas como _ALL_ (acceder a todos los regitros) y _OWN_ (Acceder solo a los registros propios)
+
+Workflows
+---------
+
+También el script genera el código para workflows a partir de un CSV. Se generan botones para la vista, el código en los modelos y el archivo xml de definición del workflow.
+
+Puede generar un archivo de ejemplo:
+
+    python ~/git/openerp-utils/utils/csv2odoo/main.py -W > petstore_workflow.csv
+
+Para generar el módulo incluyendo la generación del esquema de control de acceso puede ejecutar:
+
+    python ~/git/openerp-utils/utils/csv2odoo/main.py -f ARCHIVO.csv  -m 'NOMBRE_TECNICO_MODULO' -n NAMESPACE_DE_LOS_MODELOS -s 'NOMBRE DEL MÓDULO' -S ARCHIVO_seguridad.csv -w ARCHIVO_workflow.csv
+
+La estructura del archivo CSV de seguridad es:
+
+- model_name: Nombre del modelo al cual se le aplicará la regla de acceso
+- act_from: Nombre del estado origen para la transición
+- act_to: Nombre del estado destino para la transición
+- condition: Colocar el código python de validación para ejecutar la transición o True
+- group: Indicar el ID externo del grupo de seguridad con autorización para realizar la transición
+- button_label: Indica la etiqueta del botón que envia la señal al workflow
+- type: stop o start, para indicar si es inicio o final del workflow.

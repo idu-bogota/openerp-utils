@@ -171,6 +171,15 @@ def generate_metamodel_workflow(options, module):
                 model = module.add_model(last_model_name)
             model.add_transition(line)
 
+def generate_module_workflow(options, env, module):
+    template = env.get_template("workflow_xml.tpl")
+    for model in module.models:
+        if model.transitions:
+            fname_xml = '{0}/workflow/{1}_workflow.xml'.format(module.name, model.short_name)
+            content = template.render( {'model': model} )
+            with open(fname_xml, "w") as f:
+                f.write(content)
+
 def main():
     usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
     parser = OptionParser(usage)
@@ -182,6 +191,7 @@ def main():
     parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
     parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
     parser.add_option("-G", "--generate_security_file", action="store_true", dest="generate_security_file", default=False, help="Generate CSV Template for Security")
+    parser.add_option("-W", "--generate_workflow_file", action="store_true", dest="generate_workflow_file", default=False, help="Generate CSV Template for Workflow")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
     parser.add_option("-c", "--no_generate_csv_data", action="store_true", dest='no_generate_csv_data', help='Don\'t generate csv files on demo and data', default=False)
     parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
@@ -197,7 +207,7 @@ def main():
     if options.generate_file:
         print """model_name,name,type,params,comodel,string,help,required,unique,tracking,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create,views
 petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,1,0,0,1,1,1,0,0,main,Pet,,mail.thread,1,1,new
-,state,selection,selection:Draft|Open|Closed;default:'draft',,Estado,Estados de la mascota,1,0,1,0,0,1,statusbar,1,1,0,,,,,,,
+,state,selection,selection:Draft|Open|Closed|Pending;default:'draft',,Estado,Estados de la mascota,1,0,1,0,0,1,1,1,1,0,,,,,,,
 ,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,1,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,,
 ,age,float,compute:True;depends:birth_date,,Edad,Edad en Años,0,0,1,0,0,1,1,1,0,0,,,,,,,
 ,birth_date,date,default:_NOW_,,Fecha de nacimiento,Fecha de nacimiento,0,0,1,0,0,1,1,1,0,0,,,,,,,
@@ -217,6 +227,17 @@ petstore.pet,petstore.admin,1,1,1,1
 petstore.breed,petstore.admin,1,_ALL_,1,1"""
         return
 
+    if options.generate_workflow_file:
+        print """model_name,act_from,act_to,condition,group,button_label,type
+petstore.pet,draft,open,True,petstore.group_vet,Abrir,start
+,open,pending,True,petstore.group_vet,Pendiente,
+,open,closed,True,petstore.group_vet,Cerrar,stop
+,pending,open,True,petstore.group_admin,Abrir,
+,pending,closed,age > 10,,,
+petstore.breed,nuevo,en_progreso,True,petstore.group_admin,Abrir,start
+,en_progreso,terminado,True,petstore.group_admin,Cerrar,stop"""
+        return
+
     if not options.filename:
         parser.error('CSV filename not given')
 
@@ -227,8 +248,8 @@ petstore.breed,petstore.admin,1,_ALL_,1,1"""
     if options.filename_workflow:
         generate_metamodel_workflow(options, module)
     generate_module_content(options, env, module)
-    #if options.filename_workflow:
-        #generate_module_workflow(options, module)
+    if options.filename_workflow:
+        generate_module_workflow(options, env, module)
 
     if options.filename_security:
         generate_metamodel_security(options, module)

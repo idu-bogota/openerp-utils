@@ -217,7 +217,7 @@ class Model(object):
     def add_transition(self, line):
         act_from = self.add_activity(line.act_from, line.type)
         act_to = self.add_activity(line.act_to, line.type)
-        transition = Transition(act_from, act_to, self, line.button_label, line.group)
+        transition = Transition(act_from, act_to, self, line.button_label, line.group, line.condition)
         self._transitions.append(transition)
         return transition
 
@@ -234,11 +234,12 @@ class Model(object):
 
 class Transition(object):
 
-    def __init__(self, act_from, act_to, model, button_label, group_name):
+    def __init__(self, act_from, act_to, model, button_label, group_name, condition):
         self.model = model
         self.act_from = act_from
         self.act_to = act_to
         self.button_label = button_label
+        self.condition = condition
         self.group_name = group_name
 
     @property

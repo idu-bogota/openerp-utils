@@ -13,6 +13,11 @@
         'views/{{ namespace }}_view.xml',{% endfor %}{% for namespace in module.namespaces() if namespace != module.namespace %}
         'views/{{ namespace }}_view.xml',{% endfor %}{% for model in module.models if model.namespace == module.namespace and model.menu == 'conf' %}
         'data/{{ model.name }}.csv',{% endfor %}
+    {%- for model in module.models -%}
+      {%- if model.transitions %}
+        'workflow/{{ model.short_name }}_workflow.xml',
+      {%- endif -%}
+    {%- endfor %}
     ],
     'test': [
     ],
