@@ -20,7 +20,7 @@
     <filter string="{{field.arguments['string']}}" context="{'group_by':'{{field.name}}'}"/>
 {%- endmacro -%}
 
-{% macro form_field(field) -%}
+{% macro form_field(field, widget=False) -%}
     {%- if field.view_arguments['form_param'] == '_ATTRS_' -%}
         <field name="{{field.name}}"
             attrs="{
@@ -28,8 +28,8 @@
                 'required': [('{{field.name}}', '=', 'CHANGE ME')],
             }"
         />
-    {%- elif field.view_arguments['form_param'] -%}
-        <field name="{{field.name}}" widget="{{field.view_arguments['form_param']}}" />
+    {%- elif field.view_arguments['form_param'] or widget -%}
+        <field name="{{field.name}}" widget="{{ field.view_arguments['form_param'] or widget }}" />
     {%- else -%}
         <field name="{{field.name}}" />
     {%- endif -%}
@@ -58,8 +58,14 @@
         <field name="arch" type="xml">
             <form>
                 <header>
-                {%- for field in model.get_view_fields('form') if field.name in ['state', 'stage_id'] %}
-                    {{  form_field(field) }}
+                {%- for transition in model.transitions if transition.button_label %}
+                    <button string="{{ transition.button_label }}" type="workflow" class="oe_highlight"
+                        name="{{ transition.signal }}"{% if transition.group_name %}
+                        groups="{{ transition.group_name }}"{% endif %}
+                        states="{{ transition.act_from.name }}"
+                    />
+                {%- endfor -%}{%- for field in model.get_view_fields('form') if field.name in ['state', 'stage_id'] %}
+                    {{  form_field(field, 'statusbar') }}
                 {%- endfor %}
                 </header>
                 <sheet>

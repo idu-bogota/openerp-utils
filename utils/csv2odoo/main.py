@@ -45,6 +45,7 @@ def generate_metamodel(options, module):
             model.overwrite_write = line.overwrite_write
             field = model.add_field(line.name, line)
 
+
 def generate_module_content(options, env, module):
     output = {}
     for namespace in module.namespaces():
@@ -155,11 +156,27 @@ def generate_module_security(options, env, module):
         with open(fname_test, "w") as f:
             f.write(content)
 
+def generate_metamodel_workflow(options, module):
+    with open(options.filename_workflow, 'r') as handle:
+        reader = csv.DictReader(handle)
+        last_model_name = None
+        for line in reader:
+            line = dict_dot_access(trim_vals(line))
+            _logger.debug(line)
+            model = None
+            if line.model_name:
+                model = module.add_model(line.model_name)
+                last_model_name = line.model_name
+            elif last_model_name and not line.model_name:
+                model = module.add_model(last_model_name)
+            model.add_transition(line)
+
 def main():
     usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
     parser = OptionParser(usage)
     parser.add_option("-f", "--filename", dest="filename", help="CSV file")
     parser.add_option("-S", "--filename_security", dest="filename_security", help="CSV file security", default=False)
+    parser.add_option("-w", "--filename_workflow", dest="filename_workflow", help="CSV file workflow", default=False)
     parser.add_option("-n", "--module_namespace", dest="module_namespace", help="Module namespace", default=False)
     parser.add_option("-m", "--module_name", dest="module_name", help="Module technical name", default='')
     parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
@@ -170,7 +187,6 @@ def main():
     parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
         default=os.path.dirname(os.path.realpath(__file__)) + '/templates'
     )
-
 
     (options, args) = parser.parse_args()
     _logger.setLevel(0)
@@ -208,7 +224,11 @@ petstore.breed,petstore.admin,1,_ALL_,1,1"""
 
     module = Module(options.module_name, options.module_namespace, options.module_string)
     generate_metamodel(options, module)
+    if options.filename_workflow:
+        generate_metamodel_workflow(options, module)
     generate_module_content(options, env, module)
+    #if options.filename_workflow:
+        #generate_module_workflow(options, module)
 
     if options.filename_security:
         generate_metamodel_security(options, module)

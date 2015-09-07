@@ -66,5 +66,11 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     {%- for field in model.fields if field.arguments['onchange'] -%}
     {{  macro_fields | attr('onchange_method')(field) }}
     {%- endfor %}
+    {%- if model.activities %}
 
+    # Workflow{% endif %}
+{%- for activity in model.activities %}
+    def wkf_{{ activity.name }}(self):
+        self.state = '{{ activity.name }}'
+{% endfor %}
 {% endfor %}

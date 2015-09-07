@@ -48,6 +48,8 @@ class Model(object):
         self._overwrite_write = None
         self._fields = {}
         self._view_configuration = {}
+        self._activities = {}
+        self._transitions = []
 
     @property
     def view_configuration(self):
@@ -207,6 +209,52 @@ class Model(object):
     def overwrite_write(self, v):
         if not self._overwrite_write and v:
             self._overwrite_write = bool(eval(v)) # Convierte 1/0 en True/False
+
+    @property
+    def transitions(self):
+        return self._transitions
+
+    def add_transition(self, line):
+        act_from = self.add_activity(line.act_from, line.type)
+        act_to = self.add_activity(line.act_to, line.type)
+        transition = Transition(act_from, act_to, self, line.button_label, line.group)
+        self._transitions.append(transition)
+        return transition
+
+    @property
+    def activities(self):
+        return self._activities.values()
+
+    def add_activity(self, name, type):
+        if not name in self._activities:
+            Activity.sequence += 1
+            self._activities[name] = Activity(name, type, self, Activity.sequence)
+        return self._activities[name]
+
+
+class Transition(object):
+
+    def __init__(self, act_from, act_to, model, button_label, group_name):
+        self.model = model
+        self.act_from = act_from
+        self.act_to = act_to
+        self.button_label = button_label
+        self.group_name = group_name
+
+    @property
+    def signal(self):
+        return "wkf_{}__{}".format(self.act_from.name, self.act_to.name)
+
+
+class Activity(object):
+    sequence = 0
+
+    def __init__(self, name, type, model, sequence):
+        self.sequence = sequence
+        self.model = model
+        self.name = name
+        self.type = type
+
 
 class Field(object):
     def __init__(self, name, model, sequence):
