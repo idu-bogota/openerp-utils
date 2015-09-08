@@ -388,6 +388,8 @@ class Field(object):
             return random.randint(0, 100000000)
         elif self.type in ['float']:
             return random.uniform(0, 100000000)
+        elif self.type in ['boolean']:
+            return random.choice([True, False])
         elif self.type in ['date']:
             return '"{0}"'.format(fake.date())
         elif self.type in ['datetime']:
