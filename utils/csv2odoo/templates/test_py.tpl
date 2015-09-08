@@ -7,7 +7,7 @@ from openerp.tests import common
 logging.basicConfig()
 _logger = logging.getLogger('TEST')
 
-class Test_{{ model.name | replace('.','_') }}(common.SingleTransactionCase):
+class Test_{{ model.name | replace('.','_') }}(common.TransactionCase):
     def test_crud_validaciones(self):
         {{ model.short_name }}_model = self.env['{{ model.name }}']
         vals = {{ '{' }}{% for field in model.fields if not field.arguments['compute'] and not field.arguments['related'] %}

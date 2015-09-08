@@ -152,7 +152,7 @@ def generate_module_security(options, env, module):
     template = env.get_template("test_domain_py.tpl")
     for group in module.groups:
         fname_test = '{0}/test/test_domain_{1}.py'.format(module.name, group.name.replace('.', '_'))
-        content = template.render( {'group': group} )
+        content = template.render( {'group': group, 'module': module} )
         with open(fname_test, "w") as f:
             f.write(content)
 
