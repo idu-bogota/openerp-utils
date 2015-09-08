@@ -19,7 +19,8 @@
       {%- endif -%}
     {%- endfor %}
     ],
-    'test': [
+    'test': [{% if module.groups %}
+        'tests/001_users.yml',{% endif %}
     ],
     'demo': [{% for model in module.models if model.namespace == module.namespace and model.menu != 'conf' %}
         'demo/{{ model.name }}.csv',{% endfor %}

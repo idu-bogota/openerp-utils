@@ -109,7 +109,7 @@ def generate_module_content(options, env, module):
                 fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
                 with open(fname_csv, "w") as f:
                     f.write(output[model.name]['data'])
-            fname_test = '{0}/test/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
+            fname_test = '{0}/tests/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
             with open(fname_test, "w") as f:
                 f.write(output[model.name]['test'])
 
@@ -151,10 +151,29 @@ def generate_module_security(options, env, module):
 
     template = env.get_template("test_domain_py.tpl")
     for group in module.groups:
-        fname_test = '{0}/test/test_domain_{1}.py'.format(module.name, group.name.replace('.', '_'))
+        fname_test = '{0}/tests/test_domain_{1}.py'.format(module.name, group.name.replace('.', '_'))
         content = template.render( {'group': group, 'module': module} )
         with open(fname_test, "w") as f:
             f.write(content)
+
+    template = env.get_template("test_users_yml.tpl")
+    fname_test = '{0}/tests/001_users.yml'.format(module.name)
+    content = template.render( {'module': module} )
+    with open(fname_test, "w") as f:
+        f.write(content)
+
+    template = env.get_template("openerp_py.tpl")
+    openerp_py = template.render( {'module': module} )
+    fname_test = '{0}/__openerp__.py'.format(module.name)
+    with open(fname_test, "w") as f:
+        f.write(openerp_py)
+
+    template = env.get_template("test_init_py.tpl")
+    test_init_py = template.render( {'module': module} )
+    fname_test = '{0}/tests/__init__.py'.format(module.name)
+    with open(fname_test, "w") as f:
+        f.write(test_init_py)
+
 
 def generate_metamodel_workflow(options, module):
     with open(options.filename_workflow, 'r') as handle:

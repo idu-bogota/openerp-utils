@@ -7,7 +7,7 @@ from openerp.tests import common
 logging.basicConfig()
 _logger = logging.getLogger('TEST')
 
-class Test_security_{{ group.name | replace('.','_') }}(common.TransactionCase):
+class test_security_{{ group.name | replace('.','_') }}(common.TransactionCase):
     def test_{{ group.name | replace('.', '_') }}_search(self):
         {%- set user = "user_" + group.short_name | replace('.', '_') %}
         {{ user }}_01 = self.ref('{{ group.name }}_user_01')
