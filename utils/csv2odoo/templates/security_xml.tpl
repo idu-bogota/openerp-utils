@@ -34,7 +34,7 @@
     {%- if acl.read['param'] %}
     <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_read" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Read</field>
-        <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
+        <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('read') }}</field>
         <field name="groups" eval="[(4, ref('{{ acl.group.name }}'))]"/>
         <field name="perm_read" eval="True"/>
@@ -46,7 +46,7 @@
     {%- if acl.create['param'] %}
     <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_create" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Create</field>
-        <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
+        <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('create') }}</field>
         <field name="groups" eval="[(4, ref('{{ acl.group.name }}'))]"/>
         <field name="perm_read" eval="False"/>
@@ -58,7 +58,7 @@
     {%- if acl.write['param'] %}
     <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_write" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Write</field>
-        <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
+        <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('write') }}</field>
         <field name="groups" eval="[(4, ref('{{ acl.group.name }}'))]"/>
         <field name="perm_read" eval="False"/>
@@ -70,7 +70,7 @@
     {%- if acl.delete['param'] %}
     <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_delete" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Delete</field>
-        <field name="model_id" ref="{{ acl.model.namespace }}.model_{{ acl.model.name | replace('.', '_')}}"/>
+        <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('delete') }}</field>
         <field name="groups" eval="[(4, ref('{{ acl.group.name }}'))]"/>
         <field name="perm_read" eval="False"/>

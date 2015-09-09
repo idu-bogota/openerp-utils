@@ -52,6 +52,13 @@ class Model(object):
         self._transitions = []
 
     @property
+    def external_id(self):
+        namespace = self.namespace
+        if namespace == self.module.namespace:
+            namespace = self.module.name
+        return '{0}.model_{1}'.format(namespace, self.name.replace('.', '_'))
+
+    @property
     def view_configuration(self):
         if not self._view_configuration:
             conf = {
