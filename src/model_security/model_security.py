@@ -22,7 +22,7 @@
 ##############################################################################
 
 from openerp.exceptions import AccessError
-from openerp import models
+from openerp import models, fields, api
 from openerp.addons.base_idu.tools import direcciones
 from openerp.tools.translate import _
 
@@ -57,3 +57,17 @@ class fields_security_mixin(models.AbstractModel):
                         (self._description, operation)
                     )
         return res
+
+
+class fields_security_mixin(models.AbstractModel):
+    _name = 'models.soft_delete.mixin'
+
+    active = fields.Boolean(
+        string='No borrado',
+        default=True,
+    )
+
+    @api.multi
+    def unlink(self):
+        self.check_access_rights('unlink')
+        self.write({ 'active': False })
