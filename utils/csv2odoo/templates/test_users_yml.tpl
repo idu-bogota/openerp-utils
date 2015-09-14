@@ -4,7 +4,7 @@
 -
   !record { model: res.partner, id: {{ group.short_name }}_partner_01 }:
     name: '{{ group.short_name }}_user_01'
-    email: '{{ group.short_name }}_user_01@test.com'
+    email: '{{ group.short_name }}_user_01@{{ module.name }}.test.com'
 -
   !record { model: res.users, id: {{ group.short_name }}_user_01 }:
     name: '{{ group.short_name }}_user_01'
@@ -14,7 +14,7 @@
 -
   !record { model: res.partner, id: {{ group.short_name }}_partner_02 }:
     name: '{{ group.short_name }}_user_02'
-    email: '{{ group.short_name }}_user_02@test.com'
+    email: '{{ group.short_name }}_user_02@{{ module.name }}.test.com'
 -
   !record { model: res.users, id: {{ group.short_name }}_user_02 }:
     name: '{{ group.short_name }}_user_02'
