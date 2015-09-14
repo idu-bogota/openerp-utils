@@ -191,13 +191,25 @@ def generate_metamodel_workflow(options, module):
             model.add_transition(line)
 
 def generate_module_workflow(options, env, module):
-    template = env.get_template("workflow_xml.tpl")
     for model in module.models:
         if model.transitions:
-            fname_xml = '{0}/workflow/{1}_workflow.xml'.format(module.name, model.short_name)
+            template = env.get_template("workflow_xml.tpl")
+            fname_xml = '{0}/workflow/{1}_workflow.xml'.format(module.name, model.short_name.replace('.', '_'))
             content = template.render( {'model': model} )
             with open(fname_xml, "w") as f:
                 f.write(content)
+
+            template = env.get_template("test_workflow_py.tpl")
+            fname_test = '{0}/tests/test_workflow_{1}.py'.format(module.name, model.short_name.replace('.', '_'))
+            content = template.render( {'model': model} )
+            with open(fname_test, "w") as f:
+                f.write(content)
+
+    template = env.get_template("test_init_py.tpl")
+    test_init_py = template.render( {'module': module} )
+    fname_test = '{0}/tests/__init__.py'.format(module.name)
+    with open(fname_test, "w") as f:
+        f.write(test_init_py)
 
 def main():
     usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
@@ -267,13 +279,11 @@ petstore.breed,nuevo,en_progreso,True,petstore.group_admin,Abrir,start
     if options.filename_workflow:
         generate_metamodel_workflow(options, module)
     generate_module_content(options, env, module)
-    if options.filename_workflow:
-        generate_module_workflow(options, env, module)
-
     if options.filename_security:
         generate_metamodel_security(options, module)
         generate_module_security(options, env, module)
-
+    if options.filename_workflow:
+        generate_module_workflow(options, env, module)
 
 
 if __name__ == '__main__':
