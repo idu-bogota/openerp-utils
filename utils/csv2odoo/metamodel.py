@@ -344,7 +344,7 @@ class Field(object):
         elif v.type in ['many2one', 'many2many']:
             if 'comodel' in v:
                 self._arguments['comodel'] = v.comodel
-            else:
+            elif not 'related' in params:
                 self.report_error('"comodel" required on "{0}" field'.format(v.type))
 
             if len(self._arguments['comodel'].split(',')) > 1:
@@ -355,14 +355,14 @@ class Field(object):
             self._arguments['domain'] = params['domain'] if 'domain' in params and params['domain'] else None
             self._arguments['ondelete'] = params['ondelete'] if 'ondelete' in params and params['ondelete'] else 'restrict'
         elif v.type == 'one2many':
-            if not 'comodel' in v or not v.comodel:
+            if (not 'comodel' in v or not v.comodel) and not 'related' in params:
                 self.report_error('"comodel" required on "one2many" field')
             self._arguments['comodel'] = v.comodel
             parts = self._arguments['comodel'].split(',')
             if len(parts) > 1:
                 self._arguments['comodel'] = parts[0]
                 self._arguments['fk_field'] = parts[1]
-            else:
+            elif not 'related' in params:
                 self.report_error('No extra params accepted on "one2many" comodel:{0}'.format(
                     v.comodel
                 ))
