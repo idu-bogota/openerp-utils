@@ -222,8 +222,8 @@ class Model(object):
         return self._transitions
 
     def add_transition(self, line):
-        act_from = self.add_activity(line.act_from, line.type)
-        act_to = self.add_activity(line.act_to, line.type)
+        act_from = self.add_activity(line.act_from, 'start' if line.type == 'start' else None)
+        act_to = self.add_activity(line.act_to, 'stop' if line.type == 'stop' else None)
         transition = Transition(act_from, act_to, self, line.button_label, line.group, line.condition)
         self._transitions.append(transition)
         return transition
