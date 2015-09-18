@@ -56,8 +56,8 @@ class mi_carro_tu_carro_oferta(models.Model):
     )
     state = fields.Selection(
         [
-           ('inactivo', 'Desactivar Oferna'),
-           ('activo', 'Activar Oferna'),
+           ('inactivo', 'Desactivar Oferta'),
+           ('activo', 'Activar Oferta'),
         ],
         default="inactivo",
     )
