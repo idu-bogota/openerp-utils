@@ -30,7 +30,9 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     _name = '{{ model.name }}'
     _description = '{% if model.description %}{{ model.description }}{% else %}{{ model.name + ' DESCRIPTION PENDING' }}{% endif %}'{{ macro_fields.inheritance(model) }}
 
+    # -------------------
     # Fields
+    # -------------------
     {%- for field in model.fields %}
     {#-
         Llama al macro que tiene el mismo nombre del field.type
@@ -51,6 +53,10 @@ class {{ model.name | replace('.', '_')}}(models.Model):
 
     {{ macro_fields.sql_constraints(model) }}
     {%- endif %}
+
+    # -------------------
+    # methods
+    # -------------------
     {%- if model.overwrite_create %}
 {{ macro_fields.overwrite_create(model) }}
     {%- endif %}
@@ -68,7 +74,9 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     {%- endfor %}
     {%- if model.activities %}
 
-    # Workflow{% endif %}
+    # -------------------
+    # Workflow methods
+    # -------------------{% endif %}
 {%- for activity in model.activities %}
     def wkf_{{ activity.name }}(self):
         self.state = '{{ activity.name }}'
