@@ -3,6 +3,7 @@
 import unittest2
 import logging
 from openerp.tests import common
+from openerp.exceptions import ValidationError
 
 logging.basicConfig()
 _logger = logging.getLogger('TEST')

@@ -30,6 +30,7 @@ class test_workflow_{{ model.short_name | replace('.','_') }}(common.Transaction
         self.assertEqual({{ model.short_name }}.state, '{{ tr.act_from.name }}')
         {{ model.short_name }}.sudo({{ group_valid }}).signal_workflow('{{ tr.signal }}')
         self.assertEqual({{ model.short_name }}.state, '{{ tr.act_to.name }}')
+        self.assertEqual({{ model.short_name }}.nombre_campo, 'valor esperado al cambiar de estado')
       {%- else %}
 
         # No se cumple la condicion {{ tr.condition }}
@@ -44,11 +45,13 @@ class test_workflow_{{ model.short_name | replace('.','_') }}(common.Transaction
         self.assertEqual({{ model.short_name }}.state, '{{ tr.act_from.name }}')
         {{ model.short_name }}.sudo({{ group_valid }}).signal_workflow('{{ tr.signal }}')
         self.assertEqual({{ model.short_name }}.state, '{{ tr.act_to.name }}')
+        self.assertEqual({{ model.short_name }}.nombre_campo, 'valor esperado al cambiar de estado')
       {%- endif -%}
     {%- else -%}
       {%- if tr.condition == 'True' %}
         {{ model.short_name }}.signal_workflow('{{ tr.signal }}')
         self.assertEqual({{ model.short_name }}.state, '{{ tr.act_to.name }}')
+        self.assertEqual({{ model.short_name }}.nombre_campo, 'valor esperado al cambiar de estado')
       {%- else %}
 
         # No se cumple la condicion {{ tr.condition }}
@@ -59,6 +62,7 @@ class test_workflow_{{ model.short_name | replace('.','_') }}(common.Transaction
         {{ model.short_name }}.write({'campo': 'valor_valido'})
         {{ model.short_name }}.signal_workflow('{{ tr.signal }}')
         self.assertEqual({{ model.short_name }}.state, '{{ tr.act_to.name }}')
+        self.assertEqual({{ model.short_name }}.nombre_campo, 'valor esperado al cambiar de estado')
       {%- endif -%}
     {%- endif -%}
   {%- endfor %}

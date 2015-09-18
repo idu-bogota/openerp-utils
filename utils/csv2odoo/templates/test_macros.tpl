@@ -79,7 +79,7 @@
 
 {% macro compute_method(field) %}
         {%- if field.arguments['depends'] %}
-        vals_upd = {{ '{' }}{% for field_name in field.arguments['depends'] %}
+        vals_update = {{ '{' }}{% for field_name in field.arguments['depends'] %}
             '{{ field_name }}': 'Valor a usarse para calculo',
             {%- endfor %}
         }
@@ -89,7 +89,7 @@
 {%- endmacro -%}
 
 {% macro constrains_method(field) %}
-        vals_upd = {
+        vals_update = {
             '{{ field.name }}': 'Valor a usarse para romper la validación',
         }
         try:

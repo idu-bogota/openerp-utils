@@ -146,10 +146,10 @@
     {%- if field.arguments['constrains'] %}
         try:
             self._check_{{ field.name }}()
-        except Exception, e:
+        except Exception as e:
             return {
                 'title': "Error de Validación",
-                'warning': {'message': e.message}
+                'warning': {'message': e.value}
             }
     {%- else %}
         # https://www.odoo.com/documentation/8.0/howtos/backend.html#onchange
