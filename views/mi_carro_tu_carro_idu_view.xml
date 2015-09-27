@@ -1,12 +1,6 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-    <template id="assets_backend" name="tucarro_micarro_assets" inherit_id="web.assets_backend">
-            <xpath expr="." position="inside">
-                <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
-                <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps.js"></script>
-            </xpath>
-    </template>
     <menuitem id="mi_carro_tu_carro_nav" name="Mi Carro Tu Carro IDU"/>
     <menuitem id="mi_carro_tu_carro_menu" name="Compartir Transporte"
         parent="mi_carro_tu_carro_nav"
@@ -25,14 +19,6 @@
                 </header>
                 <sheet>
                     <group colspan="2" col="2">
-                        <group name="Datos Oferta" colspan="1">
-                            <separator string="Mapa" colspan="2"/>
-                            <body onload="load()">
-                                <div class="container">
-                                    <div class="span5" id="map" style="width: 100%; height: 400px"></div>
-                                </div>
-                            </body>
-                        </group>
                         <group name="Datos Oferta" colspan="1">
                             <separator string="Comparte Tu Viaje" colspan="2"/>
                             <field name="user_id"
@@ -91,9 +77,6 @@
             <form create="false" edit="false">
                 <sheet>
                     <group colspan="2" col="2">
-                        <group name="Datos Oferta" colspan="1">
-                            <separator string="Mapa" colspan="2"/>
-                        </group>
                         <group name="Datos Oferta" colspan="1">
                             <separator string="Comparte Tu Viaje" colspan="2"/>
                             <field name="user_id"

@@ -1,0 +1,11 @@
+<?xml version="1.0"?>
+<openerp>
+<data>
+    <record model="mi_carro_tu_carro.oferta" id="dato_demo_1">
+        <field name="descripcion">Esta es una ruta 1 configurada con datos de ejemplo</field>
+    </record>
+    <record model="mi_carro_tu_carro.oferta" id="dato_demo_2">
+		<field name="descripcion">Esta es una ruta 2 configurada con datos de ejemplo</field>
+    </record>
+</data>
+</openerp>

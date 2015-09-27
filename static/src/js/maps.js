@@ -54,7 +54,8 @@
             origin: pos_idu,
             destination: pos_pablo,
         // waypoints:[{location: pos_idu}, {location: pos_pablo}],
-            waypoints: [{location: new google.maps.LatLng(4.618083299999999,-74.06835269999999)},{location:new google.maps.LatLng(4.628582499999999,-74.0682926)}],
+        waypoints:[],
+        //    waypoints: [{location: new google.maps.LatLng(4.618083299999999,-74.06835269999999)},{location:new google.maps.LatLng(4.628582499999999,-74.0682926)}],
             travelMode: google.maps.TravelMode.DRIVING
         };
         directionsService.route(request, function(response, status) {
@@ -194,4 +195,20 @@ function WaypointsDistance(result) {
   document.getElementById('end').innerHTML = end;
   document.getElementById('waypointst').innerHTML = waypointst;
   
+}
+
+function save_waypoints()
+{
+	var w=[],wp;
+	var rleg = ren.directions.routes[0].legs[0];
+	data.start = {'lat': rleg.start_location.lat(), 'lng':rleg.start_location.lng()}
+	data.end = {'lat': rleg.end_location.lat(), 'lng':rleg.end_location.lng()}
+	var wp = rleg.via_waypoints	
+	for(var i=0;i<wp.length;i++)w[i] = [wp[i].lat(),wp[i].lng()]	
+	data.waypoints = w;
+	
+	var str = JSON.stringify(data)
+
+
+	document.getElementById('str').innerHTML = str;
 }

@@ -18,6 +18,7 @@ function goma()
                   },
         function(res,sts) {
 		if(sts=='OK')ren.setDirections(res);
+		save_waypoints(ren.getDirections());
                           })		
 }
 

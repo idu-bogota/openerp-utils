@@ -44,6 +44,7 @@ class mi_carro_tu_carro_oferta(models.Model):
     tipo_transporte = fields.Selection(
         TIPO_TRANSPORTE,
         'Tipo de Trasporte',
+        default="carro",
         required=True,
     )
     vacantes = fields.Integer('Vacantes')
@@ -61,6 +62,7 @@ class mi_carro_tu_carro_oferta(models.Model):
         ],
         default="inactivo",
     )
+    waypoints = fields.Char('Waypoints')
     # Campo det tipo ruta
     
 

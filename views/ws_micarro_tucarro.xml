@@ -4,7 +4,7 @@
       <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
       <!-- <script>var city = new Array();$(".typeahead").typeahead({source : city})</script> -->
       <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
-      <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_2.js"></script>
+      <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps.js"></script>
 
   </xpath>
 </template>
@@ -25,21 +25,58 @@
   <template id="descripcion">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
-      <body>
       <div class="oe_structure"/>
       <div class="oe_structure">
         <div class="container">
-                <h3 t-field="person.origen"/>
-                <h4 t-field="person.destino"/>
+			<label>
+            <h2>Ruta No <span t-field="person.id"/></h2>
+            </label>
+            <form action="/rutas/info_extended" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <div class="form-group">
+                <label>Descripcion</label>
+                <div>
+                    <p class="form-control-static" t-esc="person.descripcion"/>
+                </div>
+                <div>
+                    <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
+                </div>
+		        <body onload="load()">
+		            <div class="container">
+		                <div class="span5" id="map" style="width: 100%; height: 400px"></div>
+		                <div><p>Way Points: <span id="ruta"></span></p></div>
+		                <div><p>Total: <span id="total"></span></p></div>
+		                <div><p>Waypoints: <span id="waypoints"></span></p></div>
+		                <div><p>Prueba: <span id="prueba"></span></p></div>
+		                <div><p name="rutas_pw">String: <span id="str"></span></p></div>
+		                <div><p>Starts: <span id="starts"></span></p></div>
+		                <div><p>Ends: <span id="end"></span></p></div>
+		                <div><p>Waypoints: <span id="waypointst"></span></p></div>
+		                <div>
+                    	<input type="text" class="form-control" name="rutas_wp" id="str"></input>
+                    	
+                    	<textarea  class="form-control" name="rutas_wp" style="min-height: 120px" id="str"><t t-esc="Waypoints"/></textarea>
+                    	<input type="button" value="Save Waypoints" onClick="save_waypoints()"/>
+                		</div>
+		            </div>
+		        </body>
+                <!-- <body onLoad="goma()">
+		        <div id="mappy" style="width:100%; height:400px; margin:0px auto 0px auto; border:1px solid #cecece; background:#F5F5F5"></div>
+		        <div><p>Way Points: <span id="str"></span></p></div>
+		        <div style="width:900px; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+		            <input type="button" value="Save Waypoints" onClick="save_waypoints()"/>
+		        </div>-->
+		        <t t-foreach="kwargs" t-as="kwarg">
+                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                </t>
+                <div class="form-group">
+		        <div>
+                    <button class="btn btn-primary btn-lg">Send</button>
+                </div>
+                </div>
+            </div>
+            </form>
         </div>
-        <body onLoad="goma()">
-        <div id="mappy" style="width:900px; height:550px; margin:0px auto 0px auto; border:1px solid #cecece; background:#F5F5F5"></div>
-        <div><p>Way Points: <span id="str"></span></p></div>
-        <div style="width:900px; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-            <input type="button" value="Save Waypoints" onClick="save_waypoints()"/>
-        </div>
-        </body>
-<!--         <body onload="load()">
+<!--        <body onload="load()">
             <div class="container">
                 <div class="span5" id="map" style="width: 100%; height: 400px"></div>
                 <div><p>Way Points: <span id="ruta"></span></p></div>
@@ -56,7 +93,46 @@
         -->
       </div>
       <div class="oe_structure"/>
-      </body>
     </t>
   </template>
+<template id="rutas_update" name="Ruta Actualizada">
+    <t t-call="website.layout">
+      <div id="wrap">
+        <div class="oe_structure"/>
+        <div class="container">
+            <h1>Ruta Actualizada!</h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-success">
+                        Tu PQRS ha sido actualizado correctamente!.
+                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                    </div>
+            </div>
+        </div>
+        <div class="oe_structure"/>
+      </div>
+      </div>
+    </t>
+</template>
+
+<template id="rutas_not_update" name="Ruta No Actualizada">
+    <t t-call="website.layout">
+      <div id="wrap">
+        <div class="oe_structure"/>
+        <div class="container">
+            <h1>Ruta No Actualizada!</h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-success">
+                        Tu PQRS no ha podido ser actualizada dado que el número de identificación de usuario esta errado.
+                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                    </div>
+            </div>
+        </div>
+        <div class="oe_structure"/>
+      </div>
+      </div>
+    </t>
+</template>
+
 </data></openerp>
