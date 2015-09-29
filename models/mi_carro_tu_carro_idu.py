@@ -62,7 +62,7 @@ class mi_carro_tu_carro_oferta(models.Model):
         ],
         default="inactivo",
     )
-    waypoints = fields.Char('Waypoints')
+    route = fields.Char('Ruta Completa')
     # Campo det tipo ruta
     
 

@@ -33,17 +33,13 @@ class Rutas(http.Controller):
         rutas_ids = request.env['mi_carro_tu_carro.oferta']
         rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
         date_comment = fields.Datetime.now()
-        the_dict = json.loads(kwargs['rutas_wp'])
-#        if pqrs.interesado_id.identificacion_numero == kwargs['documentid']:
-#            pqrs.write(
-#                       {
-#                        'descripcion': pqrs.descripcion +
-#                        ' //Comentario Adicional con fecha -' +
-#                        date_comment +
-#                        ': ' +
-#                        kwargs['comments'],
-#                        }) #Agradecimientos a JJ.
-    
+        if kwargs['rutas_wp']:
+#            the_dict = json.loads(kwargs['rutas_wp'])
+            rutas.write(
+                       {
+                        'route': kwargs['rutas_wp']
+                        })
+
         return request.website.render("mi_carro_tu_carro_idu.rutas_update")
 #        else:
 #            return request.website.render("pqrs_idu.pqrs_not_update")
