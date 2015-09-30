@@ -1,6 +1,7 @@
 var map, ren, ser, otra;
 var data = {};
 var x = document.getElementById("otraprueba");
+var arreglo ={};
 wp = "";
 
 function load()
@@ -47,6 +48,20 @@ function load()
 function setroute()
 {
     console.log("Entro a setroute()");
+    if (arreglo.str)
+    {
+        carga = JSON.parse(arreglo.str);
+        ser.route({
+              'origin':new google.maps.LatLng(carga.start.lat,carga.start.lng),
+              'destination':new google.maps.LatLng(carga.end.lat,carga.end.lng),
+              'travelMode': google.maps.DirectionsTravelMode.DRIVING
+                },
+        function(res,sts) {
+             if(sts=='OK')ren.setDirections(res);
+             });
+    }
+    else
+    {
     ser.route({ 'origin': new google.maps.LatLng(4.6075486, -74.0712431),
                  'destination':  new google.maps.LatLng(4.7553847, -74.08053889999996),
                  'travelMode': google.maps.DirectionsTravelMode.DRIVING
@@ -54,6 +69,7 @@ function setroute()
     function(res,sts) {
              if(sts=='OK')ren.setDirections(res);
              });
+    }
 }
 
 function setroute_wp(os)
@@ -89,9 +105,9 @@ function save_waypoints()
     var wp = rleg.via_waypoints 
     for(var i=0;i<wp.length;i++)w[i] = [wp[i].lat(),wp[i].lng()]    
     data.waypoints = w;
-    
     var str = document.getElementById('str');
-    var str = JSON.stringify(data)
+    var str = JSON.stringify(data);
+    arreglo.str = str;
 //    document.getElementById('str').innerHTML = str;
     x.setAttribute("value", str);
 }
