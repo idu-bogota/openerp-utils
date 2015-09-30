@@ -62,7 +62,7 @@ class mi_carro_tu_carro_oferta(models.Model):
         ],
         default="inactivo",
     )
-    route = fields.Char('Ruta Completa')
+    route = fields.Char('Ruta Completa',default="",)
     # Campo det tipo ruta
     
 

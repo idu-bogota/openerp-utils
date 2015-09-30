@@ -1,14 +1,27 @@
-var map, ren, ser;
+var map, ren, ser, otra;
 var data = {};
-function load(wp)
+var x = document.getElementById("otraprueba");
+wp = "";
+
+function load()
 {
-    alert(wp);
+    console.log("Entro a load");
+    console.log("Verifico prueba");
+    if (prueba){
+        console.log("Entro a prueba");
+        var otra = prueba;
+        var find = '&quot;';
+        var re = new RegExp(find, 'g');
+        otra = otra.replace(re,'"');
+        wp = JSON.parse(otra);
+    }
+    console.log("Salta Prueb");
     way_points = "";
-//     way_points = {"start":{"lat":26.1048858,"lng":-80.39231649999999},
-//                       "end":{"lat":25.9416076,"lng":-80.16158410000003},
-//                       "waypoints":[[26.0487104,-80.22360939999999]]};
+//    way_points = {"start":{"lat":4.607561599999999,"lng":-74.0712666},
+//                       "end":{"lat":4.7553847,"lng":-74.08053889999996},
+//                       "waypoints":[[4.694334899999999,-74.06263419999999]]};
     if (way_points) {
-    wp = way_points;
+        wp = way_points;
     }
     map = new google.maps.Map( document.getElementById('mappy'), {
     'zoom':12,
@@ -22,17 +35,18 @@ function load(wp)
     google.maps.event.addListener(ren, 'directions_changed', function() {
     save_waypoints(ren.getDirections()); 
     });
-//    if (wp){
-//        setroute_wp(wp)
-//    }
-//    else {
+    if (wp){
+        setroute_wp(wp)
+    }
+    else {
         setroute()
-//    }
+    }
     
     }
 
 function setroute()
 {
+    console.log("Entro a setroute()");
     ser.route({ 'origin': new google.maps.LatLng(4.6075486, -74.0712431),
                  'destination':  new google.maps.LatLng(4.7553847, -74.08053889999996),
                  'travelMode': google.maps.DirectionsTravelMode.DRIVING
@@ -44,9 +58,10 @@ function setroute()
 
 function setroute_wp(os)
 {
-        
+        console.log("Entro a setroute(os)");
         var wp = [];
-        alert(os['waypoints']);
+        console.log("Entro a setroute");
+//        alert(os['waypoints']);
         for(var i=0;i<os.waypoints.length;i++)
                 wp[i] = {'location': new google.maps.LatLng(os.waypoints[i][0], os.waypoints[i][1]),'stopover':false }
                 
@@ -74,7 +89,9 @@ function save_waypoints()
     var wp = rleg.via_waypoints 
     for(var i=0;i<wp.length;i++)w[i] = [wp[i].lat(),wp[i].lng()]    
     data.waypoints = w;
-
+    
+    var str = document.getElementById('str');
     var str = JSON.stringify(data)
-    document.getElementById('str').innerHTML = str;
+//    document.getElementById('str').innerHTML = str;
+    x.setAttribute("value", str);
 }

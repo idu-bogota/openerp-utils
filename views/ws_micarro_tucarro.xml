@@ -2,10 +2,8 @@
   <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
   <xpath expr="." position="inside">
       <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
-      <!-- <script>var city = new Array();$(".typeahead").typeahead({source : city})</script> -->
       <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
       <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_wp.js"></script>
-
   </xpath>
 </template>
   <template id="index">
@@ -33,44 +31,49 @@
             </label>
             <form action="/rutas/info_extended" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
             <div class="form-group">
-                <label>Descripcion</label>
-                <div>
+                <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
+                <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.descripcion"/>
                 </div>
-                <label>Way Points</label>
-                <div>
-                    <p class="form-control-static" t-esc="person.route"/>
+                <label class="col-md-3 col-sm-4 control-label">Origen</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.origen"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Destino</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.destino"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Hora de Viaje</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.hora_viaje"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Tipo de Transporte</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.tipo_transporte"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.vacantes"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.comentario"/>
                 </div>
                 <div>
                     <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
                 </div>
-		        <!-- <body onload="load()">
-		            <div class="container">
-		                <div class="span5" id="map" style="width: 100%; height: 400px"></div>
-		                <div><p>Way Points: <span id="ruta"></span></p></div>
-		                <div><p>Total: <span id="total"></span></p></div>
-		                <div><p>Waypoints: <span id="waypoints"></span></p></div>
-		                <div><p>Prueba: <span id="prueba"></span></p></div>
-		                <div><p name="rutas_pw">String: <span id="str"></span></p></div>
-		                <div><p>Starts: <span id="starts"></span></p></div>
-		                <div><p>Ends: <span id="end"></span></p></div>
-		                <div><p>Waypoints: <span id="waypointst"></span></p></div>
-		                <div>
-                    	<input type="text" class="form-control" name="rutas_wp" id="str"></input>
-                    	
-                    	<textarea  class="form-control" name="rutas_wp" style="min-height: 120px" id="str"><t t-esc="Waypoints"/></textarea>
-                    	<input type="button" value="Save Waypoints" onClick="save_waypoints()"/>
-                		</div>
-		            </div>
-		        </body>-->
-                <body onLoad="load(t-att-src='person.route')">
+                <script type="text/javascript">
+                    var aDiv = document.getElementById("DivContenedor");
+                    var prueba = "<t t-esc="person.route"/>";
+                </script>
+                <div id="DivContenedor"></div>
+                <body onLoad="load()">
                 <div class="container">
 		        <!-- <div id="mappy" style="width:100%; height:400px; margin:0px auto 0px auto; border:1px solid #cecece; background:#F5F5F5"></div>-->
-                <div class="span5" id="mappy" style="width: 100%; height: 400px"></div>
+                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
 		        <div><p><span id="str"></span></p></div>
                 <div>
-                <input type="text" class="form-control" name="rutas_wp" id="str"></input>
-                <input type="button" value="Save Waypoints" onClick="save_waypoints()"/>
+                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
                 </div>
                 </div>
                 </body>
@@ -79,27 +82,12 @@
                 </t>
                 <div class="form-group">
 		        <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                    <button class="btn btn-primary btn-lg">Send</button>
+                    <button class="btn btn-primary btn-lg">Actualizar Ruta</button>
                 </div>
                 </div>
             </div>
             </form>
         </div>
-<!--        <body onload="load()">
-            <div class="container">
-                <div class="span5" id="map" style="width: 100%; height: 400px"></div>
-                <div><p>Way Points: <span id="ruta"></span></p></div>
-                <div><p>Total: <span id="total"></span></p></div>
-                <div><p>Waypoints: <span id="waypoints"></span></p></div>
-                <div><p>Prueba: <span id="prueba"></span></p></div>
-                <div><p>String: <span id="str"></span></p></div>
-                <div><p>Starts: <span id="starts"></span></p></div>
-                <div><p>Ends: <span id="end"></span></p></div>
-                <div><p>Waypoints: <span id="waypointst"></span></p></div>
-            </div>
-        </body> 
-        http://vikku.info/programming/google-maps-v3/draggable-directions/saving-draggable-directions-saving-waypoints-google-directions-google-maps-v3.htm
-        -->
       </div>
       <div class="oe_structure"/>
     </t>
