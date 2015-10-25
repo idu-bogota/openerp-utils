@@ -16,6 +16,7 @@
         <field name="name">Geo Ruta</field>
         <field name="model">mi_carro_tu_carro.oferta</field>
         <field eval="16" name="priority" />
+        <field name="default_extent">-8258256.53593,499200.178597,-8236867.077879,522048.507704</field>
         <field name="arch" type="xml">
             <geoengine version="7.0">
                 <field name="descripcion" />
@@ -39,7 +40,7 @@
         model="geoengine.raster.layer">
         <field name="raster_type">osm</field>
         <field name="name">Ruta Background</field>
-        <field name="view_id" ref="geoengine_vector_layer_geo_ruta" />
+        <field name="view_id" ref="ir_ui_view_geo_ruta" />
         <field eval="0" name="overlay" />
     </record>
 
@@ -71,6 +72,7 @@
                             <field name="vacantes"/>
                             <field name="costo"/>
                             <field name="comentario"/>
+                            <field name="shape" widget="geo_edit_map"/>
                         </group>
                     </group>
                 </sheet>
