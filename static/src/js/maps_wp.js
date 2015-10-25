@@ -117,9 +117,9 @@ function save_waypoints()
         w[i] = [wp[i].lat(),wp[i].lng()]
     }
     data.waypoints = w;
-    var steps = [[rleg.start_location.lat(), rleg.start_location.lng()]];
+    var steps = [[rleg.start_location.lng(), rleg.start_location.lat()]];
     for(var i=0; i < rleg.steps.length; i++) {
-        steps[i+1] = [ rleg.steps[i].end_point.lat(), rleg.steps[i].end_point.lng()]
+        steps[i+1] = [ rleg.steps[i].end_point.lng(), rleg.steps[i].end_point.lat()]
     }
     data.steps = steps;
 
