@@ -78,21 +78,31 @@ function setroute_wp(os)
         var wp = [];
         console.log("Entro a setroute");
 //        alert(os['waypoints']);
-        for(var i=0;i<os.waypoints.length;i++)
-                wp[i] = {'location': new google.maps.LatLng(os.waypoints[i][0], os.waypoints[i][1]),'stopover':false }
-                
+        for(var i=0;i<os.waypoints.length;i++) {
+            wp[i] = {'location': new google.maps.LatLng(os.waypoints[i][0], os.waypoints[i][1]),'stopover':false }
+        }
+        var steps = [];
+        for(var i=0; i < os.steps.length; i++) {
+            steps[i] = {
+                'location': new google.maps.LatLng(os.steps[i][0], os.steps[i][1])
+            }
+        }
+
         ser.route({
-        'origin':new google.maps.LatLng(os.start.lat,os.start.lng),
-        'destination':new google.maps.LatLng(os.end.lat,os.end.lng),
-        'waypoints': wp,
-        'travelMode': google.maps.DirectionsTravelMode.DRIVING
-                },
-        
+          'origin':new google.maps.LatLng(os.start.lat,os.start.lng),
+          'destination':new google.maps.LatLng(os.end.lat,os.end.lng),
+          'waypoints': wp,
+          'steps': steps,
+          'travelMode': google.maps.DirectionsTravelMode.DRIVING
+        },
+
         function(res,sts) {
-                if(sts=='OK')ren.setDirections(res);
+            if(sts=='OK') {
+                ren.setDirections(res);
+            }
         })
         google.maps.event.addListener(ren, 'directions_changed', function() {
-        save_waypoints(ren.getDirections());
+            save_waypoints(ren.getDirections());
        });
 }
 
@@ -102,9 +112,17 @@ function save_waypoints()
     var rleg = ren.directions.routes[0].legs[0];
     data.start = {'lat': rleg.start_location.lat(), 'lng':rleg.start_location.lng()}
     data.end = {'lat': rleg.end_location.lat(), 'lng':rleg.end_location.lng()}
-    var wp = rleg.via_waypoints 
-    for(var i=0;i<wp.length;i++)w[i] = [wp[i].lat(),wp[i].lng()]    
+    var wp = rleg.via_waypoints
+    for(var i=0;i<wp.length;i++) {
+        w[i] = [wp[i].lat(),wp[i].lng()]
+    }
     data.waypoints = w;
+    var steps = [[rleg.start_location.lat(), rleg.start_location.lng()]];
+    for(var i=0; i < rleg.steps.length; i++) {
+        steps[i+1] = [ rleg.steps[i].end_point.lat(), rleg.steps[i].end_point.lng()]
+    }
+    data.steps = steps;
+
     var str = document.getElementById('str');
     var str = JSON.stringify(data);
     arreglo.str = str;
