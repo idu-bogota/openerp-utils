@@ -7,7 +7,7 @@ from openerp import http
 from openerp.http import request
 from openerp import fields
 import json
-#import pyproj
+import pyproj
 
 class Rutas(http.Controller):
     @http.route('/rutas/', auth='public', website=True)
@@ -37,16 +37,16 @@ class Rutas(http.Controller):
         date_comment = fields.Datetime.now()
         if kwargs['rutas_wp']:
             the_dict = json.loads(kwargs['rutas_wp'])
-            #wgs84 = pyproj.Proj("+init=EPSG:4326")
-            #google = pyproj.Proj("+init=SR-ORG:6627")
-            #steps_google = []
-            #for step in the_dict['steps']:
-                #steps_google.append(
-                    #pyproj.transform(wgs84, google, step[0], step[1]),
-                #)
+            gmap = pyproj.Proj("+init=EPSG:3857")
+            google = pyproj.Proj("+init=EPSG:4326")
+            steps_google = []
+            for step in the_dict['steps']:
+                steps_google.append(
+                    pyproj.transform(gmap, google, step[0], step[1]),
+                )
             shape = {
                 "type": "LineString",
-                "coordinates": the_dict['steps'],
+                "coordinates": steps_google, #the_dict['steps'],
             }
             rutas.write({
                 'route': kwargs['rutas_wp'],
