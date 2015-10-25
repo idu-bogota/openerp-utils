@@ -10,6 +10,7 @@
         'base',
         'base_idu',
         'website',
+        'base_geoengine',
     ],
     "data" : [
         'views/mi_carro_tu_carro_idu_view.xml',
