@@ -7,6 +7,7 @@ from openerp import http
 from openerp.http import request
 from openerp import fields
 import json
+#import pyproj
 
 class Rutas(http.Controller):
     @http.route('/rutas/', auth='public', website=True)
@@ -30,15 +31,27 @@ class Rutas(http.Controller):
 
     @http.route(['/rutas/info_extended/'], type='http', auth="public", website=True)
     def info_extended(self, **kwargs):
+        #import pudb; pu.db
         rutas_ids = request.env['mi_carro_tu_carro.oferta']
         rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
         date_comment = fields.Datetime.now()
         if kwargs['rutas_wp']:
-#            the_dict = json.loads(kwargs['rutas_wp'])
-            rutas.write(
-                       {
-                        'route': kwargs['rutas_wp']
-                        })
+            the_dict = json.loads(kwargs['rutas_wp'])
+            #wgs84 = pyproj.Proj("+init=EPSG:4326")
+            #google = pyproj.Proj("+init=SR-ORG:6627")
+            #steps_google = []
+            #for step in the_dict['steps']:
+                #steps_google.append(
+                    #pyproj.transform(wgs84, google, step[0], step[1]),
+                #)
+            shape = {
+                "type": "LineString",
+                "coordinates": the_dict['steps'],
+            }
+            rutas.write({
+                'route': kwargs['rutas_wp'],
+                'shape': json.dumps(shape),
+            })
 
         return request.website.render("mi_carro_tu_carro_idu.rutas_update")
 #        else:
