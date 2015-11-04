@@ -29,7 +29,7 @@
 			<label>
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
-            <form action="/rutas/info_extended" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <form action="/rutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
                 <div class="col-md-7 col-sm-8">

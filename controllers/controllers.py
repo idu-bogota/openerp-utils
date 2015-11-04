@@ -28,7 +28,7 @@ class Rutas(http.Controller):
             'kwargs': values
         })
 
-    @http.route(['/rutas/info_extended'], type='http', auth="public", website=True)
+    @http.route(['/rutas/info_extended/'], type='http', auth="public", website=True)
     def info_extended(self, **kwargs):
         rutas_ids = request.env['mi_carro_tu_carro.oferta']
         rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
