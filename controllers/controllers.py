@@ -43,3 +43,49 @@ class Rutas(http.Controller):
         return request.website.render("mi_carro_tu_carro_idu.rutas_update")
 #        else:
 #            return request.website.render("pqrs_idu.pqrs_not_update")
+
+    @http.route('/crear/', auth='public', website=True)
+    def get_crear(self, **kwargs):
+        values = {}
+        for field in ['ruta_number']:
+            if kwargs.get(field):
+                values[field] = kwargs.pop(field)
+        values.update(kwargs=kwargs.items())
+        return request.website.render("mi_carro_tu_carro_idu.crear_ruta_form", values)
+
+    @http.route(['/crear_ruta/'], type='http', auth="public", website=True)
+    def get_crear_ruta(self, **kwargs):
+        ruta_created = request.env['mi_carro_tu_carro.oferta'].create(
+                                       {'descripcion' : kwargs['descripcion'],
+                                        'hora_viaje': kwargs['fecha_viaje'],
+                                        'tipo_transporte': kwargs['transporteselect'],
+                                        'vacantes': kwargs['vacantes'],
+                                        'comentario' : kwargs['comentarios'],
+                                        'state' : kwargs['stateselect'],
+                                        'route': kwargs['rutas_wp'],
+                                        }) #Agradecimientos a JJ.
+
+        values = ruta_created
+        
+        return request.website.render("mi_carro_tu_carro_idu.ruta_creada", {
+                            'person': values
+                            })
+
+
+    @http.route('/buscar/', auth='public', website=True)
+    def get_buscar(self, **kwargs):
+        values = {}
+        for field in ['ruta_number']:
+            if kwargs.get(field):
+                values[field] = kwargs.pop(field)
+        values.update(kwargs=kwargs.items())
+        return request.website.render("mi_carro_tu_carro_idu.buscar_ruta_form", values)
+
+    @http.route('/buscar_ruta/', auth='public', website=True)
+    def get_buscar_ruta(self, **kwargs):
+        values = {}
+        for field in ['ruta_number']:
+            if kwargs.get(field):
+                values[field] = kwargs.pop(field)
+        values.update(kwargs=kwargs.items())
+        return request.website.render("mi_carro_tu_carro_idu.buscar_ruta_form", values)

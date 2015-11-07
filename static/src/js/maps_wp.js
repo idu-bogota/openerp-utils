@@ -4,6 +4,31 @@ var x = document.getElementById("otraprueba");
 var arreglo ={};
 wp = "";
 
+function crear()
+{
+    console.log("Entro a load");
+    console.log("Salta Prueb");
+    map = new google.maps.Map( document.getElementById('mappy'), {
+    'zoom':12,
+    'mapTypeId': google.maps.MapTypeId.ROADMAP,
+    'center': new google.maps.LatLng(4.7553847, -74.08053889999996)
+    })
+
+    ren = new google.maps.DirectionsRenderer( {'draggable':true} );
+    ren.setMap(map);
+    ser = new google.maps.DirectionsService();
+    google.maps.event.addListener(ren, 'directions_changed', function() {
+    save_waypoints(ren.getDirections()); 
+    });
+    if (wp){
+        setroute_wp(wp)
+    }
+    else {
+        setroute()
+    }
+    
+    }
+
 function load()
 {
     console.log("Entro a load");
@@ -98,6 +123,7 @@ function setroute_wp(os)
 
 function save_waypoints()
 {
+    console.log("Entro a save");
     var w=[],wp;
     var rleg = ren.directions.routes[0].legs[0];
     data.start = {'lat': rleg.start_location.lat(), 'lng':rleg.start_location.lng()}
