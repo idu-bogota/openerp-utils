@@ -84,6 +84,11 @@ class Rutas(http.Controller):
     @http.route('/buscar_ruta/', auth='public', website=True)
     def get_buscar_ruta(self, **kwargs):
         values = {}
+        wp = kwargs['rutas_wp']
+#         Oferta = http.request.env['mi_carro_tu_carro.oferta']
+#         return http.request.render('mi_carro_tu_carro_idu.index', {
+#             'ofertas': Oferta.search([]),
+#         })
         for field in ['ruta_number']:
             if kwargs.get(field):
                 values[field] = kwargs.pop(field)
