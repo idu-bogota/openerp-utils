@@ -32,24 +32,26 @@ class Rutas(http.Controller):
     @http.route(['/rutas/info_extended/'], type='http', auth="public", website=True)
     def info_extended(self, **kwargs):
         #import pudb; pu.db
-        rutas_ids = request.env['mi_carro_tu_carro.oferta']
-        rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
+        rutas_model = request.env['mi_carro_tu_carro.oferta']
+        rutas = rutas_model.search([('id','=',kwargs['rutas_id'])])
         date_comment = fields.Datetime.now()
         if kwargs['rutas_wp']:
             the_dict = json.loads(kwargs['rutas_wp'])
-            gmap = pyproj.Proj("+init=EPSG:3857")
-            google = pyproj.Proj("+init=EPSG:4326")
+            google = pyproj.Proj("+init=EPSG:3857")
+            gps = pyproj.Proj("+init=EPSG:4326")
             steps_google = []
             for step in the_dict['steps']:
                 steps_google.append(
-                    pyproj.transform(gmap, google, step[0], step[1]),
+                    pyproj.transform(gps, google, step[0], step[1]),
                 )
             shape = {
                 "type": "LineString",
-                "coordinates": steps_google, #the_dict['steps'],
+                "coordinates": steps_google,
+                #"coordinates": the_dict['steps'],
             }
+            the_dict.pop('steps', None) # Eliminando
             rutas.write({
-                'route': kwargs['rutas_wp'],
+                'route': json.dumps(the_dict),
                 'shape': json.dumps(shape),
             })
 
@@ -79,7 +81,6 @@ class Rutas(http.Controller):
                                         }) #Agradecimientos a JJ.
 
         values = ruta_created
-        
         return request.website.render("mi_carro_tu_carro_idu.ruta_creada", {
                             'person': values
                             })
@@ -96,14 +97,27 @@ class Rutas(http.Controller):
 
     @http.route('/buscar_ruta/', auth='public', website=True)
     def get_buscar_ruta(self, **kwargs):
-        values = {}
-        wp = kwargs['rutas_wp']
-#         Oferta = http.request.env['mi_carro_tu_carro.oferta']
-#         return http.request.render('mi_carro_tu_carro_idu.index', {
-#             'ofertas': Oferta.search([]),
-#         })
-        for field in ['ruta_number']:
-            if kwargs.get(field):
-                values[field] = kwargs.pop(field)
+        values = json.loads(kwargs['rutas_wp'])
+        google = pyproj.Proj("+init=EPSG:3857")
+        gps = pyproj.Proj("+init=EPSG:4326")
+        start = pyproj.transform(gps, google, values['start']['lng'], values['start']['lat'])
+        finish = pyproj.transform(gps, google, values['end']['lng'], values['end']['lat'])
+        sql = """SELECT id
+            FROM mi_carro_tu_carro_oferta o
+            WHERE ST_DWithin(o.shape, ST_SetSRID(ST_MakePoint(%s, %s), 900913), 500) AND
+            ST_DWithin(o.shape, ST_SetSRID(ST_MakePoint(%s, %s), 900913), 500)
+        """ # Busca rutas que esten a 500 metros de los puntos origen y destino seleccionados
+        params = (start[0], start[1], finish[0], finish[1])
+        request.env.cr.execute(sql, params)
+        res = request.env.cr.fetchall()
+        #print values['start']['lng'], values['start']['lat']
+        #print values['end']['lng'], values['end']['lat']
+        #print sql
+        #print params
+        #print res
+        rutas_ids = [ i[0] for i in res ]
+        rutas_model = request.env['mi_carro_tu_carro.oferta']
+        rutas = rutas_model.browse(rutas_ids)
+        #print rutas
         values.update(kwargs=kwargs.items())
         return request.website.render("mi_carro_tu_carro_idu.buscar_ruta_form", values)
