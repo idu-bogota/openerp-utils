@@ -65,12 +65,10 @@
                                 readonly="1"
                             />
                             <field name="descripcion"/>
-                            <field name="origen"/>
-                            <field name="destino"/>
                             <field name="hora_viaje"/>
                             <field name="tipo_transporte"/>
-                            <field name="vacantes"/>
-                            <field name="costo"/>
+                            <field name="vacantes" attrs="{'invisible':[('tipo_transporte','=','bici')]}"/>
+                            <field name="integrantes" attrs="{'invisible':[('tipo_transporte','!=','bici')]}"/>
                             <field name="comentario"/>
                             <field name="shape" widget="geo_edit_map" readonly="1"/>
                         </group>
@@ -85,12 +83,8 @@
         <field name="arch" type="xml">
             <tree>
                 <field name="state" string="Estado"/>
-                <field name="origen"/>
-                <field name="destino"/>
                 <field name="hora_viaje"/>
                 <field name="tipo_transporte"/>
-                <field name="vacantes"/>
-                <field name="costo"/>
                 <field name="comentario"/>
             </tree>
         </field>
@@ -115,6 +109,10 @@
         <field name="model">mi_carro_tu_carro.oferta</field>
         <field name="arch" type="xml">
             <form create="false" edit="false">
+                <header>
+                    <button name="compute_vacantes" string="Solicitar" type="object" attrs="{'invisible':[('tipo_transporte','=','bici')]}"/>
+                    <button name="compute_integrantes" string="Solicitar" type="object" attrs="{'invisible':[('tipo_transporte','!=','bici')]}"/>
+                </header>
                 <sheet>
                     <group colspan="2" col="2">
                         <group name="Datos Oferta" colspan="1">
@@ -124,12 +122,10 @@
                                 readonly="1"
                             />
                             <field name="descripcion"/>
-                            <field name="origen"/>
-                            <field name="destino"/>
                             <field name="hora_viaje"/>
                             <field name="tipo_transporte"/>
-                            <field name="vacantes"/>
-                            <field name="costo"/>
+                            <field name="vacantes" attrs="{'invisible':[('tipo_transporte','=','bici')]}"/>
+                            <field name="integrantes" attrs="{'invisible':[('tipo_transporte','!=','bici')]}"/>
                             <field name="comentario"/>
                         </group>
                     </group>
@@ -143,12 +139,8 @@
         <field name="arch" type="xml">
             <tree create="false">
                 <field name="user_id"/>
-                <field name="origen"/>
-                <field name="destino"/>
                 <field name="hora_viaje"/>
                 <field name="tipo_transporte"/>
-                <field name="vacantes"/>
-                <field name="costo"/>
                 <field name="comentario"/>
             </tree>
         </field>

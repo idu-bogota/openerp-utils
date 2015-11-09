@@ -51,6 +51,7 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         required=True,
     )
     vacantes = fields.Integer('Vacantes')
+    integrantes = fields.Integer('Integrantes')
     costo = fields.Integer('Costo')
     comentario = fields.Text('Comentario')
     user_id = fields.Many2one(
@@ -71,3 +72,17 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         string='Ruta',
     )
 
+    @api.multi
+    def compute_vacantes(self):
+        if not self.vacantes <= 0:
+            self.vacantes = self.vacantes - 1
+            return True
+        else:
+            res = {'value':{}}
+            res.update({'warning': {'title': _('Warning !'), 'message': _('No hay Vacantes en esta Ruta.')}})
+            return res
+
+    @api.multi
+    def compute_integrantes(self):
+        self.integrantes = self.integrantes + 1
+        return True

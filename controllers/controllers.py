@@ -70,15 +70,38 @@ class Rutas(http.Controller):
 
     @http.route(['/crear_ruta/'], type='http', auth="public", website=True)
     def get_crear_ruta(self, **kwargs):
-        ruta_created = request.env['mi_carro_tu_carro.oferta'].create(
+        rutas = request.env['mi_carro_tu_carro.oferta']
+        if kwargs['rutas_wp']:
+            the_dict = json.loads(kwargs['rutas_wp'])
+            google = pyproj.Proj("+init=EPSG:3857")
+            gps = pyproj.Proj("+init=EPSG:4326")
+            steps_google = []
+            for step in the_dict['steps']:
+                steps_google.append(
+                    pyproj.transform(gps, google, step[0], step[1]),
+                )
+            shape = {
+                "type": "LineString",
+                "coordinates": steps_google,
+                #"coordinates": the_dict['steps'],
+            }
+            the_dict.pop('steps', None) # Eliminando
+            ruta_created = rutas.create(
                                        {'descripcion' : kwargs['descripcion'],
                                         'hora_viaje': kwargs['fecha_viaje'],
                                         'tipo_transporte': kwargs['transporteselect'],
                                         'vacantes': kwargs['vacantes'],
                                         'comentario' : kwargs['comentarios'],
                                         'state' : kwargs['stateselect'],
-                                        'route': kwargs['rutas_wp'],
+                                        'route' : kwargs['rutas_wp'],
                                         }) #Agradecimientos a JJ.
+            ruta_created.write({
+                'route': json.dumps(the_dict),
+                'shape': json.dumps(shape),
+            })
+        
+        
+
 
         values = ruta_created
         return request.website.render("mi_carro_tu_carro_idu.ruta_creada", {
@@ -120,4 +143,40 @@ class Rutas(http.Controller):
         rutas = rutas_model.browse(rutas_ids)
         #print rutas
         values.update(kwargs=kwargs.items())
-        return request.website.render("mi_carro_tu_carro_idu.buscar_ruta_form", values)
+        return http.request.render('mi_carro_tu_carro_idu.lista_rutas_ofertar', {
+            'lista_ofertas': rutas,
+        })
+        #return request.website.render("mi_carro_tu_carro_idu.buscar_ruta_form", values)
+
+    @http.route('/ofertar/<model("mi_carro_tu_carro.oferta"):oferta>/', auth='public', website=True)
+    def ruta_ofertar_form(self, oferta,**kwargs):
+        values = {}
+        for field in ['rutas_id', 'rutas_wp']:
+            if kwargs.get(field):
+                values[field] = kwargs.pop(field)
+        values.update(kwargs=kwargs.items())
+        return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
+            'person': oferta,
+            'kwargs': values
+        })
+
+    @http.route(['/ofertar/info_extended/'], type='http', auth="public", website=True)
+    def ofertar(self, **kwargs):
+        values = {}
+        rutas_ids = request.env['mi_carro_tu_carro.oferta']
+        rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
+        if rutas.tipo_transporte == 'bici':
+            rutas.compute_integrantes()
+            return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
+                            'person': rutas,
+                            'kwargs': values,
+                            })
+        else:
+            if not rutas.vacantes <=0:
+                rutas.compute_vacantes()
+                return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
+                    'person': rutas,
+                    'kwargs': values
+                    })
+            else:
+                return request.website.render("mi_carro_tu_carro_idu.ruta_no_ofertada")

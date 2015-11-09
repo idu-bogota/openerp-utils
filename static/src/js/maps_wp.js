@@ -4,6 +4,31 @@ var x = document.getElementById("otraprueba");
 var arreglo ={};
 wp = "";
 
+function ofertar()
+{
+    console.log("Entro a load");
+    console.log("Salta Prueb");
+    map = new google.maps.Map( document.getElementById('mappy'), {
+    'zoom':12,
+    'mapTypeId': google.maps.MapTypeId.ROADMAP,
+    'center': new google.maps.LatLng(4.7553847, -74.08053889999996)
+    })
+
+    ren = new google.maps.DirectionsRenderer( {'draggable':false} );
+    ren.setMap(map);
+    ser = new google.maps.DirectionsService();
+    google.maps.event.addListener(ren, 'directions_changed', function() {
+    save_waypoints(ren.getDirections()); 
+    });
+    if (wp){
+        setroute_wp(wp)
+    }
+    else {
+        setroute()
+    }
+    
+    }
+
 function crear()
 {
     console.log("Entro a load");
@@ -48,6 +73,7 @@ function load()
 //                       "waypoints":[[4.694334899999999,-74.06263419999999]]};
     if (way_points) {
         wp = way_points;
+        console.log("Asigna WPS");
     }
     map = new google.maps.Map( document.getElementById('mappy'), {
     'zoom':12,
@@ -102,22 +128,42 @@ function setroute_wp(os)
         console.log("Entro a setroute(os)");
         var wp = [];
         console.log("Entro a setroute");
-//        alert(os['waypoints']);
-        for(var i=0;i<os.waypoints.length;i++) {
+        for(var i=0;i<os.waypoints.length;i++)
+        {
             wp[i] = {'location': new google.maps.LatLng(os.waypoints[i][0], os.waypoints[i][1]),'stopover':false }
         }
-        var steps = [];
-        for(var i=0; i < os.steps.length; i++) {
-            steps[i] = {
-                'location': new google.maps.LatLng(os.steps[i][0], os.steps[i][1])
+        console.log("Paso chequeo wp");
+        if (steps)
+        {
+            var steps = [];
+            for(var i=0; i < os.steps.length; i++) 
+            {
+                steps[i] = {
+                    'location': new google.maps.LatLng(os.steps[i][0], os.steps[i][1])
+                           }
             }
-        }
-
+            ser.route({
+              'origin':new google.maps.LatLng(os.start.lat,os.start.lng),
+              'destination':new google.maps.LatLng(os.end.lat,os.end.lng),
+              'waypoints': wp,
+              'steps': steps,
+              'travelMode': google.maps.DirectionsTravelMode.DRIVING
+            },
+    
+            function(res,sts) {
+                if(sts=='OK') {
+                    ren.setDirections(res);
+                }
+            })
+        }   
+        else
+        {
+        console.log("Paso chequeo steps");
         ser.route({
           'origin':new google.maps.LatLng(os.start.lat,os.start.lng),
           'destination':new google.maps.LatLng(os.end.lat,os.end.lng),
           'waypoints': wp,
-          'steps': steps,
+          //'steps': steps,
           'travelMode': google.maps.DirectionsTravelMode.DRIVING
         },
 
@@ -126,6 +172,7 @@ function setroute_wp(os)
                 ren.setDirections(res);
             }
         })
+        }
         google.maps.event.addListener(ren, 'directions_changed', function() {
             save_waypoints(ren.getDirections());
        });
