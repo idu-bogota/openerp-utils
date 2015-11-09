@@ -137,7 +137,7 @@ class Model(object):
 
     @menu.setter
     def menu(self, v):
-        if not self._menu and v in ['main', 'conf']:
+        if not self._menu and v in ['main', 'conf', 'admin']:
             self._menu = v
 
     @property

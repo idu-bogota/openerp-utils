@@ -115,7 +115,7 @@
         <field name="view_mode">tree,form</field>
     </record>
     {%- set parent_prefix = model.module.name | replace('.','_') %}
-    {%- set parent = parent_prefix + '_conf_menu' if model.menu == 'conf' else parent_prefix + '_menu' %}
+    {%- set parent = parent_prefix +  {'conf': '_conf_menu', 'admin': '_admin_menu'}.get(model.menu, '_menu') %}
     <menuitem id="{{ model.short_name | replace('.','_') }}_menu"
         parent="{{ parent }}"
         name="{{ model.description or model.short_name }}" action="{{ model.short_name | replace('.','_') }}_action"

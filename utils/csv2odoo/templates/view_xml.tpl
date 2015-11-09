@@ -13,6 +13,11 @@
      <menuitem id="{{ module.name }}_menu" name="{{ module.string }}" parent="{{ module.name }}_nav"/>
      <menuitem id="{{ module.name }}_conf_menu" parent="{{ module.name }}_nav"
         name="Configuración"
+        groups="base.group_configuration"
+     />
+     <menuitem id="{{ module.name }}_admin_menu" parent="{{ module.name }}_nav"
+        name="Administración"
+        groups="base.group_configuration"
      />
 {% endif -%}
 {%- for model in module.models if model.namespace == namespace %}
