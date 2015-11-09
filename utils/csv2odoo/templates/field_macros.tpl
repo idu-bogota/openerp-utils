@@ -58,6 +58,15 @@
     {% if field.arguments['fk_field'] %}
         inverse_name='{{field.arguments['fk_field']}}',
     {%- endif -%}
+    {% if field.arguments['relation'] %}
+        relation='{{field.arguments['relation']}}',
+    {%- endif -%}
+    {% if field.arguments['column1'] %}
+        column1='{{field.arguments['column1']}}',
+    {%- endif -%}
+    {% if field.arguments['column2'] %}
+        column2='{{field.arguments['column2']}}',
+    {%- endif -%}
     {% if field.arguments['ondelete'] %}
         ondelete='{{field.arguments['ondelete']}}',
     {%- endif -%}

@@ -11,11 +11,12 @@ class Module(object):
 
     @property
     def models(self):
-        return self._models.values()
+        return sorted(self._models.values(), key=lambda x: x.sequence)
 
     def add_model(self, name):
         if not name in self._models:
-            self._models[name] = Model(name, self)
+            Model.sequence += 1
+            self._models[name] = Model(name, self, Model.sequence)
         return self._models[name]
 
     @property
@@ -34,11 +35,12 @@ class Module(object):
 
 class Model(object):
     sequence = 0
-    def __init__(self, name, module):
+    def __init__(self, name, module, sequence):
         self.name = name
         parts = name.split('.')
         self.namespace = parts[0]
         self._module = module
+        self.sequence = sequence
         self.short_name = '_'.join(parts[1:])
         self._description = None
         self._inherit = None
@@ -171,8 +173,8 @@ class Model(object):
 
     def add_field(self, name, line):
         if not name in self._fields:
-            Model.sequence += 1
-            self._fields[name] = Field(name, self, Model.sequence)
+            Field.sequence += 1
+            self._fields[name] = Field(name, self, Field.sequence)
         field = self._fields[name]
         field.arguments = line
         return field
@@ -265,6 +267,7 @@ class Activity(object):
 
 
 class Field(object):
+    sequence = 0
     def __init__(self, name, model, sequence):
         self.sequence = sequence
         self.name = name
@@ -341,7 +344,7 @@ class Field(object):
                 self._arguments['selection'] = None
         elif v.type == 'char':
             self._arguments['size'] = params['size'] if 'size' in params else 255
-        elif v.type in ['many2one', 'many2many']:
+        elif v.type == 'many2one':
             if 'comodel' in v:
                 self._arguments['comodel'] = v.comodel
             elif not 'related' in params:
@@ -363,9 +366,29 @@ class Field(object):
                 self._arguments['comodel'] = parts[0]
                 self._arguments['fk_field'] = parts[1]
             elif not 'related' in params:
-                self.report_error('No extra params accepted on "one2many" comodel:{0}'.format(
+                self.report_error('fk_field on "one2many" comodel is required:{0}'.format(
                     v.comodel
                 ))
+            self._arguments['domain'] = params['domain'] if 'domain' in params and params['domain'] else None
+            self._arguments['ondelete'] = params['ondelete'] if 'ondelete' in params and params['ondelete'] else 'restrict'
+        elif v.type == 'many2many':
+            if (not 'comodel' in v or not v.comodel) and not 'related' in params:
+                self.report_error('"comodel" required on "many2many" field')
+            self._arguments['comodel'] = v.comodel
+            parts = self._arguments['comodel'].split(',')
+            if len(parts) == 2:
+                self._arguments['comodel'] = parts[0]
+                self._arguments['relation'] = parts[1]
+            elif len(parts) == 3:
+                self._arguments['comodel'] = parts[0]
+                self._arguments['relation'] = parts[1]
+                #self._arguments['column1'] = parts[2]
+            elif len(parts) == 4:
+                self._arguments['comodel'] = parts[0]
+                self._arguments['relation'] = parts[1]
+                self._arguments['column1'] = parts[2]
+                self._arguments['column2'] = parts[3]
+
             self._arguments['domain'] = params['domain'] if 'domain' in params and params['domain'] else None
             self._arguments['ondelete'] = params['ondelete'] if 'ondelete' in params and params['ondelete'] else 'restrict'
 
@@ -412,6 +435,8 @@ class Field(object):
         default = self.arguments['default']
         if default == '_CURRENT_USER_':
             return "lambda self: self._context.get('uid', False)"
+        elif default == '_CURRENT_USER_DEPARTMENT_':
+            return "lambda self: self.env.user.department_id.id"
         elif default == '_CONTEXT_':
             return "lambda self: self._context.get('{0}', None)".format(self.name)
         elif default == '_NOW_' and self.type == 'date':
@@ -513,6 +538,15 @@ class Acl(object):
     def delete(self, v):
         self._set_params('delete', v)
 
+    def rule_id(self, action):
+        """Return an external ID for this ACL maximum 64 characters long"""
+        ext_id = "{0}_{1}_acl_{2}".format(
+            self.model.short_name.replace('.', '_'),
+            self.group.name.replace('.', '_'),
+            action,
+        )
+        return ext_id[-64:]
+
 
     def domain_force(self, action):
         domain = getattr(self, action)['param']
@@ -521,4 +555,4 @@ class Acl(object):
         elif domain == '_ALL_':
             return "[(1, '=', 1)]"
         else:
-            return "[{0}]".format(domain)
+            return "{0}".format(domain)

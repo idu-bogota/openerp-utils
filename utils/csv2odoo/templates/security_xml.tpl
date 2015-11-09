@@ -32,7 +32,7 @@
     <!-- Domain {{ group.name }} -->
     {%- for model_name, acl in group.acls.iteritems() -%}
     {%- if acl.read['param'] %}
-    <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_read" model="ir.rule">
+    <record id="{{ acl.rule_id('read') }}" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Read</field>
         <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('read') }}</field>
@@ -44,7 +44,7 @@
     </record>
     {%- endif %}
     {%- if acl.create['param'] %}
-    <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_create" model="ir.rule">
+    <record id="{{ acl.rule_id('create') }}" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Create</field>
         <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('create') }}</field>
@@ -56,7 +56,7 @@
     </record>
     {%- endif %}
     {%- if acl.write['param'] %}
-    <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_write" model="ir.rule">
+    <record id="{{ acl.rule_id('write') }}" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Write</field>
         <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('write') }}</field>
@@ -68,7 +68,7 @@
     </record>
     {%- endif %}
     {%- if acl.delete['param'] %}
-    <record id="{{ acl.model.short_name | replace('.', '_') }}_{{ acl.group.name | replace('.', '_') }}_domain_delete" model="ir.rule">
+    <record id="{{ acl.rule_id('delete') }}" model="ir.rule">
         <field name="name">{{ group.name }} {{ model_name }} Delete</field>
         <field name="model_id" ref="{{ acl.model.external_id }}"/>
         <field name="domain_force">{{ acl.domain_force('delete') }}</field>
