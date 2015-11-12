@@ -76,19 +76,23 @@ class Model():
             campos = self.model[i]
             for key, campo in campos.iteritems():
                 if campo['type'] == 'many2one':
-                    self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))
+                    self.file.write("    {0} {1} {2}\n".format(campo['type'], campo['string'], key))
                  
                 if campo['type'] == 'many2many':
                     try:
                         if campo['m2m_join_table']:
-                            self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))
+                            self.file.write("    {0} {1} {2}\n".format(campo['type'], campo['string'], key))
                     except:
                         pass
             
-            if(self.options.detailed_model  == "1"): # todo los campos
+            if(self.options.detailed_model  == "1"): # todo los campos label del campo
                 for key, campo in campos.iteritems():
                     if campo['type'] != 'many2one' and campo['type'] != 'many2many':
                         self.file.write("    {0} {1}\n".format(campo['type'], campo['string']))
+            if(self.options.detailed_model  == "2"): # todo los campos nombre campo
+                for key, campo in campos.iteritems():
+                    if campo['type'] != 'many2one' and campo['type'] != 'many2many':
+                        self.file.write("    {0} {1}\n".format(campo['type'], key))
             
             self.file.write("}\n")
     # fin        
