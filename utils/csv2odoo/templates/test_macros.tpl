@@ -60,6 +60,10 @@
     {{ text(field) }}
 {%- endmacro %}
 
+{% macro monetary(field) -%}
+    {{ text(field) }}
+{%- endmacro %}
+
 {% macro html(field) -%}
     {{ text(field) }}
 {%- endmacro %}

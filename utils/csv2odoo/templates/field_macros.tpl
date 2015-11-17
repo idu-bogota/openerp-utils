@@ -43,6 +43,9 @@
     {%- if field.arguments['readonly'] %}
         readonly=True,
     {%- endif -%}
+    {%- if field.arguments['invisible'] %}
+        invisible=True,
+    {%- endif -%}
     {%- if field.arguments['tracking'] %}
         track_visibility='onchange',
     {%- endif -%}
@@ -78,6 +81,9 @@
     {%- endif -%}
     {% if field.arguments['domain'] %}
         domain="{{field.arguments['domain']}}",
+    {%- endif -%}
+    {% if field.arguments['currency_field'] %}
+        currency_field="{{field.arguments['currency_field'] or 'currency_id'}}",
     {%- endif -%}
     {% if field.arguments['selection'] %}
         selection=[{% for i in field.arguments['selection'] %}
@@ -123,6 +129,10 @@
 
 {% macro float(field) -%}
     {{ field.name }} = fields.Float({{ arguments(field) }})
+{%- endmacro %}
+
+{% macro monetary(field) -%}
+    {{ field.name }} = fields.Monetary({{ arguments(field) }})
 {%- endmacro %}
 
 {% macro html(field) -%}

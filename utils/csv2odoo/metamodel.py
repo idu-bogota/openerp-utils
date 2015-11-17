@@ -297,7 +297,7 @@ class Field(object):
         self._process_arguments_by_type(v, params)
         self._process_view_arguments(v, params)
 
-    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends', 'selection', 'default', 'ondelete']
+    _PARAMS_ALLOWED = ['store', 'related', 'size', 'compute', 'domain', 'readonly', 'depends', 'selection', 'default', 'ondelete', 'invisible']
     def _process_generic_parameters(self, v):
         ############################################
         # Process CSV 'params' column
