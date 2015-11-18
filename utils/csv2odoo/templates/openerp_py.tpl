@@ -1,9 +1,8 @@
 {
     'name': '{{ module.string }}',
     'version': '1.0',
-    'depends': [
-        'base',
-        'base_idu'
+    'depends': [{% for dependency in module.depends | sort %}
+        '{{ dependency }}',{% endfor %}
     ],
     'author': "Grupo de Investigación, Desarrollo e Innovación - STRT - IDU",
     'category': 'IDU',

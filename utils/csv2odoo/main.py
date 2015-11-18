@@ -31,6 +31,10 @@ def generate_metamodel(options, module):
             line = dict_dot_access(trim_vals(line))
             _logger.debug(line)
             model = None
+            if line.model_name == '__openerp__' or last_model_name == '__openerp__':
+                module.add_parameter(line.name, line)
+                last_model_name == '__openerp__'
+                continue
             if line.model_name:
                 model = module.add_model(line.model_name)
                 last_model_name = line.model_name

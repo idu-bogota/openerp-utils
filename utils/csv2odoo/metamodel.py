@@ -8,6 +8,7 @@ class Module(object):
         self._models = {}
         self._groups = {}
         self.namespace = namespace or name
+        self.depends = ['base']
 
     @property
     def models(self):
@@ -31,6 +32,13 @@ class Module(object):
     def namespaces(self):
         namespaces = [ m.namespace for m in self.models if m.namespace ]
         return list(set(namespaces))
+
+    def add_parameter(self, name, line):
+        if name == 'depends':
+            self.depends.extend(line.params.split('|'))
+            self.depends = list(set(self.depends))
+        else:
+            raise Exception('Module parameter {0} no recognized'.format(name))
 
 
 class Model(object):
