@@ -416,7 +416,7 @@ class Field(object):
         fake = Factory.create()
         if self.type in ['integer']:
             return random.randint(0, 100000000)
-        elif self.type in ['float']:
+        elif self.type in ['float', 'monetary']:
             return random.uniform(0, 100000000)
         elif self.type in ['boolean']:
             return random.choice([True, False])
@@ -443,6 +443,8 @@ class Field(object):
             return "fields.Date.today"
         elif default == '_NOW_' and self.type == 'datetime':
             return "fields.Datetime.now"
+        elif default == '_COMPANY_':
+            return "lambda self: self.env.user.company_id"
         else:
             return default
 
