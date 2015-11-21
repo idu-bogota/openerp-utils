@@ -39,14 +39,6 @@
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.descripcion"/>
                 </div>
-                <label class="col-md-3 col-sm-4 control-label">Origen</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.origen"/>
-                </div>
-                <label class="col-md-3 col-sm-4 control-label">Destino</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.destino"/>
-                </div>
                 <label class="col-md-3 col-sm-4 control-label">Hora de Viaje</label>
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.hora_viaje"/>
@@ -171,6 +163,7 @@
                         <option value="carro" >Carro </option>
                         <option value="moto" >Moto</option>
                         <option value="taxi" >Taxi</option>
+                        <option value="bici" >Bicicleta</option>
                     </select>
                 </div>
                 </div>
