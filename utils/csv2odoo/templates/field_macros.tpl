@@ -39,6 +39,8 @@
     {%- endif -%}
     {%- if field.arguments['required'] %}
         required=True,
+    {%- else %}
+        required=False,
     {%- endif -%}
     {%- if field.arguments['readonly'] %}
         readonly=True,
