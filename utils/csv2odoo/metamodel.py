@@ -60,6 +60,7 @@ class Model(object):
         self._view_configuration = {}
         self._activities = {}
         self._transitions = []
+        self.data = '1' # 0 No CSV file, 1 Demo File, 2 Install data, 3 Demo and Install data
 
     @property
     def external_id(self):
@@ -165,8 +166,9 @@ class Model(object):
             return False
         inherits = {}
         for i in self._inherits:
-            model_name = i
-            field_name = i.replace('.', '_') + '_id'
+            parts = i.split('|')
+            model_name = parts[0]
+            field_name = parts[1] or model_name.replace('.', '_') + '_id'
             inherits[model_name] = field_name
         return inherits
 

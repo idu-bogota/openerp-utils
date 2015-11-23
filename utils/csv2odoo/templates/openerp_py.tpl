@@ -10,7 +10,7 @@
         'security/security.xml',
         'security/ir.model.access.csv',{% for namespace in module.namespaces() if namespace == module.namespace %}
         'views/{{ namespace }}_view.xml',{% endfor %}{% for namespace in module.namespaces() if namespace != module.namespace %}
-        'views/{{ namespace }}_view.xml',{% endfor %}{% for model in module.models if model.namespace == module.namespace and model.menu == 'conf' %}
+        'views/{{ namespace }}_view.xml',{% endfor %}{% for model in module.models if model.data in ['2', '3'] %}
         'data/{{ model.name }}.csv',{% endfor %}
     {%- for model in module.models -%}
       {%- if model.transitions %}
@@ -21,7 +21,7 @@
     'test': [{% if module.groups %}
         'tests/001_users.yml',{% endif %}
     ],
-    'demo': [{% for model in module.models if model.namespace == module.namespace and model.menu != 'conf' %}
+    'demo': [{% for model in module.models if model.data in ['1', '3'] %}
         'demo/{{ model.name }}.csv',{% endfor %}
     ],
     'installable': True,
