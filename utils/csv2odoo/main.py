@@ -242,6 +242,7 @@ def main():
 
     if options.generate_file:
         print """model_name,name,type,params,comodel,string,help,required,unique,tracking,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create,data,views
+__openerp__,depends,char,base|hr,,,,,,,,,,,,,,,,,,,,,
 petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,1,0,0,1,1,1,0,0,main,Pet,,mail.thread,1,1,3,new
 ,state,selection,selection:Draft|Open|Closed|Pending;default:'draft',,Estado,Estados de la mascota,1,0,1,0,0,1,1,1,1,0,,,,,,,,
 ,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,1,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,,,
