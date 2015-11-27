@@ -1,4 +1,4 @@
-{% for model in module.models if model.namespace == module.namespace and model.menu != 'conf' -%}
+{% for model in module.models if model.namespace == module.namespace and model.data in ['1', '3'] -%}
     import test_{{ model.name | replace('.', '_') }}
 {% endfor %}
 {%- for group in module.groups -%}
