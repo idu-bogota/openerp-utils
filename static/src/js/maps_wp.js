@@ -7,7 +7,24 @@ wp = "";
 function ofertar()
 {
     console.log("Entro a load");
+    console.log("Verifico prueba");
+    if (prueba){
+        console.log("Entro a prueba");
+        var otra = prueba;
+        var find = '&quot;';
+        var re = new RegExp(find, 'g');
+        otra = otra.replace(re,'"');
+        wp = JSON.parse(otra);
+    }
     console.log("Salta Prueb");
+    way_points = "";
+//    way_points = {"start":{"lat":4.6085621,"lng":-74.0716666},
+//                       "end":{"lat":4.6074777,"lng":-74.0702044},
+//                       "waypoints":[[4.694334899999999,-74.06263419999999]]};
+    if (way_points) {
+        wp = way_points;
+        console.log("Asigna WPS");
+    }
     map = new google.maps.Map( document.getElementById('mappy'), {
     'zoom':12,
     'mapTypeId': google.maps.MapTypeId.ROADMAP,
@@ -113,8 +130,9 @@ function setroute()
     }
     else
     {
-    ser.route({ 'origin': new google.maps.LatLng(4.6075486, -74.0712431),
-                 'destination':  new google.maps.LatLng(4.7553847, -74.08053889999996),
+
+    ser.route({ 'origin': new google.maps.LatLng(4.6074777, -74.0702044),
+                 'destination':  new google.maps.LatLng(4.6085621, -74.0716666),
                  'travelMode': google.maps.DirectionsTravelMode.DRIVING
                },
     function(res,sts) {

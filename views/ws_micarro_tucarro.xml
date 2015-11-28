@@ -67,6 +67,18 @@
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.comentario"/>
                 </div>
+                <t t-foreach="person.pasajeros_ids" t-as="pasajero">
+                    <p>
+                        <label class="col-md-3 col-sm-4 control-label">Pasajero</label>
+                        <div class="col-md-7 col-sm-8">
+                            <p class="form-control-static" t-esc="pasajero.name"/>
+                        </div>
+                        <label class="col-md-3 col-sm-4 control-label">Celular</label>
+                        <div class="col-md-7 col-sm-8">
+                            <p class="form-control-static" t-esc="pasajero.partner_id.phone"/>
+                        </div>
+                    </p>
+                </t>
                 <div>
                     <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
                 </div>
@@ -90,12 +102,6 @@
                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
                     <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
                 </div>
-                <!-- <t t-foreach="ofertas" t-as="offer">
-                    <p><a t-attf-href="/rutas/{{ slug(offer) }}">
-                    <t t-esc="offer.descripcion"/></a>
-                    </p>
-                </t> -->
-                
                 </body>
 		        <t t-foreach="kwargs" t-as="kwarg">
                 <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>

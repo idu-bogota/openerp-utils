@@ -56,6 +56,7 @@ class mi_carro_tu_carro_oferta(models.Model):
         inverse_name='ruta_oferta_id',
         default=lambda self: [self._context.get('uid', False)],
         help='Usuarios integrantes.',
+        ondelete = 'SET DEFAULT',
     )
     costo = fields.Integer('Costo')
     comentario = fields.Text('Comentario')
@@ -77,10 +78,11 @@ class mi_carro_tu_carro_oferta(models.Model):
     @api.multi
     def compute_vacantes(self):
         usuario = self._context.get('uid', False)
+        usuario = self.env['res.users'].browse(usuario)
         if usuario in self.pasajeros_ids:
             raise exceptions.Warning('Usted ya esta en esta ruta')
         if self.vacantes > 0:
-            self.pasajeros_ids = usuario    #[(4, usuario, 0)]
+            self.pasajeros_ids = [(4, usuario.id, 0)]#usuario.id    #[(4, usuario, 0)]
             self.vacantes = self.vacantes - 1
             return True
         else:
@@ -91,9 +93,10 @@ class mi_carro_tu_carro_oferta(models.Model):
     @api.multi
     def compute_integrantes(self):
         usuario = self._context.get('uid', False)
+        usuario = self.env['res.users'].browse(usuario)
         if usuario in self.pasajeros_ids:
             raise exceptions.Warning('Usted ya esta en esta ruta')
-        self.pasajeros_ids = usuario    #[(4, usuario, 0)]
+        self.pasajeros_ids = usuario.id    #[(4, usuario, 0)]
         self.integrantes = self.integrantes + 1
         return True
 
