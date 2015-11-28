@@ -25,17 +25,15 @@ from openerp import models, fields, api, exceptions
 from openerp.exceptions import Warning, AccessError
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
-from openerp.addons.base_geoengine import geo_model
-from openerp.addons.base_geoengine import fields as geo_fields
 
 TIPO_TRANSPORTE = [
     ('carro', 'Carro'),
     ('moto', 'Moto'),
     ('taxi', 'Táxi'),
-    ('bici', 'bicicleta'),
+    ('bici', 'Bicicleta'),
 ]
 
-class mi_carro_tu_carro_oferta(geo_model.GeoModel):
+class mi_carro_tu_carro_oferta(models.Model):
     _name = 'mi_carro_tu_carro.oferta'
     _description = 'Mi carro tu carro Oferta'
 
@@ -52,6 +50,13 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
     )
     vacantes = fields.Integer('Vacantes')
     integrantes = fields.Integer('Integrantes')
+    pasajeros_ids = fields.One2many(
+        string='Pasajeros',
+        comodel_name='res.users',
+        inverse_name='ruta_oferta_id',
+        default=lambda self: [self._context.get('uid', False)],
+        help='Usuarios integrantes.',
+    )
     costo = fields.Integer('Costo')
     comentario = fields.Text('Comentario')
     user_id = fields.Many2one(
@@ -68,13 +73,14 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
     )
     route = fields.Char('Ruta Completa',default="",)
     # Campo det tipo ruta
-    shape = geo_fields.GeoLine(
-        string='Ruta',
-    )
 
     @api.multi
     def compute_vacantes(self):
-        if not self.vacantes <= 0:
+        usuario = self._context.get('uid', False)
+        if usuario in self.pasajeros_ids:
+            raise exceptions.Warning('Usted ya esta en esta ruta')
+        if self.vacantes > 0:
+            self.pasajeros_ids = usuario    #[(4, usuario, 0)]
             self.vacantes = self.vacantes - 1
             return True
         else:
@@ -84,5 +90,16 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
 
     @api.multi
     def compute_integrantes(self):
+        usuario = self._context.get('uid', False)
+        if usuario in self.pasajeros_ids:
+            raise exceptions.Warning('Usted ya esta en esta ruta')
+        self.pasajeros_ids = usuario    #[(4, usuario, 0)]
         self.integrantes = self.integrantes + 1
         return True
+
+#     @api.model
+#     def create(self,vals):
+# #         if self.search([('user_id','=',self._context.get('uid', False))]):
+# #             raise exceptions.Warning('Este Usuario ya esta dentro de una oferta.')
+#         vals['pasajeros_ids'] = [self._context.get('uid', False)]
+#         return super(mi_carro_tu_carro_oferta, self).create(vals)

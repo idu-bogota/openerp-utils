@@ -16,6 +16,8 @@ https://github.com/acsone/odoo/commit/676e4b8d9eb0b1cda663532f59fdb10d59f3af40
         'base_geoengine',
     ],
     "data" : [
+        'security/security.xml',
+        'security/ir.model.access.csv',
         'views/mi_carro_tu_carro_idu_view.xml',
         'views/ws_micarro_tucarro.xml',
         'views/mi_carro_tu_carro_demo.xml',
