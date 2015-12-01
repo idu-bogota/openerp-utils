@@ -29,7 +29,26 @@ class Rutas(http.Controller):
             'kwargs': values
         })
 
-    @http.route(['/rutas/info_extended/'], type='http', auth="public", website=True)
+    @http.route('/misrutas/', auth='public', website=True)
+    def misrutas(self):
+        Oferta = http.request.env['mi_carro_tu_carro.oferta']
+        return http.request.render('mi_carro_tu_carro_idu.misrutas', {
+            'ofertas': Oferta.search([('user_id','=', http.request.uid)]),
+        })
+        
+    @http.route('/misrutas/<model("mi_carro_tu_carro.oferta"):offer>/', auth='public', website=True)
+    def showrutas(self, offer,**kwargs):
+        values = {}
+        for field in ['rutas_id', 'rutas_wp']:
+            if kwargs.get(field):
+                values[field] = kwargs.pop(field)
+        values.update(kwargs=kwargs.items())
+        return http.request.render('mi_carro_tu_carro_idu.showrutas', {
+            'person': offer,
+            'kwargs': values
+        })
+
+    @http.route(['/misrutas/info_extended/'], type='http', auth="public", website=True)
     def info_extended(self, **kwargs):
         #import pudb; pu.db
         rutas_model = request.env['mi_carro_tu_carro.oferta']
@@ -58,6 +77,7 @@ class Rutas(http.Controller):
         return request.website.render("mi_carro_tu_carro_idu.rutas_update")
 #        else:
 #            return request.website.render("pqrs_idu.pqrs_not_update")
+
 
     @http.route('/crear/', auth='public', website=True)
     def get_crear(self, **kwargs):

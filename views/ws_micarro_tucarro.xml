@@ -18,17 +18,17 @@
 
       <!-- <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_crear.js"></script> -->
   </xpath>
+</template>
 
 <!-- ################## Modificar Ruta  ##################### -->
 
-</template>
-  <template id="index">
+  <template id="misrutas">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
       <div class="oe_structure">
         <div class="container">
           <t t-foreach="ofertas" t-as="offer">
-            <p><a t-attf-href="/rutas/{{ slug(offer) }}">
+            <p><a t-attf-href="/misrutas/{{ slug(offer) }}">
               <t t-esc="offer.descripcion"/></a>
             </p>
           </t>
@@ -36,7 +36,7 @@
       </div>
     </t>
   </template>
-  <template id="descripcion">
+  <template id="showrutas">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
       <div class="oe_structure"/>
@@ -45,7 +45,7 @@
 			<label>
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
-            <form action="/rutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <form action="/misrutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
                 <div class="col-md-7 col-sm-8">
@@ -68,16 +68,15 @@
                     <p class="form-control-static" t-esc="person.comentario"/>
                 </div>
                 <t t-foreach="person.pasajeros_ids" t-as="pasajero">
-                    <p>
-                        <label class="col-md-3 col-sm-4 control-label">Pasajero</label>
-                        <div class="col-md-7 col-sm-8">
-                            <p class="form-control-static" t-esc="pasajero.name"/>
-                        </div>
-                        <label class="col-md-3 col-sm-4 control-label">Celular</label>
-                        <div class="col-md-7 col-sm-8">
-                            <p class="form-control-static" t-esc="pasajero.partner_id.phone"/>
-                        </div>
-                    </p>
+                
+                    <label class="col-md-3 col-sm-4 control-label">Pasajero</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control-static" t-esc="pasajero.name"/>
+                    </div>
+                    <label class="col-md-3 col-sm-4 control-label">Celular</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control-static" t-esc="pasajero.partner_id.phone"/>
+                    </div>
                 </t>
                 <div>
                     <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
@@ -157,6 +156,96 @@
       </div>
     </t>
 </template>
+
+<!-- ################## Ver Rutas  ##################### -->
+
+  <template id="index">
+    <t t-call="website.layout">
+      <t t-set="title">Offer</t>
+      <div class="oe_structure">
+        <div class="container">
+          <t t-foreach="ofertas" t-as="offer">
+            <p><a t-attf-href="/rutas/{{ slug(offer) }}">
+              <t t-esc="offer.descripcion"/></a>
+            </p>
+          </t>
+        </div>
+      </div>
+    </t>
+  </template>
+  <template id="descripcion">
+    <t t-call="website.layout">
+      <t t-set="title">Offer</t>
+      <div class="oe_structure"/>
+      <div class="oe_structure">
+        <div class="container">
+            <label>
+            <h2>Ruta No <span t-field="person.id"/></h2>
+            </label>
+            <form action="/rutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <div class="form-group">
+                <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.descripcion"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Hora de Viaje</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.hora_viaje"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Tipo de Transporte</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.tipo_transporte"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.vacantes"/>
+                </div>
+                <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control-static" t-esc="person.comentario"/>
+                </div>
+                <t t-foreach="person.pasajeros_ids" t-as="pasajero">
+                
+                    <label class="col-md-3 col-sm-4 control-label">Pasajero</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control-static" t-esc="pasajero.name"/>
+                    </div>
+                    <label class="col-md-3 col-sm-4 control-label">Celular</label>
+                    <div class="col-md-7 col-sm-8">
+                        <p class="form-control-static" t-esc="pasajero.partner_id.phone"/>
+                    </div>
+                </t>
+                <div>
+                    <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
+                </div>
+                <script type="text/javascript">
+                    var aDiv = document.getElementById("DivContenedor");
+                    var prueba = "<t t-esc="person.route"/>";
+                </script>
+                <div id="DivContenedor"></div>
+                <body onLoad="ofertar()">
+<!--                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                <input type="button" value="Refrescar Mapa" onClick="setroute()"/>
+                </div> -->
+                <div class="container">
+                <!-- <div id="mappy" style="width:100%; height:400px; margin:0px auto 0px auto; border:1px solid #cecece; background:#F5F5F5"></div>-->
+                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
+                <div><p><span id="str"></span></p></div>
+                <div>
+                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                </div>
+                </div>
+                </body>
+                <t t-foreach="kwargs" t-as="kwarg">
+                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                </t>
+            </div>
+            </form>
+        </div>
+      </div>
+      <div class="oe_structure"/>
+    </t>
+  </template>
 
 <!-- ################## Creación Ruta  ##################### -->
 

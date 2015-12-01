@@ -25,6 +25,8 @@ from openerp import models, fields, api, exceptions
 from openerp.exceptions import Warning, AccessError
 from datetime import datetime, timedelta
 from dateutil.relativedelta import relativedelta
+from openerp.addons.base_geoengine import geo_model
+from openerp.addons.base_geoengine import fields as geo_fields
 
 TIPO_TRANSPORTE = [
     ('carro', 'Carro'),
@@ -33,7 +35,7 @@ TIPO_TRANSPORTE = [
     ('bici', 'Bicicleta'),
 ]
 
-class mi_carro_tu_carro_oferta(models.Model):
+class mi_carro_tu_carro_oferta(geo_model.GeoModel):
     _name = 'mi_carro_tu_carro.oferta'
     _description = 'Mi carro tu carro Oferta'
 
@@ -74,6 +76,9 @@ class mi_carro_tu_carro_oferta(models.Model):
     )
     route = fields.Char('Ruta Completa',default="",)
     # Campo det tipo ruta
+    shape = geo_fields.GeoLine(
+        string='Ruta',
+    )
 
     @api.multi
     def compute_vacantes(self):
