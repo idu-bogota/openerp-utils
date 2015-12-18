@@ -170,7 +170,7 @@
         except Exception as e:
             return {
                 'title': "Error de Validación",
-                'warning': {'message': e.value}
+                'warning': {'message': e.name}
             }
     {%- else %}
         # https://www.odoo.com/documentation/8.0/howtos/backend.html#onchange

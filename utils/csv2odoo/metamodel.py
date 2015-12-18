@@ -200,7 +200,7 @@ class Model(object):
     def get_unique_fields(self):
         res = []
         for f in self._fields.values():
-            if f.arguments['unique']:
+            if f.arguments.get('unique'):
                 res.append(f)
         return res
 
