@@ -54,6 +54,8 @@ def importar_xml(options):
                 'module = {0}'.format(options.module_name),
                 'name = {0}'.format(record_id),
             ]).res_id
+            if not view_id:
+                _logger.error('No se encontró la vista a actualizar {1}.{2}'.format(options.module_name, record_id))
 
             view_arch = None
             for field in record.findall('field'):
