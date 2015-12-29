@@ -132,8 +132,11 @@ def assign_new_entity(connect, entity_relations, model):
     
     for i in entity_relations:
         _logger.debug("{0} Campos agregado".format(i))
-        campos = connect.model(i).fields()
-        model[i] = campos
+        try:
+            campos = connect.model(i).fields()
+            model[i] = campos
+        except:
+            pass
     return model
 
 def exclude_entity_of_model_general(options, model):
@@ -149,7 +152,8 @@ def exclude_entity_of_model_general(options, model):
                 if re.match(exclude, entity):
                     del end_model[entity]
         else:
-            del end_model[exclude]
+            if end_model.get(exclude):
+                del end_model[exclude]
             
     return end_model
     
