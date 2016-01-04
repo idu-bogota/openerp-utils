@@ -70,4 +70,5 @@ class fields_security_mixin(models.AbstractModel):
     @api.multi
     def unlink(self):
         self.check_access_rights('unlink')
+        self.check_access_rule('unlink')
         self.write({ 'active': False })
