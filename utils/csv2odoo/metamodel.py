@@ -132,8 +132,6 @@ class Model(object):
 
     @property
     def description(self):
-        if not self._description:
-            return self.name
         return self._description
 
     @description.setter
@@ -144,7 +142,7 @@ class Model(object):
     @property
     def view_description(self):
         if not self._view_description:
-            return self.description
+            return self.description or self.name
         return self._view_description
 
     @view_description.setter

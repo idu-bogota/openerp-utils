@@ -11,6 +11,12 @@
 {%- endif -%}
 {%- endmacro %}
 
+{% macro description(model) %}
+{%- if model.description %}
+    _description = '{{ model.description }}'
+{%- endif -%}
+{%- endmacro %}
+
 {%- macro overwrite_create(model) %}
     @api.model
     def create(self, vals):

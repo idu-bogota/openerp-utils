@@ -27,8 +27,7 @@ from openerp.exceptions import ValidationError
 
 {% for model in module.models if model.namespace == namespace %}
 class {{ model.name | replace('.', '_')}}(models.Model):
-    _name = '{{ model.name }}'
-    _description = '{% if model.description %}{{ model.description }}{% else %}{{ model.name + ' DESCRIPTION PENDING' }}{% endif %}'{{ macro_fields.inheritance(model) }}
+    _name = '{{ model.name }}'{{ macro_fields.description(model) }}{{ macro_fields.inheritance(model) }}
 
     # -------------------
     # Fields
