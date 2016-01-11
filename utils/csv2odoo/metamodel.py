@@ -57,6 +57,7 @@ class Model(object):
         self.sequence = sequence
         self.short_name = '_'.join(parts[1:])
         self._description = None
+        self._view_description = None
         self._inherit = None
         self._inherits = None
         self._menu = None
@@ -139,6 +140,17 @@ class Model(object):
     def description(self, v):
         if not self._description and len(v):
             self._description = v
+
+    @property
+    def view_description(self):
+        if not self._view_description:
+            return self.description
+        return self._view_description
+
+    @view_description.setter
+    def view_description(self, v):
+        if not self._view_description and len(v):
+            self._view_description = v
 
     @property
     def module(self):

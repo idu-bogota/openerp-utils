@@ -110,7 +110,7 @@
 {% macro menuitem(model) %}
     {%- if model.menu -%}
     <record model="ir.actions.act_window" id="{{ model.short_name | replace('.','_') }}_action">
-        <field name="name">{{ model.name }}</field>
+        <field name="name">{{ model.view_description }}</field>
         <field name="res_model">{{ model.name }}</field>
         <field name="view_mode">tree,form</field>
     </record>
@@ -118,7 +118,7 @@
     {%- set parent = parent_prefix +  {'conf': '_conf_menu', 'admin': '_admin_menu'}.get(model.menu, '_menu') %}
     <menuitem id="{{ model.short_name | replace('.','_') }}_menu"
         parent="{{ parent }}"
-        name="{{ model.description or model.short_name }}" action="{{ model.short_name | replace('.','_') }}_action"
+        name="{{ model.view_description or model.description or model.short_name }}" action="{{ model.short_name | replace('.','_') }}_action"
     />
 {% endif -%}
 {%- endmacro -%}
