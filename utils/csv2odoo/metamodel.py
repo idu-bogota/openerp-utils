@@ -37,6 +37,12 @@ class Module(object):
         if name == 'depends':
             self.depends.extend(line.params.split('|'))
             self.depends = list(set(self.depends))
+        elif name == 'name':
+            self.name = line.params
+        elif name == 'namespace':
+            self.namespace = line.params
+        elif name == 'string':
+            self.string = line.params
         else:
             raise Exception('Module parameter {0} no recognized'.format(name))
 

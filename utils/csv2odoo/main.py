@@ -31,16 +31,17 @@ def generate_metamodel(options, module):
             line = dict_dot_access(trim_vals(line))
             _logger.debug(line)
             model = None
-            if line.model_name == '__openerp__' or last_model_name == '__openerp__':
+            if line.model_name == '__openerp__' or (not line.model_name and last_model_name == '__openerp__'):
                 module.add_parameter(line.name, line)
-                last_model_name == '__openerp__'
+                last_model_name = '__openerp__'
                 continue
-            if line.model_name:
+            if line.model_name and line.model_name != last_model_name:
                 model = module.add_model(line.model_name)
                 last_model_name = line.model_name
                 model.data = line.data
             elif last_model_name and not line.model_name:
                 model = module.add_model(last_model_name)
+
             model.view_configuration = line.views
             model.description = line.description
             model.inherit = line.inherit
@@ -242,7 +243,11 @@ def main():
 
     if options.generate_file:
         print """model_name,name,type,params,comodel,string,help,required,unique,tracking,constrains,onchange,view_tree,view_form,view_search,view_search_group_by,view_form_tab,menu,description,inherits,inherit,overwrite_write,overwrite_create,data,views
-__openerp__,depends,char,base|hr,,,,,,,,,,,,,,,,,,,,,
+
+__openerp__,name,,my_petstore,,,,,,,,,,,,,,,,,,,,,
+,namespace,,petstore,,,,,,,,,,,,,,,,,,,,,
+,string,,Pet Store,,,,,,,,,,,,,,,,,,,,,
+,depends,,base|hr,,,,,,,,,,,,,,,,,,,,,
 petstore.pet,name,char,size:50,,Nombre,Nombre de la mascota,1,0,1,0,0,1,1,1,0,0,main,Pet,,mail.thread,1,1,3,new
 ,state,selection,selection:Draft|Open|Closed|Pending;default:'draft',,Estado,Estados de la mascota,1,0,1,0,0,1,1,1,1,0,,,,,,,,
 ,user_id,many2one,readonly:True;default:_CURRENT_USER_,res.users,Usuario,Usuario asignado,0,0,1,0,0,1,_ATTRS_,"[('user_id','=',uid)]",1,0,,,,,,,,
@@ -282,6 +287,7 @@ petstore.breed,nuevo,en_progreso,True,petstore.group_admin,Abrir,start
 
     module = Module(options.module_name, options.module_namespace, options.module_string)
     generate_metamodel(options, module)
+
     if options.filename_workflow:
         generate_metamodel_workflow(options, module)
     generate_module_content(options, env, module)
