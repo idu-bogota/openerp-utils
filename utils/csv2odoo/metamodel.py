@@ -74,6 +74,7 @@ class Model(object):
         self._inherit = None
         self._inherits = None
         self._menu = None
+        self.menu_params = {}
         self._overwrite_create = None
         self._overwrite_write = None
         self._fields = {}
@@ -171,12 +172,40 @@ class Model(object):
     def menu(self):
         if not self._menu:
             return False
+        if self._menu in ['main', 'conf', 'admin']:
+            parent_prefix = self._module.name.replace('.','_')
+            postfixes = {'conf': '_conf_menu', 'admin': '_admin_menu'}
+            return "{0}{1}".format(parent_prefix, postfixes.get(self._menu, '_menu'))
         return self._menu
 
     @menu.setter
     def menu(self, v):
-        if not self._menu and v in ['main', 'conf', 'admin']:
-            self._menu = v
+        if not self._menu and len(v):
+            parts = v.split(';')
+            if len(parts) == 1:
+                self._menu = parts[0]
+            elif len(parts) > 1:
+                self._menu = parts[0]
+                del parts[0]
+                for param in parts: # Add parameters for action
+                    key_value = param.split(':')
+                    if len(key_value) == 2:
+                        self.menu_params[key_value[0]] = key_value[1]
+
+    def menu_sequence(self):
+        if self._menu in ['main', 'conf', 'admin']:
+            postfixes = {'conf': 30, 'admin': 50}
+            return postfixes.get(self._menu, 20)
+        return 10
+
+    def action_domain(self):
+        domain = self.menu_params.get('domain')
+        if domain == '_OWN_':
+            return "[('user_id', '=', uid)]"
+        elif domain == '_ALL_':
+            return "[(1, '=', 1)]"
+        else:
+            return "{0}".format(domain)
 
     @property
     def inherit(self):

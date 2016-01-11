@@ -111,13 +111,16 @@
     {%- if model.menu -%}
     <record model="ir.actions.act_window" id="{{ model.short_name | replace('.','_') }}_action">
         <field name="name">{{ model.view_description }}</field>
-        <field name="res_model">{{ model.name }}</field>
+        <field name="res_model">{{ model.name }}</field>{% if model.menu_params.get('domain') %}
+        <field name="domain">{{ model.action_domain() }}</field>
+        {% endif -%}{% if model.menu_params.get('context') %}
+        <field name="domain">{{ model.menu_params.get('context') }}</field>
+        {% endif -%}
         <field name="view_mode">tree,form</field>
     </record>
-    {%- set parent_prefix = model.module.name | replace('.','_') %}
-    {%- set parent = parent_prefix +  {'conf': '_conf_menu', 'admin': '_admin_menu'}.get(model.menu, '_menu') %}
     <menuitem id="{{ model.short_name | replace('.','_') }}_menu"
-        parent="{{ parent }}"
+        parent="{{ model.menu }}"
+        sequence="{{ model.menu_sequence() }}"
         name="{{ model.view_description or model.description or model.short_name }}" action="{{ model.short_name | replace('.','_') }}_action"
     />
 {% endif -%}

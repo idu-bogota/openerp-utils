@@ -10,14 +10,20 @@
     -->{% if not module._nav_menu_item_id %}
      <menuitem id="{{ module.name }}_nav" name="{{ module.string }}"/>{% endif %}
 
-     <menuitem id="{{ module.name }}_menu" name="{{ module.string }}" parent="{{ module.nav_menu_item_id }}"/>
+     <menuitem id="{{ module.name }}_menu"
+        name="{{ module.string }}"
+        parent="{{ module.nav_menu_item_id }}"
+        sequence="10"
+    />
      <menuitem id="{{ module.name }}_conf_menu" parent="{{ module.nav_menu_item_id }}"
         name="Configuración {{ module.string }}"
         groups="base.group_configuration"
+        sequence="30"
      />
      <menuitem id="{{ module.name }}_admin_menu" parent="{{ module.nav_menu_item_id }}"
         name="Administración {{ module.string }}"
         groups="base.group_configuration"
+        sequence="100"
      />
 {% endif -%}
 {%- for model in module.models if model.namespace == namespace %}
