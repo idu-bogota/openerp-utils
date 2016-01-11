@@ -1,6 +1,6 @@
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
-import os
+import os, sys
 import logging
 import csv
 from jinja2 import Environment, FileSystemLoader
@@ -15,7 +15,12 @@ _logger = logging.getLogger('csv2model')
 class dict_dot_access(dict):
     """Extension to make dict attributes be accesible with dot notation
     """
-    __getattr__ = dict.__getitem__
+    def __getattr__(self, attr):
+        try:
+            return self.__getitem__(attr)
+        except KeyError:
+            _logger.error('No se encontró {} en la línea'.format(attr))
+            sys.exit(1)
 
 def trim_vals(vals):
     for key, value in vals.items():
