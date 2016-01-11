@@ -9,6 +9,7 @@ class Module(object):
         self._groups = {}
         self.namespace = namespace or name
         self.depends = ['base']
+        self._nav_menu_item_id = None
 
     @property
     def models(self):
@@ -43,9 +44,21 @@ class Module(object):
             self.namespace = line.params
         elif name == 'string':
             self.string = line.params
+        elif name == 'navigation_menu_id':
+            self._nav_menu_item_id = line.params
         else:
             raise Exception('Module parameter {0} no recognized'.format(name))
 
+    @property
+    def nav_menu_item_id(self):
+        if not self._nav_menu_item_id:
+            return '{0}_nav'.format(self.name)
+        return self._nav_menu_item_id
+
+    @nav_menu_item_id.setter
+    def set_nav_menu_item_id(self, v):
+        if not self._nav_menu_item_id and v:
+            self._nav_menu_item_id = v
 
 class Model(object):
     sequence = 0

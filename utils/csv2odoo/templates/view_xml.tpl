@@ -7,16 +7,16 @@
     =================================================================
     Menú
     =================================================================
-    -->
-     <menuitem id="{{ module.name }}_nav" name="{{ module.string }}"/>
+    -->{% if not module._nav_menu_item_id %}
+     <menuitem id="{{ module.name }}_nav" name="{{ module.string }}"/>{% endif %}
 
-     <menuitem id="{{ module.name }}_menu" name="{{ module.string }}" parent="{{ module.name }}_nav"/>
-     <menuitem id="{{ module.name }}_conf_menu" parent="{{ module.name }}_nav"
-        name="Configuración"
+     <menuitem id="{{ module.name }}_menu" name="{{ module.string }}" parent="{{ module.nav_menu_item_id }}"/>
+     <menuitem id="{{ module.name }}_conf_menu" parent="{{ module.nav_menu_item_id }}"
+        name="Configuración {{ module.string }}"
         groups="base.group_configuration"
      />
-     <menuitem id="{{ module.name }}_admin_menu" parent="{{ module.name }}_nav"
-        name="Administración"
+     <menuitem id="{{ module.name }}_admin_menu" parent="{{ module.nav_menu_item_id }}"
+        name="Administración {{ module.string }}"
         groups="base.group_configuration"
      />
 {% endif -%}
