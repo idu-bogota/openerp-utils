@@ -15,12 +15,12 @@
     <record id="{{ group.short_name | replace('.', '_') }}" model="res.groups">
         <field name="name">{{ group.short_name | replace('.', '_') | replace('group_','') | capitalize() }}</field>
         <field name="category_id" ref="{{ module.name }}.category_{{ module.name }}"/>
-        <!-- <field name="implied_ids"
-            eval="[
-                (4, ref('base.group_no_one')),
-                (4, ref('base.group_user'))
+        <field name="implied_ids"
+            eval="[{% for inherit in group.inherits %}
+                (4, ref('{{ inherit }}')),
+            {%- endfor %}
             ]"
-        />-->
+        />
     </record>
 {%- endfor %}
 <!--

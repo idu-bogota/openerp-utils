@@ -524,6 +524,7 @@ class Group(object):
         self.short_name = parts[1]
         self.module = module
         self._acls = {}
+        self.inherits = ['base.group_user']
 
     @property
     def acls(self):
@@ -533,6 +534,12 @@ class Group(object):
         if not model_name in self._acls:
             self._acls[model_name] = Acl(self, model_name, create, read, update, delete)
         return self._acls[model_name]
+
+    def add_inherits(self, v):
+        if v:
+            groups = v.split(',')
+            self.inherits.extend(groups)
+            self.inherits = list(set(self.inherits))
 
 class Acl(object):
     def __init__(self, group, model, create, read, write, delete):

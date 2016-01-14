@@ -139,7 +139,10 @@ def generate_metamodel_security(options, module):
                 last_group_name = line.group
             elif last_group_name and not line.group:
                 group = module.add_group(last_group_name)
-
+            try:
+                group.add_inherits(line.group_inherits)
+            except:
+                pass
             group.add_acl(
                 line.model_name,
                 line.create,
@@ -273,11 +276,11 @@ res.users,pet_ids,one2many,,"petstore.pet,user_id",Mascotas a cargo,,0,0,0,0,0,0
         return
 
     if options.generate_security_file:
-        print """model_name,group,create,read,write,delete
-petstore.pet,base.group_user,0,"('partner_id','=', user.partner_id.id)",0,0
-petstore.pet,petstore.vet,_OWN_,_ALL_,_OWN_,0
-petstore.pet,petstore.admin,1,1,1,1
-petstore.breed,petstore.admin,1,_ALL_,1,1"""
+        print """model_name,group_inherits,group,create,read,write,delete
+petstore.pet,,base.group_user,0,"('partner_id','=', user.partner_id.id)",0,0
+petstore.pet,,petstore.vet,_OWN_,_ALL_,_OWN_,0
+petstore.pet,,petstore.admin,1,1,1,1
+petstore.breed,,petstore.admin,1,_ALL_,1,1"""
         return
 
     if options.generate_workflow_file:
