@@ -59,7 +59,7 @@ class fields_security_mixin(models.AbstractModel):
         return res
 
 
-class fields_security_mixin(models.AbstractModel):
+class soft_delete_mixin(models.AbstractModel):
     _name = 'models.soft_delete.mixin'
 
     active = fields.Boolean(
