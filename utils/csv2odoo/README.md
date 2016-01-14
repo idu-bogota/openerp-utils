@@ -74,12 +74,14 @@ Las cabeceras del archivo son:
 - view_search: 1,0 o dominio, indica si se agrega el campo en la vista search y si se indica un dominio se crea un filtro usando ese dominio
 - view_search_group_by: 1 o 0, indica si el campo puede ser usado para agrupar en la vista tree
 - view_form_tab: 0 o nombre del tab, el campo va a aparecer en un tab en la vista form.
-- menu: conf o main, indica en que menú va a aparecer, también se usa para generar datos de carga por defecto (conf)
+- menu: conf, admin o main, indica en que menú va a aparecer si en el principal, como item del menú de administración o configuración. Se puede colocar separando por punto y coma el atributo domain=[(1,'=',1)] que será aplicado al action.
 - description: Descripción corta del modelo, no usar tíldes y menor de 64 bytes.
+- view_description: Indica el nombre que se va a desplegar en el menú y en el título de las vistas
 - inherits: Indica los modelos a los cuales hacer herencia tipo delegación
 - inherit: Indica los modelos de los cuales se hereda (herencia de clase) o se extienden (herencia de prototipo)
 - overwrite_write: Indica si se crea un metodo write que sobreescribe al padre
 - overwrite_create: Indica si se crea un metodo create que sobreescribe al padre
+- data: Indica si se va a crear archivo CSV usando el siguiente código: 0 No CSV file, 1 Demo File, 2 Install data, 3 Demo and Install data
 - views: Indica si se desea crear una vista nueva "new", si no se desea crear o extender una vista "none" y extend, si se quiere crear una vista que extienda de otra. Cuando una vista es extendida se puede indicar que tipo de vistas extender indicando el id de la vista original y el campo sobre el cual aplicar la extensión. ej. "extend:form=id_vista_form_a_extender|fieldname_a_usar_para_la_extension,tree=vista_id|campo,search=vista_id|campo". Si no se desea extender alguna vista simplemente se quita: "extend:tree=vista_id|campo" esto solo crea una extensión de la vista tree. Si se deja solo extend el crea vistas por defecto para que manualmente se ajusten.
 
 Con el archivo de ejemplo se puede generar el módulo, pero este no va a instalar ya que:
