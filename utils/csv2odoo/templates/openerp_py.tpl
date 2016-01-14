@@ -21,7 +21,8 @@
     'test': [{% if module.groups %}
         'tests/001_users.yml',{% endif %}
     ],
-    'demo': [{% for model in module.models if model.data in ['1', '3'] %}
+    'demo': [{% for model in module.models if model.data in ['1', '3'] %}{% if module.groups %}
+        'tests/001_users.yml',{% endif %}
         'demo/{{ model.name }}.csv',{% endfor %}
     ],
     'installable': True,

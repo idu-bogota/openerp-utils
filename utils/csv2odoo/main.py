@@ -122,8 +122,9 @@ def generate_module_content(options, env, module):
                 with open(fname_csv, "w") as f:
                     f.write(output[model.name]['data'])
             fname_test = '{0}/tests/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
-            with open(fname_test, "w") as f:
-                f.write(output[model.name]['test'])
+            if not options.no_generate_tests:
+                with open(fname_test, "w") as f:
+                    f.write(output[model.name]['test'])
 
 def generate_metamodel_security(options, module):
     with open(options.filename_security, 'r') as handle:
@@ -163,6 +164,8 @@ def generate_module_security(options, env, module):
 
     template = env.get_template("test_domain_py.tpl")
     for group in module.groups:
+        if options.no_generate_tests:
+            break
         fname_test = '{0}/tests/test_domain_{1}.py'.format(module.name, group.name.replace('.', '_'))
         content = template.render( {'group': group, 'module': module} )
         with open(fname_test, "w") as f:
@@ -171,8 +174,9 @@ def generate_module_security(options, env, module):
     template = env.get_template("test_users_yml.tpl")
     fname_test = '{0}/tests/001_users.yml'.format(module.name)
     content = template.render( {'module': module} )
-    with open(fname_test, "w") as f:
-        f.write(content)
+    if not options.no_generate_tests:
+        with open(fname_test, "w") as f:
+            f.write(content)
 
     template = env.get_template("openerp_py.tpl")
     openerp_py = template.render( {'module': module} )
@@ -227,17 +231,18 @@ def main():
     usage = "Takes a CSV and creates a Odoo Module: %prog [options]"
     parser = OptionParser(usage)
     parser.add_option("-f", "--filename", dest="filename", help="CSV file")
-    parser.add_option("-S", "--filename_security", dest="filename_security", help="CSV file security", default=False)
+    parser.add_option("-s", "--filename_security", dest="filename_security", help="CSV file security", default=False)
     parser.add_option("-w", "--filename_workflow", dest="filename_workflow", help="CSV file workflow", default=False)
     parser.add_option("-n", "--module_namespace", dest="module_namespace", help="Module namespace", default=False)
     parser.add_option("-m", "--module_name", dest="module_name", help="Module technical name", default='')
-    parser.add_option("-s", "--module_string", dest="module_string", help="Module human name", default=False)
+    parser.add_option("-S", "--module_string", dest="module_string", help="Module human name", default=False)
     parser.add_option("-g", "--generate", action="store_true", dest="generate_file", default=False, help="Generate CSV Template")
     parser.add_option("-G", "--generate_security_file", action="store_true", dest="generate_security_file", default=False, help="Generate CSV Template for Security")
     parser.add_option("-W", "--generate_workflow_file", action="store_true", dest="generate_workflow_file", default=False, help="Generate CSV Template for Workflow")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
     parser.add_option("-c", "--no_generate_csv_data", action="store_true", dest='no_generate_csv_data', help='Don\'t generate csv files on demo and data', default=False)
-    parser.add_option("-t", "--templates", dest="templates_dir", help="Templates folder",
+    parser.add_option("-t", "--no_generate_tests", action="store_true", dest='no_generate_tests', help='Don\'t generate Test files', default=False)
+    parser.add_option("-T", "--templates", dest="templates_dir", help="Templates folder",
         default=os.path.dirname(os.path.realpath(__file__)) + '/templates'
     )
 
