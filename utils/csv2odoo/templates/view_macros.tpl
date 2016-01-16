@@ -115,7 +115,7 @@
         <field name="domain">{{ model.action_domain() }}</field>
         {% endif -%}{% if model.menu_params.get('context') %}
         <field name="domain">{{ model.menu_params.get('context') }}</field>
-        {% endif -%}
+        {% endif %}
         <field name="view_mode">tree,form</field>
     </record>
     <menuitem id="{{ model.short_name | replace('.','_') }}_menu"
