@@ -113,7 +113,7 @@
         <field name="name">{{ model.view_description }}</field>
         <field name="res_model">{{ model.name }}</field>{% if model.menu_params.get('domain') %}
         <field name="domain">{{ model.action_domain() }}</field>
-        {% endif -%}{% if model.menu_params.get('context') %}
+        {%- endif -%}{% if model.menu_params.get('context') %}
         <field name="domain">{{ model.menu_params.get('context') }}</field>
         {% endif %}
         <field name="view_mode">tree,form</field>
