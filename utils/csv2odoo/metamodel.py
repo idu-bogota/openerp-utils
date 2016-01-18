@@ -226,7 +226,9 @@ class Model(object):
         for i in self._inherits:
             parts = i.split('|')
             model_name = parts[0]
-            field_name = parts[1] or model_name.replace('.', '_') + '_id'
+            field_name = model_name.replace('.', '_') + '_id'
+            if len(parts) == 2:
+                field_name = parts[1] or model_name.replace('.', '_') + '_id'
             inherits[model_name] = field_name
         return inherits
 
@@ -402,14 +404,16 @@ class Field(object):
         return params
 
     def _process_arguments_by_type(self, v, params):
-        if v.type in ['text', 'integer', 'float', 'html', 'date', 'datetime', 'boolean']:
+        if not v.type:
+            raise Exception('No type defined for field {0}->{1}'.format(self.model.name, self.name))
+        elif v.type in ['text', 'integer', 'float', 'html', 'date', 'datetime', 'boolean']:
             pass
         elif v.type == 'selection':
             if 'selection' in params:
                 parts = params['selection'].split('|')
                 self._arguments['selection'] = [('{}'.format(i).lower().replace(' ','_'), '{}'.format(i)) for i in parts]
             else:
-                self._arguments['selection'] = None
+                self._arguments['selection'] = []
         elif v.type == 'char':
             self._arguments['size'] = params['size'] if 'size' in params else 255
         elif v.type == 'many2one':
@@ -493,7 +497,10 @@ class Field(object):
         elif self.type in ['datetime']:
             return '"{0}"'.format(fake.date_time())
         elif self.type in ['selection']:
-            return '"{}"'.format(random.choice(self.arguments['selection'])[0])
+            if self.arguments['selection']:
+                return '"{}"'.format(random.choice(self.arguments['selection'])[0])
+            else:
+                return ''
         elif self.type in ['many2one', 'one2many', 'many2many']:
             return ''
         else:

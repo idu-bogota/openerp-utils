@@ -301,6 +301,9 @@ petstore.breed,nuevo,en_progreso,True,petstore.group_admin,Abrir,start
 
     module = Module(options.module_name, options.module_namespace, options.module_string)
     generate_metamodel(options, module)
+    for model in module.models:
+        for field in model.fields:
+            _logger.debug('{0} {1}: {2}'.format(model.name, field.name, field.type))
 
     if options.filename_workflow:
         generate_metamodel_workflow(options, module)
