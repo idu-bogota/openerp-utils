@@ -23,11 +23,12 @@ class Module(object):
 
     @property
     def groups(self):
-        return self._groups.values()
+        return sorted(self._groups.values(), key=lambda x: x.sequence)
 
     def add_group(self, name):
         if not name in self._groups:
-            self._groups[name] = Group(name, self)
+            Group.sequence += 1
+            self._groups[name] = Group(name, self, Group.sequence)
         return self._groups[name]
 
     def namespaces(self):
@@ -524,7 +525,9 @@ class Field(object):
             return default
 
 class Group(object):
-    def __init__(self, name, module):
+    sequence = 0
+    def __init__(self, name, module, sequence):
+        self.sequence = sequence
         self.name = name
         parts = name.split('.')
         self.namespace = parts[0]
