@@ -74,7 +74,7 @@
                             <field name="integrantes" attrs="{'invisible':[('tipo_transporte','!=','bici')]}"/>
                             <field name="pasajeros_ids" />
                             <field name="comentario"/>
-                            <field name="shape" widget="geo_edit_map" readonly="1"/>
+<!--                             <field name="shape" widget="geo_edit_map" readonly="1"/>  -->
                         </group>
                     </group>
                 </sheet>

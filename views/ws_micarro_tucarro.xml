@@ -2,10 +2,15 @@
   <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
   <xpath expr="." position="inside">
       <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+      <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+      <script type="text/javascript">
+          odoo.define('web.csrf', function (require) {
+          var token = "<t t-esc="request.csrf_token(None)"/>";
+          require('web.core').csrf_token = token;
+          require('qweb').default_dict.csrf_token = token;
+          });
+      </script>
 
-
-
-      
       <!--
             <script type="text/javascript" src="http://maps.google.com/maps/api/js?"></script>
       <link href="https://developers.google.com/_static/acc879e135/css/devsite-google-blue.css" rel="stylesheet" type="text/css" />
@@ -46,6 +51,7 @@
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
             <form action="/misrutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
                 <div class="col-md-7 col-sm-8">
@@ -183,6 +189,7 @@
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
             <form action="/rutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
                 <div class="col-md-7 col-sm-8">
@@ -254,6 +261,7 @@
       <div class="oe_structure"/>
         <div class="container">
         <form action="/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <h3>Crear una nueva Ruta</h3>
                 <p>
                 <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
@@ -358,6 +366,7 @@
       <div class="oe_structure"/>
         <div class="container">
         <form action="/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <h3>Buscar Ruta</h3>
                 <p>
                 <script type="text/javascript">
