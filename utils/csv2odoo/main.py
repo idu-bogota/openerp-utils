@@ -112,15 +112,20 @@ def generate_module_content(options, env, module):
             f.write(output[namespace]['view'])
 
     for model in module.models:
-        if model.data in ['2', '3'] and not options.no_generate_csv_data:
+        if model.data in ['2', '3']:
             fname_csv = '{0}/data/{1}.csv'.format(module.name, model.name)
+            exists = os.path.isfile(fname_csv)
+            if options.no_generate_csv_data and exists:
+                break
             with open(fname_csv, "w") as f:
                 f.write(output[model.name]['data'])
         elif model.data in ['1', '3']:
-            if not options.no_generate_csv_data:
-                fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
-                with open(fname_csv, "w") as f:
-                    f.write(output[model.name]['data'])
+            fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
+            exists = os.path.isfile(fname_csv)
+            if options.no_generate_csv_data and exists:
+                break
+            with open(fname_csv, "w") as f:
+                f.write(output[model.name]['data'])
             fname_test = '{0}/tests/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
             if not options.no_generate_tests:
                 with open(fname_test, "w") as f:
@@ -143,13 +148,14 @@ def generate_metamodel_security(options, module):
                 group.add_inherits(line.group_inherits)
             except:
                 pass
-            group.add_acl(
-                line.model_name,
-                line.create,
-                line.read,
-                line.write,
-                line.delete,
-            )
+            if line.model_name:
+                group.add_acl(
+                    line.model_name,
+                    line.create,
+                    line.read,
+                    line.write,
+                    line.delete,
+                )
 
 def generate_module_security(options, env, module):
 
@@ -167,9 +173,10 @@ def generate_module_security(options, env, module):
 
     template = env.get_template("test_domain_py.tpl")
     for group in module.groups:
-        if options.no_generate_tests:
-            break
         fname_test = '{0}/tests/test_domain_{1}.py'.format(module.name, group.name.replace('.', '_'))
+        exists = os.path.isfile(fname_test)
+        if options.no_generate_tests and exists:
+            break
         content = template.render( {'group': group, 'module': module} )
         with open(fname_test, "w") as f:
             f.write(content)
