@@ -32,7 +32,7 @@ class {{ model.name | replace('.', '_')}}(models.Model):
     # -------------------
     # Fields
     # -------------------
-    {%- for field in model.fields %}
+    {%- for field in model.fields if not field.arguments['delegated'] %}
     {#-
         Llama al macro que tiene el mismo nombre del field.type
         y pasa el field como argumento

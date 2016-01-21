@@ -29,9 +29,9 @@
             }"
         />
     {%- elif field.view_arguments['form_param'] or widget -%}
-        <field name="{{field.name}}" widget="{{ field.view_arguments['form_param'] or widget }}" />
+        <field name="{{field.name}}" widget="{{ field.view_arguments['form_param'] or widget }}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %} />
     {%- else -%}
-        <field name="{{field.name}}" />
+        <field name="{{field.name}}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %} />
     {%- endif -%}
 {%- endmacro -%}
 
