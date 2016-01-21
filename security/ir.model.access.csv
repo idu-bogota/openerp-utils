@@ -1,0 +1,3 @@
+id,active,name,group_id/id,model_id/id,perm_create,perm_read,perm_write,perm_unlink
+mi_carro_tu_carro_idu_oferta_usuario_micarro,True,tucarro.oferta.usuario_micarro,mi_carro_tu_carro_idu.usuario_micarro,mi_carro_tu_carro_idu.model_mi_carro_tu_carro_oferta,1,1,1,1
+mi_carro_tu_carro_idu_users_usuario_micarro,True,tucarro.users.usuario_micarro,mi_carro_tu_carro_idu.usuario_micarro,model_res_users,0,1,1,0

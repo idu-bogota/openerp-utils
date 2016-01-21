@@ -401,11 +401,25 @@
       <t t-set="title">Ofertas</t>
       <div class="oe_structure">
         <div class="container">
-          <t t-foreach="lista_ofertas" t-as="oferta">
-            <p><a t-attf-href="/ofertar/{{ slug(oferta) }}">
-              <t t-esc="oferta.descripcion"/></a>
-            </p>
+            <table class="table table-condensed table-bordered table-hover">
+                <thead>
+                  <tr>
+                    <th>Descripción</th>
+                  </tr>
+                </thead>
+            <t t-foreach="lista_ofertas" t-as="oferta">
+                <tbody>
+                <tr>
+                    <td>
+                        <p><a t-attf-href="/ofertar/{{ slug(oferta) }}">
+                        <t t-esc="oferta.descripcion"/>
+                        </a>
+                        </p>
+                    </td>
+                </tr>
+             </tbody>
           </t>
+         </table>
         </div>
       </div>
     </t>
