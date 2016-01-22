@@ -25,6 +25,29 @@
   </xpath>
 </template>
 
+<!-- ################## Index  ##################### -->
+
+<template id="index" name="Introducción">
+    <t t-call="website.layout">
+      <div id="wrap">
+        <div class="oe_structure"/>
+        <div class="container">
+            <h1>Bienvenidos a Movilidad Sostenible</h1>
+            <div class="row">
+                <div class="col-md-8">
+                    <div class="alert alert-success">
+                        Este espacio permite que los funcionarios y contratistas del IDU participemos de la movilidad sostenible compartiendo nuestro carro, o creando parches para viajar en bicicleta.
+                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                    </div>
+            </div>
+        </div>
+        <div class="oe_structure"/>
+      </div>
+      </div>
+    </t>
+</template>
+
+
 <!-- ################## Modificar Ruta  ##################### -->
 
   <template id="misrutas">
@@ -33,7 +56,7 @@
       <div class="oe_structure">
         <div class="container">
           <t t-foreach="ofertas" t-as="offer">
-            <p><a t-attf-href="/misrutas/{{ slug(offer) }}">
+            <p><a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
               <t t-esc="offer.descripcion"/></a>
             </p>
           </t>
@@ -50,7 +73,7 @@
 			<label>
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
-            <form action="/misrutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
@@ -165,13 +188,13 @@
 
 <!-- ################## Ver Rutas  ##################### -->
 
-  <template id="index">
+  <template id="rutas">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
       <div class="oe_structure">
         <div class="container">
           <t t-foreach="ofertas" t-as="offer">
-            <p><a t-attf-href="/rutas/{{ slug(offer) }}">
+            <p><a t-attf-href="/movilidad_sostenible/rutas/listado/{{ slug(offer) }}">
               <t t-esc="offer.descripcion"/></a>
             </p>
           </t>
@@ -188,7 +211,7 @@
             <label>
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
-            <form action="/rutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <form action="/movilidad_sostenible/rutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
@@ -259,7 +282,7 @@
     <t t-call="website.layout">
       <div class="oe_structure"/>
         <div class="container">
-        <form action="/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+        <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <h4>Crear Ruta</h4>
             <div class="row">
@@ -371,7 +394,7 @@
     <t t-call="website.layout">
       <div class="oe_structure"/>
         <div class="container">
-        <form action="/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+        <form action="/movilidad_sostenible/rutas/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <h3>Buscar Ruta</h3>
                 <p>
@@ -442,7 +465,7 @@
             <label>
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
-            <form action="/ofertar/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
                 <div class="col-md-7 col-sm-8">
