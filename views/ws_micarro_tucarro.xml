@@ -182,100 +182,46 @@
 <!-- ################## Fin Ver Rutas [Listado] ##################### -->
 
 <!-- ################## Detalle Ruta [objeto oferta]  ##################### -->
-  <template id="descripcion">
-    <t t-call="website.layout">
-      <t t-set="title">Detalle Ruta</t>
-      <div class="oe_structure"/>
-      <div class="oe_structure">
-        <div class="container">
-            <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
-
-            <form action="/movilidad_sostenible/rutas/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
-              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-
-              <div t-attf-class="form-group">
-                <label class="col-md-3 col-sm-4 control-label" >Descripción:</label>
-                <div class="col-md-7 col-sm-8">
-                  <p class="form-control-static" t-esc="person.descripcion"/>
-                </div>
-              </div>
-              
-              <div t-attf-class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Hora de Viaje:</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.hora_viaje"/>
-                </div>
-              </div>
-
-              <div t-attf-class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Tipo Transporte:</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.tipo_transporte"/>
-                </div>
-              </div>
-
-              <div t-attf-class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Vacantes:</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.vacantes"/>
-                </div>
-              </div>
-                
-              <div t-attf-class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Comentarios:</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.comentario"/>
-                </div>
-              </div>
-
-              <div t-attf-class="form-group">
-                <label class="col-md-3 col-sm-4 control-label" >Usuario:</label>
-                <div class="col-md-7 col-sm-8">
-                  <p class="form-control" t-esc="person.user_id.name"/>
-                </div>
-              </div>
-
-              <div t-attf-class="form-group">
-                <t t-foreach="person.pasajeros_ids" t-as="pasajero">
-                    <label class="col-md-3 col-sm-4 control-label">Pasajero</label>
-                    <div class="col-md-7 col-sm-8">
-                        <p class="form-control" t-esc="pasajero.name"/>
-                    </div>
-                    <label class="col-md-3 col-sm-4 control-label">Celular</label>
-                    <div class="col-md-7 col-sm-8">
-                        <p class="form-control" t-esc="pasajero.partner_id.phone"/>
-                    </div>
-                </t>
-              </div>
-
-
-                <script type="text/javascript">
-                    var aDiv = document.getElementById("DivContenedor");
-                    var prueba = "<t t-esc="person.route"/>";
-                </script>
-                <div id="DivContenedor"></div>
-                <body onLoad="ofertar()">
-<!--                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                <input type="button" value="Refrescar Mapa" onClick="setroute()"/>
-                </div> -->
-                <div class="container">
-                <!-- <div id="mappy" style="width:100%; height:400px; margin:0px auto 0px auto; border:1px solid #cecece; background:#F5F5F5"></div>-->
-                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
-                <div><p><span id="str"></span></p></div>
-                <div>
-                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
-                </div>
-                </div>
-                </body>
-                <t t-foreach="kwargs" t-as="kwarg">
-                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-                </t>
-            </form>
-        </div>
+<template id="descripcion">
+  <t t-call="website.layout">
+    <t t-set="title">Detalle Ruta</t>
+    <div class="oe_structure">
+      <div class="container">
+        <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
+        <!-- Mapa -->
+        <script type="text/javascript">
+            var aDiv = document.getElementById("DivContenedor");
+            var prueba = "<t t-esc="person.route"/>";
+        </script>
+        <body onLoad="ofertar()">
+          <div class="container">
+            <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+          </div>
+        </body>
+        <!-- Fin Mapa -->
+        <h3>Pasajeros:</h3>
+        <table class="table table-bordered table-striped margen_arriba_tabla">
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Usuario</th>
+              <th>Celular</th>
+            </tr>
+          </thead>
+          <tbody>
+          <t t-foreach="person.pasajeros_ids" t-as="pasajero">
+            <tr>
+              <td><t t-esc="pasajero.name"/></td>
+              <td><t t-esc="pasajero.login"/></td>
+              <td><t t-esc="pasajero.partner_id.phone"/></td>
+            </tr>
+          </t>
+          </tbody>
+        </table>
       </div>
-      <div class="oe_structure"/>
-    </t>
-  </template>
+    </div>
+  </t>
+</template>
 <!-- ################## Fin Detalle Ruta [objeto oferta]  ##################### -->
 
 
