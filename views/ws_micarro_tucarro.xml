@@ -380,8 +380,7 @@
         <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <b><p>Crear Ruta</p></b>
-            <div class="row">
-              <div class="col-md-8">
+
                 <!-- Mapa -->
                 <script type="text/javascript">
                     var aDiv = document.getElementById("DivContenedor");
@@ -395,15 +394,15 @@
                     </div>
                 </body>
                 <!-- Fin Mapa -->
-              </div>
-              <div class="col-md-4">
+
+            <div class="row">
+              <div class="col-md-6">
                 <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
                   <label class="col-md-3 col-sm-4 control-label" for="descripcion">Descripción</label>
                   <div class="col-md-7 col-sm-8">
                     <input type="text" class="form-control" name="descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
                   </div>
                 </div>
-
                 <div t-attf-class="form-group #{error and 'fecha_viaje' in error and 'has-error' or ''}">
                   <label class="col-md-3 col-sm-4 control-label" for="fecha_viaje">Fecha</label>
                   <div class="col-md-7 col-sm-8">
@@ -421,6 +420,8 @@
                     </select>
                   </div>
                 </div>
+              </div>
+              <div class="col-md-6">
                 <div t-attf-class="form-group #{error and 'vacantes' in error and 'has-error' or ''}">
                   <label class="col-md-3 col-sm-4 control-label" for="vacantes">Vacantes</label>
                   <div class="col-md-7 col-sm-8">
