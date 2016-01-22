@@ -263,6 +263,19 @@
         <form action="/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <h3>Crear una nueva Ruta</h3>
+            <!-- Mapa -->
+            <script type="text/javascript">
+                var aDiv = document.getElementById("DivContenedor");
+            </script>
+            <body onLoad="crear()">
+              <div class="container">
+                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
+                  <div>
+                    <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                  </div>
+                </div>
+            </body>
+            <!-- Fin Mapa -->
 
             <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
               <label class="col-md-3 col-sm-4 control-label" for="descripcion">Descripcion</label>
@@ -309,19 +322,7 @@
                 </select>
               </div>
             </div>
-            <!-- Mapa -->
-            <script type="text/javascript">
-                var aDiv = document.getElementById("DivContenedor");
-            </script>
-            <body onLoad="crear()">
-              <div class="container">
-                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
-                  <div>
-                    <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
-                  </div>
-                </div>
-            </body>
-            <!-- Fin Mapa -->
+
             <t t-foreach="kwargs" t-as="kwarg">
               <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
             </t>
