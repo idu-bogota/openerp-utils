@@ -207,9 +207,9 @@
                 <th>Descripción</th>
                 <th>Fecha</th>
                 <th>Tipo Trasnporte</th>
-                <th>Comentarios</th>
                 <th>Estado</th>
                 <th>Usuario</th>
+                <th>Comentarios</th>
               </tr>
             </thead>
             <tbody>
@@ -222,6 +222,9 @@
 	              </td>
 	              <td><t t-esc="offer.hora_viaje"/></td>
 	              <td><t t-esc="offer.tipo_transporte"/></td>
+	              <td><t t-esc="offer.state"/></td>
+	              <td><t t-esc="offer.user_id.name"/></td>
+	              <td><t t-esc="offer.comentario"/></td>
 	            </tr>
 	          </t>
 	        </tbody>
