@@ -1,7 +1,10 @@
 <openerp><data>
   <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
   <xpath expr="." position="inside">
+      <!-- CSS -->
       <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+      <link href="/mi_carro_tu_carro_idu/static/src/css/style.css" rel="stylesheet" type="text/css"/>
+      <!-- Script -->
       <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
       <script type="text/javascript">
           odoo.define('web.csrf', function (require) {
@@ -247,7 +250,7 @@
       <t t-set="title">Offer</t>
       <div class="oe_structure">
         <div class="container">
-          <table class="table table-bordered table-striped">
+          <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
               <tr>
                 <th>Descripción</th>
@@ -356,7 +359,7 @@
     </t>
   </template>
 
-<!-- ################## Creación Ruta  ##################### -->
+<!-- ################## Creación Ruta [crear] ##################### -->
 <template id="crear_ruta_form" name="Crear una nueva Ruta" customize_show="True">
     <t t-call="website.layout">
       <div class="oe_structure"/>
@@ -444,7 +447,7 @@
       </div>
     </t>
 </template>
-<!-- ################## Fin Creación Ruta  ##################### -->
+<!-- ################## Fin Creación Ruta [crear] ##################### -->
 
 <template id="ruta_creada" name="La Ruta ha sido creada">
     <t t-call="website.layout">
