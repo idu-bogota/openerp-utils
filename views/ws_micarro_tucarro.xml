@@ -263,7 +263,6 @@
         <form action="/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <h3>Crear una nueva Ruta</h3>
-                <p>
                 <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
                 <label class="col-md-3 col-sm-4 control-label" for="descripcion">Descripcion</label>
                 <div class="col-md-7 col-sm-10">
@@ -324,7 +323,6 @@
                     <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
                 </div>
                 </body>
-                </p>
                 <t t-foreach="kwargs" t-as="kwarg">
                 <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
                 </t>
