@@ -38,10 +38,10 @@
          <h1>Bienvenidos a Movilidad Sostenible</h1>
          <div id="wrapwrap">
             <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
-                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
-                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inicio</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Listado Rutas</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Mis Rutas</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Mis Rutas Ofertadas</a></li>
               </ul>
             
               <!-- Tab panes -->
@@ -58,30 +58,44 @@
                     </div>
                     <div class="row">
                         <div class="col-md-4">
+                        <span>
                         <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-rounded" style="height: 140px">
                         </img>
+                        </span>
                         </div>
                         <div class="col-md-8">
                             <p>
-                            Crear una ruta: Si quieres armar un parche para viajar en bici o compartir tu carro, lo primero es crar una ruta.
+                            Crear una ruta: Si quieres armar un parche para viajar
+                             en bici o compartir tu carro, lo primero es crar una ruta.
                             </p>
+                            <span>
                             <a href="/movilidad_sostenible/rutas/crear" class="btn btn-primary btn-lg" role="button">Crear Ruta</a>
+                            </span>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
-                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-rounded" style="height: 140px">
-                        </img>
+                        <span>
+                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg"
+                            alt="logo-sostenible" class="img-rounded" style="height: 140px"/>
+                        </span>
                         </div>
                         <div class="col-md-8">
                             <p>
-                            Crear una ruta: Si quieres armar un parche para viajar en bici o compartir tu carro, lo primero es crar una ruta.
+                            Pegarme a una ruta: Si quieres hacer parte de un parche
+                             para viajar o utilizar un carro que alguien esta compartiendo,
+                              debes usar la ruta que te sirve e inscribirte.
                             </p>
-                            <a href="/movilidad_sostenible/rutas/crear" class="btn btn-primary btn-lg" role="button">Crear Ruta</a>
+                            <span>
+                            <a href="/movilidad_sostenible/rutas/buscar/" class="btn btn-primary btn-lg" role="button">Buscar una Ruta</a>
+                            </span>
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                <div role="tabpanel" class="tab-pane" id="profile">
+                
+                
+                </div>
                 <div role="tabpanel" class="tab-pane" id="messages">...</div>
                 <div role="tabpanel" class="tab-pane" id="settings">...</div>
               </div>
