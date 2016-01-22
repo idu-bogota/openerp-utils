@@ -58,7 +58,6 @@
 
 
 <!-- ################## Modificar Ruta  ##################### -->
-
   <template id="misrutas">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
@@ -73,6 +72,7 @@
       </div>
     </t>
   </template>
+<!-- ################## Fin Modificar Ruta  ##################### -->
   <template id="showrutas">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
@@ -195,22 +195,43 @@
     </t>
 </template>
 
-<!-- ################## Ver Rutas  ##################### -->
-
+<!-- ################## Ver Rutas [Listado] ##################### -->
   <template id="rutas">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
       <div class="oe_structure">
         <div class="container">
-          <t t-foreach="ofertas" t-as="offer">
-            <p><a t-attf-href="/movilidad_sostenible/rutas/listado/{{ slug(offer) }}">
-              <t t-esc="offer.descripcion"/></a>
-            </p>
-          </t>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Trasnporte</th>
+                <th>Comentarios</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+              </tr>
+            </thead>
+            <tbody>
+	          <t t-foreach="ofertas" t-as="offer">
+	            <tr>
+	              <td>
+	                <a t-attf-href="/movilidad_sostenible/rutas/listado/{{ slug(offer) }}">
+	                  <t t-esc="offer.descripcion"/>
+	                </a>
+	              </td>
+	              <td><t t-esc="offer.hora_viaje"/></td>
+	              <td><t t-esc="offer.tipo_transporte"/></td>
+	            </tr>
+	          </t>
+	        </tbody>
+          </table>
         </div>
       </div>
     </t>
   </template>
+<!-- ################## Ver Rutas [Listado] ##################### -->
+
   <template id="descripcion">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
