@@ -28,7 +28,6 @@
 </template>
 
 <!-- ################## Index  ##################### -->
-
 <template id="index" name="Introducción">
     <t t-call="website.layout">
       <div id="wrap">
@@ -134,7 +133,48 @@
       </div>
     </t>
 </template>
+<!-- ################## Fin Index  ##################### -->
 
+<!-- ################## Ver Rutas [Listado] ##################### -->
+  <template id="rutas">
+    <t t-call="website.layout">
+      <t t-set="title">Rutas Ofertadas</t>
+      <div class="oe_structure">
+        <div class="container">
+          <b><p>Rutas Ofertadas</p></b>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Trasnporte</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="ofertas" t-as="offer">
+                <tr>
+                  <td>
+                    <a t-attf-href="/movilidad_sostenible/rutas/listado/{{ slug(offer) }}">
+                      <t t-esc="offer.descripcion"/>
+                    </a>
+                  </td>
+                  <td><t t-esc="offer.hora_viaje"/></td>
+                  <td><t t-esc="offer.tipo_transporte"/></td>
+                  <td><t t-esc="offer.state"/></td>
+                  <td><t t-esc="offer.user_id.name"/></td>
+                  <td><t t-esc="offer.comentario"/></td>
+                </tr>
+              </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+<!-- ################## Fin Ver Rutas [Listado] ##################### -->
 
 <!-- ################## Modificar Ruta  ##################### -->
   <template id="misrutas">
@@ -152,6 +192,7 @@
     </t>
   </template>
 <!-- ################## Fin Modificar Ruta  ##################### -->
+
   <template id="showrutas">
     <t t-call="website.layout">
       <t t-set="title">Offer</t>
@@ -274,45 +315,7 @@
     </t>
 </template>
 
-<!-- ################## Ver Rutas [Listado] ##################### -->
-  <template id="rutas">
-    <t t-call="website.layout">
-      <t t-set="title">Offer</t>
-      <div class="oe_structure">
-        <div class="container">
-          <table class="table table-bordered table-striped margen_arriba_tabla">
-            <thead>
-              <tr>
-                <th>Descripción</th>
-                <th>Fecha</th>
-                <th>Tipo Trasnporte</th>
-                <th>Estado</th>
-                <th>Usuario</th>
-                <th>Comentarios</th>
-              </tr>
-            </thead>
-            <tbody>
-	          <t t-foreach="ofertas" t-as="offer">
-	            <tr>
-	              <td>
-	                <a t-attf-href="/movilidad_sostenible/rutas/listado/{{ slug(offer) }}">
-	                  <t t-esc="offer.descripcion"/>
-	                </a>
-	              </td>
-	              <td><t t-esc="offer.hora_viaje"/></td>
-	              <td><t t-esc="offer.tipo_transporte"/></td>
-	              <td><t t-esc="offer.state"/></td>
-	              <td><t t-esc="offer.user_id.name"/></td>
-	              <td><t t-esc="offer.comentario"/></td>
-	            </tr>
-	          </t>
-	        </tbody>
-          </table>
-        </div>
-      </div>
-    </t>
-  </template>
-<!-- ################## Ver Rutas [Listado] ##################### -->
+
 
   <template id="descripcion">
     <t t-call="website.layout">
@@ -392,9 +395,10 @@
 <!-- ################## Creación Ruta [crear] ##################### -->
 <template id="crear_ruta_form" name="Crear una nueva Ruta" customize_show="True">
     <t t-call="website.layout">
+    <t t-set="title">Crear Rutas</t>
       <div class="oe_structure"/>
         <div class="container">
-        <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+        <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <b><p>Crear Ruta</p></b>
             <div class="row">
