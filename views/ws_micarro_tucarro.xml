@@ -39,8 +39,8 @@
          <div id="wrapwrap">
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inicio</a></li>
-                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Listado Rutas</a></li>
-                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Mis Rutas</a></li>
+                <li role="presentation"><a href="#list_rutas" aria-controls="list_rutas" role="tab" data-toggle="tab">Listado Rutas</a></li>
+                <li role="presentation"><a href="#mis_rutas" aria-controls="mis_rutas" role="tab" data-toggle="tab">Mis Rutas</a></li>
                 <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Mis Rutas Ofertadas</a></li>
               </ul>
             
@@ -59,8 +59,10 @@
                     <div class="row">
                         <div class="col-md-4">
                         <span>
-                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-rounded" style="height: 140px">
+                        <p>
+                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-rounded" style="width: 100%">
                         </img>
+                        </p>
                         </span>
                         </div>
                         <div class="col-md-8">
@@ -77,7 +79,7 @@
                         <div class="col-md-4">
                         <span>
                         <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg"
-                            alt="logo-sostenible" class="img-rounded" style="height: 140px"/>
+                            alt="logo-sostenible" class="img-rounded" style="width: 100%"/>
                         </span>
                         </div>
                         <div class="col-md-8">
@@ -92,11 +94,25 @@
                         </div>
                     </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="profile">
-                
-                
+                <div role="tabpanel" class="tab-pane" id="list_rutas">
+                <div class="row">
+                        <div class="col-md-4">
+                        <span>
+                        <img src="/mi_carro_tu_carro_idu/static/src/images/penalosa_bici.jpeg" alt="penalosa_bici" class="img-rounded" style="width: 100%">
+                        </img>
+                        </span>
+                        </div>
+                        <div class="col-md-8">
+                            <p>
+                            A continuación podrá acceder al listado completo de rutas ofrecidas por los funcionarios del IDU. 
+                            </p>
+                            <span>
+                            <a href="/movilidad_sostenible/rutas/listado" class="btn btn-primary btn-lg" role="button">Listado de Rutas</a>
+                            </span>
+                        </div>
+                    </div>
                 </div>
-                <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                <div role="tabpanel" class="tab-pane" id="mis_rutas">...</div>
                 <div role="tabpanel" class="tab-pane" id="settings">...</div>
               </div>
 <!--                <li class="active"><a href="/movilidad_sostenible/">Home</a></li>
