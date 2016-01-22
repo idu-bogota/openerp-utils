@@ -110,20 +110,19 @@ def generate_module_content(options, env, module):
             f.write(output[namespace]['py'])
         with open(fname_view, "w") as f:
             f.write(output[namespace]['view'])
-
     for model in module.models:
         if model.data in ['2', '3']:
             fname_csv = '{0}/data/{1}.csv'.format(module.name, model.name)
             exists = os.path.isfile(fname_csv)
             if options.no_generate_csv_data and exists:
-                break
+                continue
             with open(fname_csv, "w") as f:
                 f.write(output[model.name]['data'])
         elif model.data in ['1', '3']:
             fname_csv = '{0}/demo/{1}.csv'.format(module.name, model.name)
             exists = os.path.isfile(fname_csv)
             if options.no_generate_csv_data and exists:
-                break
+                continue
             with open(fname_csv, "w") as f:
                 f.write(output[model.name]['data'])
             fname_test = '{0}/tests/test_{1}.py'.format(module.name, model.name.replace('.', '_'))
