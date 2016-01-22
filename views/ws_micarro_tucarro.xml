@@ -264,6 +264,7 @@
       <t t-set="title">Offer</t>
       <div class="oe_structure">
         <div class="container">
+          <b><p>Ruta Ofertadas</p></b>
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
               <tr>
@@ -296,7 +297,7 @@
       </div>
     </t>
   </template>
-<!-- ################## Ver Rutas [Listado] ##################### -->
+<!-- ################## Fin Ver Rutas [Listado] ##################### -->
 
   <template id="descripcion">
     <t t-call="website.layout">
@@ -378,7 +379,7 @@
     <t t-call="website.layout">
       <div class="oe_structure"/>
         <div class="container">
-        <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+        <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <b><p>Crear Ruta</p></b>
             <div class="row">
