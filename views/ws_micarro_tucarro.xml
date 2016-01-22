@@ -35,20 +35,69 @@
         <div class="oe_structure"/>
 
          <div class="container">
-            <h1>Bienvenidos a Movilidad Sostenible</h1>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="alert alert-success">
-                        Este espacio permite que los funcionarios y contratistas del IDU participemos de la movilidad sostenible compartiendo nuestro carro, o creando parches para viajar en bicicleta.
-                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+         <h1>Bienvenidos a Movilidad Sostenible</h1>
+         <div id="wrapwrap">
+            <ul class="nav nav-tabs">
+                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Home</a></li>
+                <li role="presentation"><a href="#profile" aria-controls="profile" role="tab" data-toggle="tab">Profile</a></li>
+                <li role="presentation"><a href="#messages" aria-controls="messages" role="tab" data-toggle="tab">Messages</a></li>
+                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Settings</a></li>
+              </ul>
+            
+              <!-- Tab panes -->
+              <div class="tab-content">
+                <div role="tabpanel" class="tab-pane active" id="home">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <p>
+                            Este espacio permite que los funcionarios y contratistas del IDU
+                            participemos de la movilidad sostenible compartiendo nuestro carro,
+                            o creando parches para viajar en bicicleta.
+                            </p>
+                        </div>
                     </div>
-                 <ul>
-                      <li><a href="#">Home</a></li>
-                      <li><a href="#">Menu 1</a></li>
-                      <li><a href="#">Menu 2</a></li>
-                      <li><a href="#">Menu 3</a></li>
-                 </ul>
-            </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-rounded" style="height: 140px">
+                        </img>
+                        </div>
+                        <div class="col-md-8">
+                            <p>
+                            Crear una ruta: Si quieres armar un parche para viajar en bici o compartir tu carro, lo primero es crar una ruta.
+                            </p>
+                            <a href="/movilidad_sostenible/rutas/crear" class="btn btn-primary btn-lg" role="button">Crear Ruta</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4">
+                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-rounded" style="height: 140px">
+                        </img>
+                        </div>
+                        <div class="col-md-8">
+                            <p>
+                            Crear una ruta: Si quieres armar un parche para viajar en bici o compartir tu carro, lo primero es crar una ruta.
+                            </p>
+                            <a href="/movilidad_sostenible/rutas/crear" class="btn btn-primary btn-lg" role="button">Crear Ruta</a>
+                        </div>
+                    </div>
+                </div>
+                <div role="tabpanel" class="tab-pane" id="profile">...</div>
+                <div role="tabpanel" class="tab-pane" id="messages">...</div>
+                <div role="tabpanel" class="tab-pane" id="settings">...</div>
+              </div>
+<!--                <li class="active"><a href="/movilidad_sostenible/">Home</a></li>
+                <li id="rutas"><a href="/movilidad_sostenible/rutas/listado">Rutas</a></li>
+                <li><a href="/movilidad_sostenible/misrutas/">Mis Rutas</a></li>
+            </ul>-->
+            <main>
+                <div class="container">
+                    <t t-raw="0"/>
+                </div>
+            </main>
+            <footer>
+                <div id="footer">
+                </div>
+            </footer>
         </div>
         <div class="oe_structure"/>
       </div>
