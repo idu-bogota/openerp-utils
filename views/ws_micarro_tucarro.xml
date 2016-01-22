@@ -34,7 +34,12 @@
         <div class="oe_structure"/>
 
          <div class="container">
-         <h1>Bienvenidos a Movilidad Sostenible</h1>
+         <div class="row">
+            <div class="col-md-8" style="text-align: center;">
+         <h1 style="text-align: center;">Bienvenidos a Movilidad Sostenible</h1>
+         <img src="/mi_carro_tu_carro_idu/static/src/images/moviliad-sostenible.png" alt="moviliad-sostenible" class="img-rounded" style="text-align: center;"/>
+         </div>
+         </div>
          <div id="wrapwrap">
             <ul class="nav nav-tabs">
                 <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inicio</a></li>
@@ -59,7 +64,7 @@
                         <div class="col-md-4">
                         <span>
                         <p>
-                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-rounded" style="width: 100%">
+                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-circle" style="width: 100%">
                         </img>
                         </p>
                         </span>
@@ -97,7 +102,7 @@
                 <div class="row">
                         <div class="col-md-4">
                         <span>
-                        <img src="/mi_carro_tu_carro_idu/static/src/images/penalosa_bici.jpeg" alt="penalosa_bici" class="img-rounded" style="width: 100%">
+                        <img src="/mi_carro_tu_carro_idu/static/src/images/penalosa_bici.jpeg" alt="penalosa_bici" class="img-circle" style="width: 100%">
                         </img>
                         </span>
                         </div>
