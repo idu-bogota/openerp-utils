@@ -284,7 +284,7 @@
         <div class="container">
         <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-            <h4>Crear Ruta</h4>
+            <b><p>Crear Ruta</p></b>
             <div class="row">
               <div class="col-md-6">
                 <!-- Mapa -->
@@ -293,7 +293,7 @@
                 </script>
                 <body onLoad="crear()">
                   <div class="container">
-                    <div class="span4" id="mappy" style="width: 100%; height: 600px"></div>
+                    <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
                       <div>
                         <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
                       </div>
