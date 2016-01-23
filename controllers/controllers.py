@@ -1,8 +1,3 @@
-'''
-Created on Jul 6, 2015
-
-@author: camoncal1
-'''
 from openerp import http
 from openerp.http import request
 from openerp import fields
