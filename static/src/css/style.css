@@ -6,3 +6,9 @@
     margin-top: 10px;
     margin-botton: 10px;
 }
+
+#scroll_ofertas{
+    height: 450px;
+    overflow: scroll;
+    overflow-x: hidden;
+}
