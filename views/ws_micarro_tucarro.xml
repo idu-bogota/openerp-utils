@@ -380,7 +380,6 @@
         <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <b><p>Crear Ruta</p></b>
-
                 <!-- Mapa -->
                 <script type="text/javascript">
                     var aDiv = document.getElementById("DivContenedor");
@@ -395,8 +394,8 @@
                 </body>
                 <!-- Fin Mapa -->
 
-            <div class="row">
-              <div class="col-md-6">
+            <div class="row margen_vertical">
+              <div class="col-md-4">
                 <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
                   <label class="col-md-3 col-sm-4 control-label" for="descripcion">Descripción</label>
                   <div class="col-md-7 col-sm-8">
@@ -421,7 +420,7 @@
                   </div>
                 </div>
               </div>
-              <div class="col-md-6">
+              <div class="col-md-4">
                 <div t-attf-class="form-group #{error and 'vacantes' in error and 'has-error' or ''}">
                   <label class="col-md-3 col-sm-4 control-label" for="vacantes">Vacantes</label>
                   <div class="col-md-7 col-sm-8">
@@ -443,10 +442,11 @@
                     </select>
                   </div>
                 </div>
-
                 <t t-foreach="kwargs" t-as="kwarg">
                   <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
                 </t>
+              </div>
+              <div class="col-md-4">
                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
                   <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
                 </div>
@@ -456,6 +456,7 @@
                   </div>
                 </div>
               </div>
+            --
             </div>
         </form>
       </div>

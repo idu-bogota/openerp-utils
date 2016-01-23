@@ -1,3 +1,8 @@
 .margen_arriba_tabla{
     margin-top: 10px;
 }
+
+.margen_vertical{
+    margin-top: 10px;
+    margin-botton: 10px;
+}
