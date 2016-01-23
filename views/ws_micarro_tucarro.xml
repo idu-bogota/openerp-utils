@@ -232,7 +232,7 @@
     <t t-set="title">Mis Rutas</t>
     <div class="oe_structure">
       <div class="container">
-        <b><p>Rutas Ofertadas</p></b>
+        <b><p>Mis Rutas</p></b>
         <div id="scroll_ofertas">
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
@@ -249,7 +249,7 @@
               <t t-foreach="ofertas" t-as="offer">
                 <tr>
                  <td>
-                   <a t-attf-href="/movilidad_sostenible/rutas/misrutas/{{ slug(offer) }}">
+                   <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
                      <t t-esc="offer.descripcion"/>
                    </a>
                  </td>
