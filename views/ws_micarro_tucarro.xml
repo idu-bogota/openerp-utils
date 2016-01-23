@@ -226,6 +226,48 @@
 </template>
 <!-- ################## Fin Detalle Ruta [objeto oferta]  ##################### -->
 
+<!-- ################## Mis Rutas [misrutas] ##################### -->
+<template id="misrutas">
+  <t t-call="website.layout">
+    <t t-set="title">Mis Rutas</t>
+    <div class="oe_structure">
+      <div class="container">
+        <b><p>Rutas Ofertadas</p></b>
+        <div id="scroll_ofertas">
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Trasnporte</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="ofertas" t-as="offer">
+                <tr>
+                 <td>
+                   <a t-attf-href="/movilidad_sostenible/rutas/misrutas/{{ slug(offer) }}">
+                     <t t-esc="offer.descripcion"/>
+                   </a>
+                 </td>
+                 <td><t t-esc="offer.hora_viaje"/></td>
+                 <td><t t-esc="offer.tipo_transporte"/></td>
+                 <td><t t-esc="offer.state"/></td>
+                 <td><t t-esc="offer.user_id.name"/></td>
+                 <td><t t-esc="offer.comentario"/></td>
+                 </tr>
+              </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </t>
+</template>
+<!-- ################## Fin Mis Rutas [misrutas] ##################### -->
 
 
   <template id="showrutas">
@@ -311,23 +353,6 @@
       <div class="oe_structure"/>
     </t>
   </template>
-
-<!-- ################## Mis Rutas ##################### -->
-  <template id="misrutas">
-    <t t-call="website.layout">
-      <t t-set="title">Mis Rutas</t>
-      <div class="oe_structure">
-        <div class="container">
-          <t t-foreach="ofertas" t-as="offer">
-            <p><a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
-              <t t-esc="offer.descripcion"/></a>
-            </p>
-          </t>
-        </div>
-      </div>
-    </t>
-  </template>
-<!-- ################## Fin Mis Rutas ##################### -->
 
 
 <template id="rutas_update" name="Ruta Actualizada">
