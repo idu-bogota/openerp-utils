@@ -270,89 +270,87 @@
 <!-- ################## Fin Mis_Rutas [misrutas] ##################### -->
 
 <!-- ################## Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
-  <template id="showrutas">
-    <t t-call="website.layout">
-      <t t-set="title">Detalle Mis_Rutas</t>
-      <div class="oe_structure"/>
-      <div class="oe_structure">
-        <div class="container">
-            <label>
-            <b><p>Detalle de Ruta: <span t-field="person.id"/></p></b>
-            <h2>Ruta No </h2>
-            </label>
-            <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-            <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.descripcion"/>
-                </div>
+<template id="showrutas">
+  <t t-call="website.layout">
+    <t t-set="title">Detalle Mis Rutas</t>
+    <div class="oe_structure">
+      <div class="container">
+        <b><p>Mis Rutas / Detalle Ruta: <span t-field="person.descripcion"/></p></b>
+        <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
+          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+          <!-- Mapa -->
+          <script type="text/javascript">
+             var aDiv = document.getElementById("DivContenedor");
+             var prueba = "<t t-esc="person.route"/>";
+          </script>
+          <body onLoad="load()">
+            <div class="container">
+              <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+              <div>
+                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+              </div>
+            </div>
+          </body>
+          <!-- Fin Mapa -->
+          <div class="row margen_vertical">
+            <div class="col-md-4">
+              <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Descripción</label>
+                  <div class="col-md-7 col-sm-8">
+                      <p class="form-control-static" t-esc="person.descripcion"/>
+                  </div>
+              </div>
+              <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Hora de Viaje</label>
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.hora_viaje"/>
                 </div>
-                <label class="col-md-3 col-sm-4 control-label">Tipo de Transporte</label>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.tipo_transporte"/>
                 </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.vacantes"/>
                 </div>
+              </div>
+              <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control-static" t-esc="person.comentario"/>
                 </div>
-                <t t-foreach="person.pasajeros_ids" t-as="pasajero">
-                
-                    <label class="col-md-3 col-sm-4 control-label">Pasajero</label>
-                    <div class="col-md-7 col-sm-8">
-                        <p class="form-control-static" t-esc="pasajero.name"/>
-                    </div>
-                    <label class="col-md-3 col-sm-4 control-label">Celular</label>
-                    <div class="col-md-7 col-sm-8">
-                        <p class="form-control-static" t-esc="pasajero.partner_id.phone"/>
-                    </div>
-                </t>
-                <div>
-                    <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
-                </div>
-                <script type="text/javascript">
-                    var aDiv = document.getElementById("DivContenedor");
-                    var prueba = "<t t-esc="person.route"/>";
-                </script>
-                <div id="DivContenedor"></div>
-                <body onLoad="load()">
-<!--                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                <input type="button" value="Refrescar Mapa" onClick="setroute()"/>
-                </div> -->
-                <div class="container">
-                <!-- <div id="mappy" style="width:100%; height:400px; margin:0px auto 0px auto; border:1px solid #cecece; background:#F5F5F5"></div>-->
-                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
-                <div><p><span id="str"></span></p></div>
-                <div>
-                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
-                </div>
-                </div>
-                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                    <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
-                </div>
-                </body>
-                <t t-foreach="kwargs" t-as="kwarg">
-                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-                </t>
-                <div class="form-group">
-                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                    <button class="btn btn-primary btn-lg">Actualizar Ruta</button>
-                </div>
-                </div>
+              </div>
+              <!-- Para que este campo -->
+              <div>
+                  <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
+              </div>
+              <!-- Para que este campo -->
+              <t t-foreach="kwargs" t-as="kwarg">
+               <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+              </t>
             </div>
-            </form>
-        </div>
+            <div class="col-md-4">
+              <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                 <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
+              </div>
+              <div class="form-group">
+                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                  <button class="btn btn-primary btn-lg">Actualizar Ruta</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
       </div>
-      <div class="oe_structure"/>
-    </t>
-  </template>
+    </div>
+  </t>
+</template>
 <!-- ################## Fin Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
 
 <template id="rutas_update" name="Ruta Actualizada">
@@ -404,87 +402,86 @@
     <t t-set="title">Crear Rutas</t>
       <div class="oe_structure"/>
         <div class="container">
+        <b><p>Crear Ruta</p></b>
         <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-            <b><p>Crear Ruta</p></b>
-                <!-- Mapa -->
-                <script type="text/javascript">
-                    var aDiv = document.getElementById("DivContenedor");
-                </script>
-                <body onLoad="crear()">
-                  <div class="container">
-                    <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
-                      <div>
-                        <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
-                      </div>
-                    </div>
-                </body>
-                <!-- Fin Mapa -->
+          <!-- Mapa -->
+          <script type="text/javascript">
+              var aDiv = document.getElementById("DivContenedor");
+          </script>
+          <body onLoad="crear()">
+            <div class="container">
+              <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                <div>
+                  <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                </div>
+              </div>
+          </body>
+          <!-- Fin Mapa -->
 
-            <div class="row margen_vertical">
-              <div class="col-md-4">
-                <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
-                  <label class="col-md-3 col-sm-4 control-label" for="descripcion">Descripción</label>
-                  <div class="col-md-7 col-sm-8">
-                    <input type="text" class="form-control" name="descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
-                  </div>
-                </div>
-                <div t-attf-class="form-group #{error and 'fecha_viaje' in error and 'has-error' or ''}">
-                  <label class="col-md-3 col-sm-4 control-label" for="fecha_viaje">Fecha</label>
-                  <div class="col-md-7 col-sm-8">
-                    <input type="datetime-local" class="form-control" name="fecha_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
-                  </div>
-                </div>
-                <div t-attf-class="form-group #{error and 'transporteselect' in error and 'has-error' or ''}">
-                  <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Tipo Transporte</label>
-                  <div class="col-md-7 col-sm-8">
-                    <select name="transporteselect" class="form-control" required="True">
-                        <option value="carro" >Carro </option>
-                        <option value="moto" >Moto</option>
-                        <option value="taxi" >Taxi</option>
-                        <option value="bici" >Bicicleta</option>
-                    </select>
-                  </div>
+          <div class="row margen_vertical">
+            <div class="col-md-4">
+              <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="descripcion">Descripción</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="text" class="form-control" name="descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
                 </div>
               </div>
-              <div class="col-md-4">
-                <div t-attf-class="form-group #{error and 'vacantes' in error and 'has-error' or ''}">
-                  <label class="col-md-3 col-sm-4 control-label" for="vacantes">Vacantes</label>
-                  <div class="col-md-7 col-sm-8">
-                    <input type="text" class="form-control" name="vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
-                  </div>
-                </div>
-                <div t-attf-class="form-group #{error and 'comentarios' in error and 'has-error' or ''}">
-                  <label class="col-md-3 col-sm-4 control-label" for="comentarios">Comentarios</label>
-                  <div class="col-md-7 col-sm-8">
-                    <input type="text" class="form-control" name="comentarios" t-attf-value="#{comentarios or ''}"/>
-                  </div>
-                </div>
-                <div t-attf-class="form-group #{error and 'stateselect' in error and 'has-error' or ''}">
-                  <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Estado</label>
-                  <div class="col-md-7 col-sm-8">
-                    <select name="stateselect" class="form-control" required="True">
-                        <option value="activo" >Activo </option>
-                        <option value="inactivo" >Inactivo</option>
-                    </select>
-                  </div>
-                </div>
-                <t t-foreach="kwargs" t-as="kwarg">
-                  <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-                </t>
-              </div>
-              <div class="col-md-4">
-                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                  <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
-                </div>
-                <div class="form-group">
-                  <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                    <button class="btn btn-primary btn-lg">Crear Ruta</button>
-                  </div>
+              <div t-attf-class="form-group #{error and 'fecha_viaje' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="fecha_viaje">Fecha</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="datetime-local" class="form-control" name="fecha_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
                 </div>
               </div>
-            --
+              <div t-attf-class="form-group #{error and 'transporteselect' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Tipo Transporte</label>
+                <div class="col-md-7 col-sm-8">
+                  <select name="transporteselect" class="form-control" required="True">
+                      <option value="carro" >Carro </option>
+                      <option value="moto" >Moto</option>
+                      <option value="taxi" >Taxi</option>
+                      <option value="bici" >Bicicleta</option>
+                  </select>
+                </div>
+              </div>
             </div>
+            <div class="col-md-4">
+              <div t-attf-class="form-group #{error and 'vacantes' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="vacantes">Vacantes</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="text" class="form-control" name="vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
+                </div>
+              </div>
+              <div t-attf-class="form-group #{error and 'comentarios' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="comentarios">Comentarios</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="text" class="form-control" name="comentarios" t-attf-value="#{comentarios or ''}"/>
+                </div>
+              </div>
+              <div t-attf-class="form-group #{error and 'stateselect' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Estado</label>
+                <div class="col-md-7 col-sm-8">
+                  <select name="stateselect" class="form-control" required="True">
+                      <option value="activo" >Activo </option>
+                      <option value="inactivo" >Inactivo</option>
+                  </select>
+                </div>
+              </div>
+              <t t-foreach="kwargs" t-as="kwarg">
+                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+              </t>
+            </div>
+            <div class="col-md-4">
+              <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
+              </div>
+              <div class="form-group">
+                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                  <button class="btn btn-primary btn-lg">Crear Ruta</button>
+                </div>
+              </div>
+            </div>
+          </div>
         </form>
       </div>
     </t>
