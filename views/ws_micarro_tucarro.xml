@@ -34,94 +34,53 @@
 
          <div class="container">
          <div class="row">
-            <div class="col-md-8" style="text-align: center;">
+            <div class="col-md-12" style="text-align: center;">
          <h1 style="text-align: center;">Bienvenidos a Movilidad Sostenible</h1>
-         <img src="/mi_carro_tu_carro_idu/static/src/images/moviliad-sostenible.png" alt="moviliad-sostenible" class="img-rounded" style="text-align: center;"/>
+         <img src="/mi_carro_tu_carro_idu/static/src/images/logo_movilidad.png" alt="moviliad-sostenible" class="img-rounded" style="width: 100%; text-align: center;"/>
          </div>
          </div>
-         <div id="wrapwrap">
-            <ul class="nav nav-tabs">
-                <li role="presentation" class="active"><a href="#home" aria-controls="home" role="tab" data-toggle="tab">Inicio</a></li>
-                <li role="presentation"><a href="#list_rutas" aria-controls="list_rutas" role="tab" data-toggle="tab">Listado Rutas</a></li>
-                <li role="presentation"><a href="#mis_rutas" aria-controls="mis_rutas" role="tab" data-toggle="tab">Mis Rutas</a></li>
-                <li role="presentation"><a href="#settings" aria-controls="settings" role="tab" data-toggle="tab">Mis Rutas Ofertadas</a></li>
-              </ul>
-            
-              <!-- Tab panes -->
-              <div class="tab-content">
-                <div role="tabpanel" class="tab-pane active" id="home">
-                    <div class="row">
-                        <div class="col-md-6">
-                            <p>
-                            Este espacio permite que los funcionarios y contratistas del IDU
-                            participemos de la movilidad sostenible compartiendo nuestro carro,
-                            o creando parches para viajar en bicicleta.
-                            </p>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                        <span>
-                        <p>
-                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg" alt="logo-sostenible" class="img-circle" style="width: 100%">
-                        </img>
-                        </p>
-                        </span>
-                        </div>
-                        <div class="col-md-8">
-                            <p>
-                            Crear una ruta: Si quieres armar un parche para viajar
-                             en bici o compartir tu carro, lo primero es crar una ruta.
-                            </p>
-                            <span>
-                            <a href="/movilidad_sostenible/rutas/crear" class="btn btn-primary btn-lg" role="button">Crear Ruta</a>
-                            </span>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                        <span>
-                        <img src="/mi_carro_tu_carro_idu/static/src/images/logo-sostenible.jpg"
-                            alt="logo-sostenible" class="img-rounded" style="width: 100%"/>
-                        </span>
-                        </div>
-                        <div class="col-md-8">
-                            <p>
-                            Pegarme a una ruta: Si quieres hacer parte de un parche
-                             para viajar o utilizar un carro que alguien esta compartiendo,
-                              debes usar la ruta que te sirve e inscribirte.
-                            </p>
-                            <span>
-                            <a href="/movilidad_sostenible/rutas/buscar/" class="btn btn-primary btn-lg" role="button">Buscar una Ruta</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="list_rutas">
-                <div class="row">
-                        <div class="col-md-4">
-                        <span>
-                        <img src="/mi_carro_tu_carro_idu/static/src/images/penalosa_bici.jpeg" alt="penalosa_bici" class="img-circle" style="width: 100%">
-                        </img>
-                        </span>
-                        </div>
-                        <div class="col-md-8">
-                            <p>
-                            A continuación podrá acceder al listado completo de rutas ofrecidas por los funcionarios del IDU. 
-                            </p>
-                            <span>
-                            <a href="/movilidad_sostenible/rutas/listado" class="btn btn-primary btn-lg" role="button">Listado de Rutas</a>
-                            </span>
-                        </div>
-                    </div>
-                </div>
-                <div role="tabpanel" class="tab-pane" id="mis_rutas">...</div>
-                <div role="tabpanel" class="tab-pane" id="settings">...</div>
-              </div>
-<!--                <li class="active"><a href="/movilidad_sostenible/">Home</a></li>
-                <li id="rutas"><a href="/movilidad_sostenible/rutas/listado">Rutas</a></li>
-                <li><a href="/movilidad_sostenible/misrutas/">Mis Rutas</a></li>
-            </ul>-->
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-12">
+          <h2 class="featurette-heading">Movilidad Sostenible. <span class="text-muted">Por una movilidad mejor para todos.</span></h2>
+          <p class="lead">Este espacio permite que los funcionarios y contratistas del IDU
+            participemos de la movilidad sostenible compartiendo nuestro carro,
+            o creando parches para viajar en bicicleta.</p>
+        </div>
+        </div>
+        </hr>
+
+
+      <div class="row">
+        <div class="col-lg-3">
+          <h2>Crear Ruta</h2>
+          <p>Crear una ruta: Si quieres armar un parche para viajar
+             en bici o compartir tu carro, lo primero es crar una ruta.</p>
+          <p><a class="btn btn-default" href="/movilidad_sostenible/rutas/crear" role="button">Crear Ruta »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-3">
+          <h2>Buscar Ruta</h2>
+          <p>Pegarme a una ruta: Si quieres hacer parte de un parche
+             para viajar o utilizar un carro que alguien esta compartiendo,
+             usar la ruta que te sirve e inscribirte.</p>
+          <p><a class="btn btn-default" href="/movilidad_sostenible/rutas/buscar/" role="button">Buscar Ruta »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-3">
+          <h2>Listado de Rutas</h2>
+          <p>A continuación podrá acceder al listado completo de rutas
+           ofrecidas por los funcionarios del IDU.</p>
+          <p><a class="btn btn-default" href="/movilidad_sostenible/rutas/listado" role="button">Listado Rutas »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-3">
+          <h2>Mis Rutas</h2>
+          <p>En esta sección podrá revisar las rutas que ha ofrecido y obervar
+           que nuevos integrantes tiene en su ruta.</p>
+          <p><a class="btn btn-default" href="/movilidad_sostenible/misrutas/" role="button">Mis Rutas »</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+            </div>
             <main>
                 <div class="container">
                     <t t-raw="0"/>
@@ -131,10 +90,8 @@
                 <div id="footer">
                 </div>
             </footer>
-        </div>
         <div class="oe_structure"/>
-      </div>
-      </div>
+        </div>
     </t>
 </template>
 <!-- ################## Fin Index  ##################### -->
