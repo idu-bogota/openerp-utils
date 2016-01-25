@@ -303,13 +303,18 @@
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Fecha/Hora Viaje</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.hora_viaje"/>
+                    <input type="datetime-local" class="form-control" name="fecha_viaje" t-att-value="person.hora_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.tipo_transporte"/>
+                  <select name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True">
+                      <option value="carro" >Carro </option>
+                      <option value="moto" >Moto</option>
+                      <option value="taxi" >Taxi</option>
+                      <option value="bici" >Bicicleta</option>
+                  </select>
                 </div>
               </div>
             </div>
@@ -317,19 +322,22 @@
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.vacantes"/>
+                    <input type="text" class="form-control" name="vacantes" t-att-value="person.vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.comentario"/>
+                    <input type="text" class="form-control" name="comentarios" t-att-value="person.comentario" t-attf-value="#{comentarios or ''}"/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Estado</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control" t-esc="person.state"/>
+	                <select name="stateselect" class="form-control" t-att-value="person.state" required="True">
+	                    <option value="activo" >Activo </option>
+	                    <option value="inactivo" >Inactivo</option>
+	                </select>
                 </div>
               </div>
               <!-- Para que este campo -->
@@ -338,7 +346,7 @@
               </div>
               <!-- Para que este campo -->
               <t t-foreach="kwargs" t-as="kwarg">
-               <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
               </t>
             </div>
             <div class="col-md-4">
@@ -352,6 +360,7 @@
               </div>
             </div>
           </div>
+          <!-- para pasajeros -->
         </form>
       </div>
     </div>
