@@ -32,6 +32,7 @@
                  'base',
                  ],
     "data" : [
+        'security/ir.model.access.csv',
         'photo_gallery_view.xml',
     ],
     "installable": True

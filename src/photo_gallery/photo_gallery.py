@@ -77,7 +77,7 @@ class photo_gallery_photo(osv.osv):
         'datetime': fields.datetime('Date and time'),
         'url': fields.char('URL', size=255),
     }
-    
+
     _defaults = {
         'active': True,
         'datetime': fields.datetime.now,
