@@ -485,25 +485,28 @@
 </template>
 <!-- ################## Fin Creación Ruta [crear] ##################### -->
 
-<template id="ruta_creada" name="La Ruta ha sido creada">
-    <t t-call="website.layout">
-      <div id="wrap">
-        <div class="oe_structure"/>
-        <div class="container">
-            <h1>Ruta Creada!</h1>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="alert alert-success">
-                        Tu Ruta ha sido creada exitosamente!.
-                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
-                    </div>
-            </div>
+  <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
+  <template id="ruta_creada" name="La Ruta ha sido creada">
+      <t t-call="website.layout">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+              <h1>Ruta Creada!</h1>
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="alert alert-success">
+                          Tu Ruta ha sido creada exitosamente!.
+                          <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                      </div>
+              </div>
+          </div>
+          <div class="oe_structure"/>
         </div>
-        <div class="oe_structure"/>
-      </div>
-      </div>
-    </t>
-</template>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
+
 
 <!-- ################## Buscar Ruta  ##################### -->
 
