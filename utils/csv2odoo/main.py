@@ -76,7 +76,7 @@ def generate_module_content(options, env, module):
         output[model.name]['data'] = template.render( {'model': model} )
 
     template = env.get_template("openerp_py.tpl")
-    openerp_py = template.render( {'module': module} )
+    openerp_py = template.render( {'module': module, 'options': options} )
 
     template = env.get_template("test_init_py.tpl")
     test_init_py = template.render( {'module': module} )
@@ -188,7 +188,7 @@ def generate_module_security(options, env, module):
             f.write(content)
 
     template = env.get_template("openerp_py.tpl")
-    openerp_py = template.render( {'module': module} )
+    openerp_py = template.render( {'module': module, 'options': options} )
     fname_test = '{0}/__openerp__.py'.format(module.name)
     with open(fname_test, "w") as f:
         f.write(openerp_py)
@@ -249,6 +249,7 @@ def main():
     parser.add_option("-G", "--generate_security_file", action="store_true", dest="generate_security_file", default=False, help="Generate CSV Template for Security")
     parser.add_option("-W", "--generate_workflow_file", action="store_true", dest="generate_workflow_file", default=False, help="Generate CSV Template for Workflow")
     parser.add_option("-d", "--debug", action="store_true", dest="debug", help="Display debug message", default=False)
+    parser.add_option("-D", "--load-demo-data", action="store_false", dest="load_demo_data", help="Don't include demo data references on __openerp__", default=True)
     parser.add_option("-c", "--no_generate_csv_data", action="store_true", dest='no_generate_csv_data', help='Don\'t generate csv files on demo and data', default=False)
     parser.add_option("-t", "--no_generate_tests", action="store_true", dest='no_generate_tests', help='Don\'t generate Test files', default=False)
     parser.add_option("-T", "--templates", dest="templates_dir", help="Templates folder",

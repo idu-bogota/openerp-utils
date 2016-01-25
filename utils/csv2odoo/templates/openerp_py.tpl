@@ -20,11 +20,11 @@
     ],
     'test': [{% if module.groups %}
         'tests/001_users.yml',{% endif %}
-    ],
+    ],{% if options.load_demo_data %}
     'demo': [{% if module.groups %}
         'tests/001_users.yml',{% endif %}{% for model in module.models if model.data in ['1', '3'] %}
         'demo/{{ model.name }}.csv',{% endfor %}
-    ],
+    ],{% endif %}
     'installable': True,
     'description': """
 ## Dependencias módulos Python
