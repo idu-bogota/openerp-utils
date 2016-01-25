@@ -1,0 +1,3 @@
+id,active,name,group_id/id,model_id/id,perm_create,perm_read,perm_write,perm_unlink
+photo_gallery_global,True,photo_gallery.photo_global,,photo_gallery.model_photo_gallery_photo,0,1,0,0
+photo_gallery_users,True,photo_gallery.photo_users,base.group_user,photo_gallery.model_photo_gallery_photo,1,1,1,0
