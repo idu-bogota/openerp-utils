@@ -208,12 +208,15 @@
             </tr>
           </thead>
           <tbody>
+          <t t-set="i" t-value="1"/>
           <t t-foreach="person.pasajeros_ids" t-as="pasajero">
             <tr>
+              <td><t t-esc="i"/></td>
               <td><t t-esc="pasajero.name"/></td>
               <td><t t-esc="pasajero.login"/></td>
               <td><t t-esc="pasajero.partner_id.phone"/></td>
             </tr>
+           <t t-set="i" t-value="i+1"/>
           </t>
           </tbody>
         </table>
