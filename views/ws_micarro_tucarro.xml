@@ -559,7 +559,7 @@
                 <tbody>
                 <tr>
                     <td>
-                        <p><a t-attf-href="/ofertar/{{ slug(oferta) }}">
+                        <p><a t-attf-href="/movilidad_sostenible/rutas/ofertar/{{ slug(oferta) }}">
                         <t t-esc="oferta.descripcion"/>
                         </a>
                         </p>
@@ -585,6 +585,7 @@
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
             <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
                 <div class="col-md-7 col-sm-8">
