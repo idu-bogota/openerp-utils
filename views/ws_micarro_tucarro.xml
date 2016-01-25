@@ -291,10 +291,10 @@
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Estado</label>
                 <div class="col-md-7 col-sm-8">
-	                <select name="stateselect" class="form-control" t-att-value="person.state" required="True">
-	                    <option value="activo" >Activo </option>
-	                    <option value="inactivo" >Inactivo</option>
-	                </select>
+                  <select name="stateselect" class="form-control" t-att-value="person.state" required="True">
+                      <option value="activo" >Activo </option>
+                      <option value="inactivo" >Inactivo</option>
+                  </select>
                 </div>
               </div>
               <!-- Para que este campo -->
