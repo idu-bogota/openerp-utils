@@ -101,7 +101,7 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         usuario = self.env['res.users'].browse(usuario)
         if usuario in self.pasajeros_ids:
             raise exceptions.Warning('Usted ya esta en esta ruta')
-        self.pasajeros_ids = usuario.id    #[(4, usuario, 0)]
+        self.pasajeros_ids = [(4, usuario.id, 0)]    #[(4, usuario, 0)]
         self.integrantes = self.integrantes + 1
         return True
 
