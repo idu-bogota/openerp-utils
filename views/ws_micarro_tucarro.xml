@@ -507,43 +507,41 @@
   <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
 
 
-<!-- ################## Buscar Ruta  ##################### -->
-
-
-<template id="buscar_ruta_form" name="Buscar Ruta" customize_show="True">
-    <t t-call="website.layout">
-      <div class="oe_structure"/>
-        <div class="container">
-        <form action="/movilidad_sostenible/rutas/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
-            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-            <h3>Buscar Ruta</h3>
-                <p>
+  <!-- ################## Buscar Ruta ##################### -->
+  <template id="buscar_ruta_form" name="Buscar Ruta" customize_show="True">
+      <t t-call="website.layout">
+        <div class="oe_structure"/>
+          <div class="container">
+            <form action="/movilidad_sostenible/rutas/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <h3>Buscar Ruta</h3>
                 <script type="text/javascript">
                     var aDiv = document.getElementById("DivContenedor");
                 </script>
-                <div id="DivContenedor"></div>
                 <body onLoad="crear()">
-                <div class="container">
-                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
-                <div><p><span id="str"></span></p></div>
-                <div>
-                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
-                </div>
-                </div>
+                  <div class="container">
+                    <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                    <div><p><span id="str"></span></p></div>
+                    <div>
+                      <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                    </div>
+                  </div>
                 </body>
-                </p>
                 <t t-foreach="kwargs" t-as="kwarg">
-                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                  <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
                 </t>
                 <div class="form-group">
-                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                    <button class="btn btn-primary btn-lg">Buscar Ruta</button>
+                  <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                      <button class="btn btn-primary btn-lg">Buscar Ruta</button>
+                  </div>
                 </div>
-                </div>
-        </form>
-      </div>
-    </t>
-</template>
+            </form>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Fin Buscar Ruta ##################### -->
+
+
 
   <template id="lista_rutas_ofertar">
     <t t-call="website.layout">
