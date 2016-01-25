@@ -297,12 +297,11 @@
               <div class="form-group">
                   <label class="col-md-3 col-sm-4 control-label">Descripción</label>
                   <div class="col-md-7 col-sm-8">
-                      <p class="form-control" t-esc="person.descripcion"/>
-                      <input type="text" class="form-control" name="descripcion" value="88" required="True" t-attf-value="#{descripcion or ''}"/>
+                      <input type="text" class="form-control" name="descripcion" t-att-value="person.descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
                   </div>
               </div>
               <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Hora de Viaje</label>
+                <label class="col-md-3 col-sm-4 control-label">Fecha/Hora Viaje</label>
                 <div class="col-md-7 col-sm-8">
                     <p class="form-control" t-esc="person.hora_viaje"/>
                 </div>
@@ -435,7 +434,7 @@
                 </div>
               </div>
               <div t-attf-class="form-group #{error and 'fecha_viaje' in error and 'has-error' or ''}">
-                <label class="col-md-3 col-sm-4 control-label" for="fecha_viaje">Fecha</label>
+                <label class="col-md-3 col-sm-4 control-label" for="fecha_viaje">Fecha/Hora Viaje</label>
                 <div class="col-md-7 col-sm-8">
                   <input type="datetime-local" class="form-control" name="fecha_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
                 </div>
