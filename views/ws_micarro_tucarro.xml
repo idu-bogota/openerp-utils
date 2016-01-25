@@ -507,9 +507,10 @@
   <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
 
 
-  <!-- ################## Buscar Ruta ##################### -->
+  <!-- ################## Buscar Ruta [buscar] ##################### -->
   <template id="buscar_ruta_form" name="Buscar Ruta" customize_show="True">
       <t t-call="website.layout">
+      <t t-set="title">Buscar Rutas</t>
         <div class="oe_structure"/>
           <div class="container">
             <form action="/movilidad_sostenible/rutas/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
@@ -539,38 +540,45 @@
         </div>
       </t>
   </template>
-  <!-- ################## Fin Buscar Ruta ##################### -->
+  <!-- ################## Fin Buscar Ruta [buscar] ##################### -->
 
-
-
+  <!-- ################## Resultado Buscar Ruta [buscar_ruta] ##################### -->
   <template id="lista_rutas_ofertar">
     <t t-call="website.layout">
-      <t t-set="title">Ofertas</t>
+      <t t-set="title">Rutas Adyacentes</t>
       <div class="oe_structure">
         <div class="container">
-            <table class="table table-condensed table-bordered table-hover">
-                <thead>
-                  <tr>
-                    <th>Descripción</th>
-                  </tr>
-                </thead>
-            <t t-foreach="lista_ofertas" t-as="oferta">
-                <tbody>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Trasnporte</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="lista_ofertas" t-as="offer">
                 <tr>
-                    <td>
-                        <p><a t-attf-href="/movilidad_sostenible/rutas/ofertar/{{ slug(oferta) }}">
-                        <t t-esc="oferta.descripcion"/>
-                        </a>
-                        </p>
-                    </td>
+                  <td>
+                    <a t-attf-href="/movilidad_sostenible/rutas/ofertar/{{ slug(offer) }}">
+                      <t t-esc="offer.descripcion"/>
+                    </a>
+                  </td>
+                  <td><t t-esc="offer.hora_viaje"/></td>
+                  <td><t t-esc="offer.tipo_transporte"/></td>
+                  <td><t t-esc="offer.user_id.name"/></td>
+                  <td><t t-esc="offer.comentario"/></td>
                 </tr>
-             </tbody>
-          </t>
-         </table>
+              </t>
+            </tbody>
+          </table>
         </div>
       </div>
     </t>
   </template>
+  <!-- ################## Fin Resultado Buscar Ruta [buscar_ruta] ##################### -->
 
 <!-- ################## Ofertar Ruta  ##################### -->
 
