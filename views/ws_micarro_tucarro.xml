@@ -297,19 +297,20 @@
               <div class="form-group">
                   <label class="col-md-3 col-sm-4 control-label">Descripción</label>
                   <div class="col-md-7 col-sm-8">
-                      <p class="form-control-static" t-esc="person.descripcion"/>
+                      <p class="form-control" t-esc="person.descripcion"/>
+                      <input type="text" class="form-control" name="descripcion" value="88" required="True" t-attf-value="#{descripcion or ''}"/>
                   </div>
               </div>
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Hora de Viaje</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.hora_viaje"/>
+                    <p class="form-control" t-esc="person.hora_viaje"/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.tipo_transporte"/>
+                    <p class="form-control" t-esc="person.tipo_transporte"/>
                 </div>
               </div>
             </div>
@@ -317,13 +318,19 @@
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.vacantes"/>
+                    <p class="form-control" t-esc="person.vacantes"/>
                 </div>
               </div>
               <div class="form-group">
                 <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
                 <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.comentario"/>
+                    <p class="form-control" t-esc="person.comentario"/>
+                </div>
+              </div>
+              <div class="form-group">
+                <label class="col-md-3 col-sm-4 control-label">Estado</label>
+                <div class="col-md-7 col-sm-8">
+                    <p class="form-control" t-esc="person.state"/>
                 </div>
               </div>
               <!-- Para que este campo -->
