@@ -139,7 +139,7 @@
 </template>
 <!-- ################## Fin Index  ##################### -->
 
-<!-- ################## Ver Rutas [Listado] ##################### -->
+  <!-- ################## Ver Rutas [Listado] ##################### -->
   <template id="rutas">
     <t t-call="website.layout">
       <t t-set="title">Rutas Ofertadas</t>
@@ -178,53 +178,53 @@
       </div>
     </t>
   </template>
-<!-- ################## Fin Ver Rutas [Listado] ##################### -->
+  <!-- ################## Fin Ver Rutas [Listado] ##################### -->
 
-<!-- ################## Detalle Ruta [Listado/]  ##################### -->
-<template id="descripcion">
-  <t t-call="website.layout">
-    <t t-set="title">Detalle Ruta</t>
-    <div class="oe_structure">
-      <div class="container">
-        <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
-        <!-- Mapa -->
-        <script type="text/javascript">
-            var aDiv = document.getElementById("DivContenedor");
-            var prueba = "<t t-esc="person.route"/>";
-        </script>
-        <body onLoad="ofertar()">
-          <div class="container">
-            <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
-          </div>
-        </body>
-        <!-- Fin Mapa -->
-        <h3>Pasajeros:</h3>
-        <table class="table table-bordered table-striped margen_arriba_tabla">
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Usuario</th>
-              <th>Celular</th>
-            </tr>
-          </thead>
-          <tbody>
-          <t t-set="i" t-value="1"/>
-          <t t-foreach="person.pasajeros_ids" t-as="pasajero">
-            <tr>
-              <td><t t-esc="i"/></td>
-              <td><t t-esc="pasajero.name"/></td>
-              <td><t t-esc="pasajero.login"/></td>
-              <td><t t-esc="pasajero.partner_id.phone"/></td>
-            </tr>
-           <t t-set="i" t-value="i+1"/>
-          </t>
-          </tbody>
-        </table>
+  <!-- ################## Detalle Ruta [Listado/]  ##################### -->
+  <template id="descripcion">
+    <t t-call="website.layout">
+      <t t-set="title">Detalle Ruta</t>
+      <div class="oe_structure">
+        <div class="container">
+          <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
+          <!-- Mapa -->
+          <script type="text/javascript">
+              var aDiv = document.getElementById("DivContenedor");
+              var prueba = "<t t-esc="person.route"/>";
+          </script>
+          <body onLoad="ofertar()">
+            <div class="container">
+              <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+            </div>
+          </body>
+          <!-- Fin Mapa -->
+          <h3>Pasajeros:</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Celular</th>
+              </tr>
+            </thead>
+            <tbody>
+            <t t-set="i" t-value="1"/>
+            <t t-foreach="person.pasajeros_ids" t-as="pasajero">
+              <tr>
+                <td><t t-esc="i"/></td>
+                <td><t t-esc="pasajero.name"/></td>
+                <td><t t-esc="pasajero.login"/></td>
+                <td><t t-esc="pasajero.partner_id.phone"/></td>
+              </tr>
+             <t t-set="i" t-value="i+1"/>
+            </t>
+            </tbody>
+          </table>
+        </div>
       </div>
-    </div>
-  </t>
-</template>
-<!-- ################## Fin Detalle Ruta [Listado/]  ##################### -->
+    </t>
+  </template>
+  <!-- ################## Fin Detalle Ruta [Listado/]  ##################### -->
 
 <!-- ################## Mis_Rutas [misrutas] ##################### -->
 <template id="misrutas">
