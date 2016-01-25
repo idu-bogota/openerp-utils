@@ -318,11 +318,10 @@
               </div>
             </div>
           </div>
-          <!-- para pasajeros -->
         </form>
-       <h3>Pasajeros:</h3>
-       <div id="scroll_ofertas">
-       <table class="table table-bordered table-striped margen_arriba_tabla">
+        <h3>Pasajeros:</h3>
+        <div id="scroll_ofertas">
+        <table class="table table-bordered table-striped margen_arriba_tabla">
          <thead>
            <tr>
              <th>No</th>
@@ -343,8 +342,8 @@
           <t t-set="i" t-value="i+1"/>
          </t>
          </tbody>
-       </table>
-       </div>
+        </table>
+        </div>
       </div>
     </div>
   </t>
