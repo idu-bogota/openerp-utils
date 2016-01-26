@@ -592,21 +592,18 @@
   </template>
   <!-- ################## Fin Resultado Buscar Ruta [buscar_ruta] ##################### -->
 
-<!-- ################## Detalle y solicitar Ruta  ##################### -->
+  <!-- ################## Detalle y solicitar Ruta  ##################### -->
   <template id="ruta_ofertar_form">
     <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Detalle Ruta Final</t>
-      <div class="oe_structure"/>
       <div class="oe_structure">
         <div class="container">
           <div class="well">
             En esta página usted podrá solicitar ser parte de esta
             ruta si esta de acuerdo con la ruta y los tiempos de partida..
           </div>
-          <label>
-            <h2>Ruta No <span t-field="person.id"/></h2>
-          </label>
-          <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+          <b><p>Descripción: <span t-field="person.descripcion"/></p></b>
+          <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <!-- Mapa -->
             <script type="text/javascript">
@@ -639,9 +636,9 @@
           </form>
         </div>
       </div>
-      <div class="oe_structure"/>
     </t>
   </template>
+  <!-- ################## Detalle y solicitar Ruta  ##################### -->
 
 <template id="ruta_no_ofertada" name="La Ruta no pudo ser ofertada">
     <t t-call="mi_carro_tu_carro_idu.layout">
