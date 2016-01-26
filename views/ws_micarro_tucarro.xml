@@ -123,7 +123,7 @@
                   <t t-foreach="ofertas" t-as="offer">
                     <tr>
                       <td>
-                        <a t-attf-href="/movilidad_sostenible/rutas/listado/{{ slug(offer) }}">
+                        <a t-attf-href="/movilidad_sostenible/rutas/ofertar/{{ slug(offer) }}">
                           <t t-esc="offer.descripcion"/>
                         </a>
                       </td>
