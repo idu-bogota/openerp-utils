@@ -56,26 +56,30 @@
         </hr>
 
       <div class="row">
-        <div class="col-lg-3">
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/location.png" alt="Location" height="140"/>
           <h2>Crear Ruta</h2>
           <p>Crear una ruta: Si quieres armar un parche para viajar
              en bici o compartir tu carro, lo primero es crar una ruta.</p>
           <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/crear" role="button">Crear Ruta »</a></p>
         </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3">
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/compass.png" alt="Compass" height="140"/>
           <h2>Buscar Ruta</h2>
           <p>Pegarme a una ruta: Si quieres hacer parte de un parche
              para viajar o utilizar un carro que alguien esta compartiendo,
              usar la ruta que te sirve e inscribirte.</p>
           <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/buscar/" role="button">Buscar Ruta »</a></p>
         </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3">
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/map.png" alt="Map" height="140"/>
           <h2>Listado de Rutas</h2>
           <p>A continuación podrá acceder al listado completo de rutas
            ofrecidas por los funcionarios del IDU.</p>
           <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/listado" role="button">Listado Rutas »</a></p>
         </div><!-- /.col-lg-4 -->
-        <div class="col-lg-3">
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/bike.png" alt="Bike" height="140"/>
           <h2>Mis Rutas</h2>
           <p>En esta sección podrá revisar las rutas que ha ofrecido y obervar
            que nuevos integrantes tiene en su ruta.</p>
