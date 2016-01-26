@@ -147,6 +147,7 @@
       <t t-set="title">Detalle Ruta</t>
       <div class="oe_structure">
         <div class="container">
+          <div class="well">Esta página contiene la descripción general de la ruta escogida</div>
           <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
           <!-- Mapa -->
           <script type="text/javascript">
@@ -194,7 +195,7 @@
     <t t-set="title">Mis Rutas</t>
     <div class="oe_structure">
       <div class="container">
-        <b><p>Mis Rutas</p></b>
+      <div class="well">Esta página contiene el listado de las rutas creadas por cada persona.</div>
         <div id="scroll_ofertas">
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
@@ -237,7 +238,8 @@
     <t t-set="title">Detalle Mis Rutas</t>
     <div class="oe_structure">
       <div class="container">
-        <b><p>Mis Rutas / Detalle Ruta: <span t-field="person.descripcion"/></p></b>
+        <div class="well">Esta página contiene el detalle de cada ruta creada, además podrá editar los detalles iniciales con los que se creo la ruta.</div>
+        <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
         <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
           <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
           <!-- Mapa -->
@@ -403,6 +405,9 @@
     <t t-set="title">Crear Rutas</t>
       <div class="oe_structure"/>
         <div class="container">
+        <div class="well">Esta página le permitirá crear de forma fácil y rápida
+         una nueva ruta, especificando el tipo de transporte, la fecha,
+          la descripción, vacantes y demás datos que tiene la oferta.</div>
         <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
           <!-- Mapa -->
@@ -517,6 +522,9 @@
       <t t-set="title">Buscar Rutas</t>
         <div class="oe_structure"/>
           <div class="container">
+          <div class="well">Esta página le permitirá hacer una busqueda de las
+           rutas que estan cercanas a su ruta deseada, usted deberá colocar su
+            inicio y fin para que el sistema le arroje las mejores alternativas.</div>
             <form action="/movilidad_sostenible/rutas/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
                 <h3>Buscar Ruta</h3>
@@ -592,6 +600,8 @@
       <div class="oe_structure"/>
       <div class="oe_structure">
         <div class="container">
+        <div class="well">En esta página usted podrá solicitar ser parte de esta
+         ruta si esta de acuerdo con la ruta y los tiempos de partida..</div>
             <label>
             <h2>Ruta No <span t-field="person.id"/></h2>
             </label>
