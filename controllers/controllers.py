@@ -21,18 +21,6 @@ class Rutas(http.Controller):
             'ofertas': Oferta.search([('state', '=', 'activo'),]),
         })
 
-    @http.route('/movilidad_sostenible/rutas/listado/<model("mi_carro_tu_carro.oferta"):offer>/', auth='public', website=True)
-    def offer(self, offer,**kwargs):
-        values = {}
-        for field in ['rutas_id', 'rutas_wp']:
-            if kwargs.get(field):
-                values[field] = kwargs.pop(field)
-        values.update(kwargs=kwargs.items())
-        return http.request.render('mi_carro_tu_carro_idu.descripcion', {
-            'person': offer,
-            'kwargs': values
-        })
-
     @http.route('/movilidad_sostenible/misrutas/', auth='public', website=True)
     def misrutas(self):
         Oferta = http.request.env['mi_carro_tu_carro.oferta']
