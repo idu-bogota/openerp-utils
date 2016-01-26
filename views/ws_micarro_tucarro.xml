@@ -592,11 +592,10 @@
   </template>
   <!-- ################## Fin Resultado Buscar Ruta [buscar_ruta] ##################### -->
 
-<!-- ################## Ofertar Ruta  ##################### -->
-
+<!-- ################## Detalle y solicitar Ruta  ##################### -->
   <template id="ruta_ofertar_form">
     <t t-call="mi_carro_tu_carro_idu.layout">
-      <t t-set="title">Offer</t>
+      <t t-set="title">Detalle Ruta Final</t>
       <div class="oe_structure"/>
       <div class="oe_structure">
         <div class="container">
@@ -608,30 +607,6 @@
             <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
               <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Descripcion</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.descripcion"/>
-                </div>
-                <label class="col-md-3 col-sm-4 control-label">Hora de Viaje</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.hora_viaje"/>
-                </div>
-                <label class="col-md-3 col-sm-4 control-label">Tipo de Transporte</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.tipo_transporte"/>
-                </div>
-                <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.vacantes"/>
-                </div>
-                <label class="col-md-3 col-sm-4 control-label">Integrantes</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.integrantes"/>
-                </div>
-                <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
-                <div class="col-md-7 col-sm-8">
-                    <p class="form-control-static" t-esc="person.comentario"/>
-                </div>
                 <div>
                     <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
                 </div>
