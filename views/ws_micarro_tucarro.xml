@@ -276,7 +276,6 @@
           </div>
         </form>
         <h3>Pasajeros:</h3>
-        <div id="scroll_ofertas">
         <table class="table table-bordered table-striped margen_arriba_tabla">
          <thead>
            <tr>
@@ -299,7 +298,6 @@
          </t>
          </tbody>
         </table>
-        </div>
       </div>
     </div>
   </t>
