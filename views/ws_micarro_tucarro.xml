@@ -1,4 +1,15 @@
 <openerp><data>
+  <template id="layout" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+        <ol class="breadcrumb">
+          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+          <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+        <t t-raw="0"/>
+    </t>
+
+  </template>
   <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
     <xpath expr="." position="inside">
     <!-- CSS -->
@@ -97,12 +108,11 @@
 
   <!-- ################## Ver Rutas [Listado] ##################### -->
   <template id="rutas">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Rutas Ofertadas</t>
       <div class="oe_structure">
         <div class="container">
-          <b><p>Rutas Ofertadas</p></b>
-          <div id="scroll_ofertas">
+              <div class="well">Esta página contiene las rutas ofertadas por otros usuarios para que ud pueda seleccionar una de ellas y acompañar el grupo en el viaje</div>
               <table class="table table-bordered table-striped margen_arriba_tabla">
                 <thead>
                   <tr>
@@ -129,7 +139,6 @@
                   </t>
                 </tbody>
               </table>
-          </div>
         </div>
       </div>
     </t>
