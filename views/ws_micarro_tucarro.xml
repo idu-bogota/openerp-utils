@@ -599,45 +599,44 @@
       <div class="oe_structure"/>
       <div class="oe_structure">
         <div class="container">
-        <div class="well">En esta página usted podrá solicitar ser parte de esta
-         ruta si esta de acuerdo con la ruta y los tiempos de partida..</div>
-            <label>
+          <div class="well">
+            En esta página usted podrá solicitar ser parte de esta
+            ruta si esta de acuerdo con la ruta y los tiempos de partida..
+          </div>
+          <label>
             <h2>Ruta No <span t-field="person.id"/></h2>
-            </label>
-            <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
-              <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-            <div class="form-group">
-                <div>
-                    <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
-                </div>
-                <script type="text/javascript">
-                    var aDiv = document.getElementById("DivContenedor");
-                    var prueba = "<t t-esc="person.route"/>";
-                </script>
-                <div id="DivContenedor"></div>
-                <body onLoad="ofertar()">
-<!--                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                <input type="button" value="Refrescar Mapa" onClick="setroute()"/>
-                </div> -->
+          </label>
+          <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <!-- Mapa -->
+            <script type="text/javascript">
+                var aDiv = document.getElementById("DivContenedor");
+                var prueba = "<t t-esc="person.route"/>";
+            </script>
+            <div id="DivContenedor"></div>
+            <body onLoad="ofertar()">
                 <div class="container">
-                <!-- <div id="mappy" style="width:100%; height:400px; margin:0px auto 0px auto; border:1px solid #cecece; background:#F5F5F5"></div>-->
-                <div class="span4" id="mappy" style="width: 100%; height: 300px"></div>
-                <div><p><span id="str"></span></p></div>
-                <div>
-                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                    <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                    <div>
+                        <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                    </div>
                 </div>
-                </div>
-                </body>
-                <t t-foreach="kwargs" t-as="kwarg">
-                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
-                </t>
-                <div class="form-group">
+            </body>
+            <!-- Fin Mapa -->
+            <div class="form-group">
+              <div>
+                  <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
+              </div>
+              <t t-foreach="kwargs" t-as="kwarg">
+                  <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+              </t>
+              <div class="form-group">
                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
                     <button class="btn btn-primary btn-lg">Solicitar</button>
                 </div>
-                </div>
+              </div>
             </div>
-            </form>
+          </form>
         </div>
       </div>
       <div class="oe_structure"/>
