@@ -31,13 +31,15 @@ class Rutas(http.Controller):
     @http.route('/movilidad_sostenible/misrutas/<model("mi_carro_tu_carro.oferta"):offer>/', auth='public', website=True)
     def showrutas(self, offer,**kwargs):
         values = {}
+        page = ["Mis Rutas", '/movilidad_sostenible/misrutas/']
         for field in ['rutas_id', 'rutas_wp']:
             if kwargs.get(field):
                 values[field] = kwargs.pop(field)
         values.update(kwargs=kwargs.items())
         return http.request.render('mi_carro_tu_carro_idu.showrutas', {
             'person': offer,
-            'kwargs': values
+            'kwargs': values,
+            'page_data': page,
         })
 
     @http.route(['/movilidad_sostenible/misrutas/info_extended/'], type='http', auth="public", website=True)
