@@ -9,6 +9,17 @@
         <t t-raw="0"/>
     </t>
 
+  <template id="layout_2" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+        <ol class="breadcrumb">
+          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+          <li><a href="/movilidad_sostenible/misrutas/">Rutas</a></li>
+          <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+        <t t-raw="0"/>
+    </t>
+
   </template>
   <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
     <xpath expr="." position="inside">
@@ -184,7 +195,7 @@
 
   <!-- ################## Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
   <template id="showrutas">
-    <t t-call="mi_carro_tu_carro_idu.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout_2">
       <t t-set="title">Detalle Mis Rutas</t>
       <div class="oe_structure">
         <div class="container">
