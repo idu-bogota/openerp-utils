@@ -182,11 +182,14 @@ class Rutas(http.Controller):
         rutas_ids = request.env['mi_carro_tu_carro.oferta']
         rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
         if rutas.tipo_transporte == 'bici':
-            rutas.compute_integrantes()
-            return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
-                            'person': rutas,
-                            'kwargs': values,
-                            })
+            result = rutas.compute_integrantes()
+            if result==True:
+                return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
+                                'person': rutas,
+                                'kwargs': values,
+                                })
+            else:
+                return request.website.render("mi_carro_tu_carro_idu.ruta_no_ofertada")
         else:
             if not rutas.vacantes <=0:
                 rutas.compute_vacantes()

@@ -85,7 +85,8 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         usuario = self._context.get('uid', False)
         usuario = self.env['res.users'].browse(usuario)
         if usuario in self.pasajeros_ids:
-            raise exceptions.Warning('Usted ya esta en esta ruta')
+            return False
+#            raise exceptions.Warning('Usted ya esta en esta ruta')
         if self.vacantes > 0:
             self.pasajeros_ids = [(4, usuario.id, 0)]#usuario.id    #[(4, usuario, 0)]
             self.vacantes = self.vacantes - 1
