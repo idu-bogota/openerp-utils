@@ -165,13 +165,15 @@ class Rutas(http.Controller):
     @http.route('/movilidad_sostenible/rutas/ofertar/<model("mi_carro_tu_carro.oferta"):oferta>/', auth='public', website=True)
     def ruta_ofertar_form(self, oferta,**kwargs):
         values = {}
+        page = ["Mis Ofertadas", '/movilidad_sostenible/rutas/listado/']
         for field in ['rutas_id', 'rutas_wp']:
             if kwargs.get(field):
                 values[field] = kwargs.pop(field)
         values.update(kwargs=kwargs.items())
         return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
             'person': oferta,
-            'kwargs': values
+            'kwargs': values,
+            'page_data': page,
         })
 
     @http.route(['/movilidad_sostenible/rutas/ofertar/info_extended/'], type='http', auth="public", website=True)
