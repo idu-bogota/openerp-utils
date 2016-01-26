@@ -1,26 +1,28 @@
 <openerp><data>
   <template id="layout" name="Layout Movilidad Urbana">
-    <t t-call="website.layout">
-        <div class="container">
-            <ol class="breadcrumb">
-              <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
-              <li class="active"><t t-esc="title"/></li>
-            </ol>
-            <h1><t t-esc="title"/></h1>
-            <t t-raw="0"/>
-        </div>
-    </t>
+<t t-call="website.layout">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+      <li class="active"><t t-esc="title"/></li>
+    </ol>
+    <h1><t t-esc="title"/></h1>
+   </div>
+   <t t-raw="0"/>
+</t>
   </template>
 
   <template id="layout_2" name="Layout Movilidad Urbana">
     <t t-call="website.layout">
+      <div class="container">
         <ol class="breadcrumb">
           <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
           <li><a href="/movilidad_sostenible/misrutas/">Mis Rutas</a></li>
           <li class="active"><t t-esc="title"/></li>
         </ol>
         <h1><t t-esc="title"/></h1>
-        <t t-raw="0"/>
+      </div>
+      <t t-raw="0"/>
     </t>
   </template>
 
