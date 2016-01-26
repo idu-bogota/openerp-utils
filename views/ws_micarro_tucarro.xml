@@ -76,7 +76,7 @@
           <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/location.png" alt="Location" height="140"/>
           <h2>Crear Ruta</h2>
           <p>Crear una ruta: Si quieres armar un parche para viajar
-             en bici o compartir tu carro, lo primero es crar una ruta.</p>
+             en bici o compartir tu carro, lo primero es crear una ruta.</p>
           <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/crear" role="button">Crear Ruta »</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-3" style="text-align: center;">
@@ -97,7 +97,7 @@
         <div class="col-lg-3" style="text-align: center;">
           <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/bike.png" alt="Bike" height="140"/>
           <h2>Mis Rutas</h2>
-          <p>En esta sección podrá revisar las rutas que ha ofrecido y obervar
+          <p>En esta sección podrá revisar las rutas que ha ofrecido y observar
            que nuevos integrantes tiene en su ruta.</p>
           <p><a class="btn btn-primary" href="/movilidad_sostenible/misrutas/" role="button">Mis Rutas »</a></p>
         </div><!-- /.col-lg-4 -->
@@ -124,13 +124,15 @@
       <t t-set="title">Rutas Ofertadas</t>
       <div class="oe_structure">
         <div class="container">
-              <div class="well">Esta página contiene las rutas ofertadas por otros usuarios para que ud pueda seleccionar una de ellas y acompañar el grupo en el viaje</div>
+              <div class="well">Esta página contiene las rutas ofertadas por 
+              otros usuarios para que usted pueda seleccionar una de ellas y 
+              acompañar el grupo en el viaje</div>
               <table class="table table-bordered table-striped margen_arriba_tabla">
                 <thead>
                   <tr>
                     <th>Descripción</th>
                     <th>Fecha</th>
-                    <th>Tipo Trasnporte</th>
+                    <th>Tipo Transporte</th>
                     <th>Usuario</th>
                     <th>Comentarios</th>
                   </tr>
@@ -204,7 +206,9 @@
       <t t-set="title">Detalle Mis Rutas</t>
       <div class="oe_structure">
         <div class="container">
-          <div class="well">Esta página contiene el detalle de cada ruta creada, además podrá editar los detalles iniciales con los que se creo la ruta.</div>
+          <div class="well">Esta página contiene el detalle de cada ruta creada,
+           además podrá editar los detalles iniciales con los que se creo 
+           la ruta.</div>
           <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
           <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
@@ -532,7 +536,7 @@
               <tr>
                 <th>Descripción</th>
                 <th>Fecha</th>
-                <th>Tipo Trasnporte</th>
+                <th>Tipo Transporte</th>
                 <th>Usuario</th>
                 <th>Comentarios</th>
               </tr>
