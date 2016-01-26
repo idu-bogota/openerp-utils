@@ -148,36 +148,34 @@
     <div class="oe_structure">
       <div class="container">
       <div class="well">Esta página contiene el listado de las rutas creadas por cada persona.</div>
-        <div id="scroll_ofertas">
-          <table class="table table-bordered table-striped margen_arriba_tabla">
-            <thead>
+        <table class="table table-bordered table-striped margen_arriba_tabla">
+          <thead>
+            <tr>
+              <th>Descripción</th>
+              <th>Fecha</th>
+              <th>Tipo Trasnporte</th>
+              <th>Estado</th>
+              <th>Usuario</th>
+              <th>Comentarios</th>
+            </tr>
+          </thead>
+          <tbody>
+            <t t-foreach="ofertas" t-as="offer">
               <tr>
-                <th>Descripción</th>
-                <th>Fecha</th>
-                <th>Tipo Trasnporte</th>
-                <th>Estado</th>
-                <th>Usuario</th>
-                <th>Comentarios</th>
-              </tr>
-            </thead>
-            <tbody>
-              <t t-foreach="ofertas" t-as="offer">
-                <tr>
-                 <td>
-                   <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
-                     <t t-esc="offer.descripcion"/>
-                   </a>
-                 </td>
-                 <td><t t-esc="offer.hora_viaje"/></td>
-                 <td><t t-esc="offer.tipo_transporte"/></td>
-                 <td><t t-esc="offer.state"/></td>
-                 <td><t t-esc="offer.user_id.name"/></td>
-                 <td><t t-esc="offer.comentario"/></td>
-                 </tr>
-              </t>
-            </tbody>
-          </table>
-        </div>
+               <td>
+                 <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
+                   <t t-esc="offer.descripcion"/>
+                 </a>
+               </td>
+               <td><t t-esc="offer.hora_viaje"/></td>
+               <td><t t-esc="offer.tipo_transporte"/></td>
+               <td><t t-esc="offer.state"/></td>
+               <td><t t-esc="offer.user_id.name"/></td>
+               <td><t t-esc="offer.comentario"/></td>
+               </tr>
+            </t>
+          </tbody>
+        </table>
       </div>
     </div>
   </t>
