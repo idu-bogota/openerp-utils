@@ -547,7 +547,7 @@
   <!-- ################## Detalle y solicitar Ruta  ##################### -->
   <template id="ruta_ofertar_form">
     <t t-call="mi_carro_tu_carro_idu.layout">
-      <t t-set="title">Detalle Ruta Final</t>
+      <t t-set="title">Detalle Ruta</t>
       <div class="oe_structure">
         <div class="container">
           <div class="well">
