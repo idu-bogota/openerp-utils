@@ -399,7 +399,6 @@
     <t t-set="title">Crear Rutas</t>
       <div class="oe_structure"/>
         <div class="container">
-        <b><p>Crear Ruta</p></b>
         <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
         <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
           <!-- Mapa -->
