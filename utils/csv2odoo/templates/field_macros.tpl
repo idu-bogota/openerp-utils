@@ -85,7 +85,7 @@
         compute='_compute_{{ field.name }}',
     {%- endif -%}
     {% if field.arguments['help'] %}
-        help='{{field.arguments['help']}}',
+        help='''{{field.arguments['help']}}''',
     {%- endif -%}
     {% if field.arguments['domain'] %}
         domain="{{field.arguments['domain']}}",

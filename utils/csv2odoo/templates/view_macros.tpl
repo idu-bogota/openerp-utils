@@ -26,12 +26,13 @@
             attrs="{
                 'invisible': [('{{field.name}}', '=', 'CHANGE ME')],
                 'required': [('{{field.name}}', '=', 'CHANGE ME')],
+                'readonly': [('{{field.name}}', '=', 'CHANGE ME')],
             }"
         />
     {%- elif field.view_arguments['form_param'] or widget -%}
-        <field name="{{field.name}}" widget="{{ field.view_arguments['form_param'] or widget }}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %} />
+        <field name="{{field.name}}" widget="{{ field.view_arguments['form_param'] or widget }}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %}{% if field.arguments['invisible']%} invisible="1"{% endif %} />
     {%- else -%}
-        <field name="{{field.name}}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %} />
+        <field name="{{field.name}}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %}{% if field.arguments['invisible']%} invisible="1"{% endif %} />
     {%- endif -%}
 {%- endmacro -%}
 
