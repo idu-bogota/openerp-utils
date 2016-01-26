@@ -304,6 +304,7 @@
 </template>
 <!-- ################## Fin Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
 
+<!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
 <template id="rutas_update" name="Ruta Actualizada">
     <t t-call="mi_carro_tu_carro_idu.layout">
       <div id="wrap">
@@ -343,7 +344,7 @@
       </div>
     </t>
 </template>
-
+<!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
 
 
 
