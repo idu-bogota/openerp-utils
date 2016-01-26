@@ -141,210 +141,210 @@
   </template>
   <!-- ################## Fin Ver Rutas [Listado] ##################### -->
 
-<!-- ################## Mis_Rutas [misrutas] ##################### -->
-<template id="misrutas">
-  <t t-call="mi_carro_tu_carro_idu.layout">
-    <t t-set="title">Mis Rutas</t>
-    <div class="oe_structure">
-      <div class="container">
-      <div class="well">Esta página contiene el listado de las rutas creadas por cada persona.</div>
-        <table class="table table-bordered table-striped margen_arriba_tabla">
-          <thead>
-            <tr>
-              <th>Descripción</th>
-              <th>Fecha</th>
-              <th>Tipo Trasnporte</th>
-              <th>Estado</th>
-              <th>Usuario</th>
-              <th>Comentarios</th>
-            </tr>
-          </thead>
-          <tbody>
-            <t t-foreach="ofertas" t-as="offer">
+  <!-- ################## Mis_Rutas [misrutas] ##################### -->
+  <template id="misrutas">
+    <t t-call="mi_carro_tu_carro_idu.layout">
+      <t t-set="title">Mis Rutas</t>
+      <div class="oe_structure">
+        <div class="container">
+        <div class="well">Esta página contiene el listado de las rutas creadas por cada persona.</div>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
               <tr>
-               <td>
-                 <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
-                   <t t-esc="offer.descripcion"/>
-                 </a>
-               </td>
-               <td><t t-esc="offer.hora_viaje"/></td>
-               <td><t t-esc="offer.tipo_transporte"/></td>
-               <td><t t-esc="offer.state"/></td>
-               <td><t t-esc="offer.user_id.name"/></td>
-               <td><t t-esc="offer.comentario"/></td>
-               </tr>
-            </t>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </t>
-</template>
-<!-- ################## Fin Mis_Rutas [misrutas] ##################### -->
-
-<!-- ################## Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
-<template id="showrutas">
-  <t t-call="mi_carro_tu_carro_idu.layout">
-    <t t-set="title">Detalle Mis Rutas</t>
-    <div class="oe_structure">
-      <div class="container">
-        <div class="well">Esta página contiene el detalle de cada ruta creada, además podrá editar los detalles iniciales con los que se creo la ruta.</div>
-        <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
-        <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
-          <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-          <!-- Mapa -->
-          <script type="text/javascript">
-             var aDiv = document.getElementById("DivContenedor");
-             var prueba = "<t t-esc="person.route"/>";
-          </script>
-          <body onLoad="load()">
-            <div class="container">
-              <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
-              <div>
-                <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
-              </div>
-            </div>
-          </body>
-          <!-- Fin Mapa -->
-          <div class="row margen_vertical">
-            <div class="col-md-4">
-              <div class="form-group">
-                  <label class="col-md-3 col-sm-4 control-label">Descripción</label>
-                  <div class="col-md-7 col-sm-8">
-                      <input type="text" class="form-control" name="descripcion" t-att-value="person.descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
-                  </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Fecha/Hora Viaje</label>
-                <div class="col-md-7 col-sm-8">
-                    <input type="datetime-local" class="form-control" name="fecha_viaje" t-att-value="person.hora_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
-                <div class="col-md-7 col-sm-8">
-                  <select name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True">
-                      <option value="carro" >Carro </option>
-                      <option value="moto" >Moto</option>
-                      <option value="taxi" >Taxi</option>
-                      <option value="bici" >Bicicleta</option>
-                  </select>
-                </div>
-              </div>
-            </div>
-            <div class="col-md-4">
-              <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
-                <div class="col-md-7 col-sm-8">
-                    <input type="text" class="form-control" name="vacantes" t-att-value="person.vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Estado</label>
-                <div class="col-md-7 col-sm-8">
-                  <select name="stateselect" class="form-control" t-att-value="person.state" required="True">
-                      <option value="activo" >Activo </option>
-                      <option value="inactivo" >Inactivo</option>
-                  </select>
-                </div>
-              </div>
-              <div class="form-group">
-                <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
-                <div class="col-md-7 col-sm-8">
-                    <textarea  class="form-control" name="comentarios" style="min-height: 60px" required="True" t-att-value="person.comentario" t-attf-value="#{comentarios or ''}"/>
-                </div>
-              </div>
-              <!-- Para que este campo -->
-              <div>
-                  <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
-              </div>
-              <!-- Para que este campo -->
-              <t t-foreach="kwargs" t-as="kwarg">
-                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Trasnporte</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="ofertas" t-as="offer">
+                <tr>
+                 <td>
+                   <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
+                     <t t-esc="offer.descripcion"/>
+                   </a>
+                 </td>
+                 <td><t t-esc="offer.hora_viaje"/></td>
+                 <td><t t-esc="offer.tipo_transporte"/></td>
+                 <td><t t-esc="offer.state"/></td>
+                 <td><t t-esc="offer.user_id.name"/></td>
+                 <td><t t-esc="offer.comentario"/></td>
+                 </tr>
               </t>
-            </div>
-            <div class="col-md-4">
-              <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                 <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Fin Mis_Rutas [misrutas] ##################### -->
+
+  <!-- ################## Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
+  <template id="showrutas">
+    <t t-call="mi_carro_tu_carro_idu.layout">
+      <t t-set="title">Detalle Mis Rutas</t>
+      <div class="oe_structure">
+        <div class="container">
+          <div class="well">Esta página contiene el detalle de cada ruta creada, además podrá editar los detalles iniciales con los que se creo la ruta.</div>
+          <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
+          <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <!-- Mapa -->
+            <script type="text/javascript">
+               var aDiv = document.getElementById("DivContenedor");
+               var prueba = "<t t-esc="person.route"/>";
+            </script>
+            <body onLoad="load()">
+              <div class="container">
+                <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                <div>
+                  <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                </div>
               </div>
-              <div class="form-group">
+            </body>
+            <!-- Fin Mapa -->
+            <div class="row margen_vertical">
+              <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label">Descripción</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="descripcion" t-att-value="person.descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Fecha/Hora Viaje</label>
+                  <div class="col-md-7 col-sm-8">
+                      <input type="datetime-local" class="form-control" name="fecha_viaje" t-att-value="person.hora_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
+                  <div class="col-md-7 col-sm-8">
+                    <select name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True">
+                        <option value="carro" >Carro </option>
+                        <option value="moto" >Moto</option>
+                        <option value="taxi" >Taxi</option>
+                        <option value="bici" >Bicicleta</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
+                  <div class="col-md-7 col-sm-8">
+                      <input type="text" class="form-control" name="vacantes" t-att-value="person.vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Estado</label>
+                  <div class="col-md-7 col-sm-8">
+                    <select name="stateselect" class="form-control" t-att-value="person.state" required="True">
+                        <option value="activo" >Activo </option>
+                        <option value="inactivo" >Inactivo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
+                  <div class="col-md-7 col-sm-8">
+                      <textarea  class="form-control" name="comentarios" style="min-height: 60px" required="True" t-att-value="person.comentario" t-attf-value="#{comentarios or ''}"/>
+                  </div>
+                </div>
+                <!-- Para que este campo -->
+                <div>
+                    <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
+                </div>
+                <!-- Para que este campo -->
+                <t t-foreach="kwargs" t-as="kwarg">
+                  <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                </t>
+              </div>
+              <div class="col-md-4">
                 <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                  <button class="btn btn-primary btn-lg">Actualizar Ruta</button>
+                   <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
+                </div>
+                <div class="form-group">
+                  <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                    <button class="btn btn-primary btn-lg">Actualizar Ruta</button>
+                  </div>
                 </div>
               </div>
             </div>
+          </form>
+          <h3>Pasajeros:</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+           <thead>
+             <tr>
+               <th>No</th>
+               <th>Nombre</th>
+               <th>Usuario</th>
+               <th>Celular</th>
+             </tr>
+           </thead>
+           <tbody>
+           <t t-set="i" t-value="1"/>
+           <t t-foreach="person.pasajeros_ids" t-as="pasajero">
+             <tr>
+               <td><t t-esc="i"/></td>
+               <td><t t-esc="pasajero.name"/></td>
+               <td><t t-esc="pasajero.login"/></td>
+               <td><t t-esc="pasajero.partner_id.phone"/></td>
+             </tr>
+            <t t-set="i" t-value="i+1"/>
+           </t>
+           </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Fin Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
+
+  <!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
+  <template id="rutas_update" name="Ruta Actualizada">
+      <t t-call="mi_carro_tu_carro_idu.layout">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+              <h1>Ruta Actualizada!</h1>
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="alert alert-success">
+                          Tu Ruta ha sido actualizada correctamente!.
+                          <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                      </div>
+              </div>
           </div>
-        </form>
-        <h3>Pasajeros:</h3>
-        <table class="table table-bordered table-striped margen_arriba_tabla">
-         <thead>
-           <tr>
-             <th>No</th>
-             <th>Nombre</th>
-             <th>Usuario</th>
-             <th>Celular</th>
-           </tr>
-         </thead>
-         <tbody>
-         <t t-set="i" t-value="1"/>
-         <t t-foreach="person.pasajeros_ids" t-as="pasajero">
-           <tr>
-             <td><t t-esc="i"/></td>
-             <td><t t-esc="pasajero.name"/></td>
-             <td><t t-esc="pasajero.login"/></td>
-             <td><t t-esc="pasajero.partner_id.phone"/></td>
-           </tr>
-          <t t-set="i" t-value="i+1"/>
-         </t>
-         </tbody>
-        </table>
-      </div>
-    </div>
-  </t>
-</template>
-<!-- ################## Fin Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
-
-<!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
-<template id="rutas_update" name="Ruta Actualizada">
-    <t t-call="mi_carro_tu_carro_idu.layout">
-      <div id="wrap">
-        <div class="oe_structure"/>
-        <div class="container">
-            <h1>Ruta Actualizada!</h1>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="alert alert-success">
-                        Tu Ruta ha sido actualizada correctamente!.
-                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
-                    </div>
-            </div>
+          <div class="oe_structure"/>
         </div>
-        <div class="oe_structure"/>
-      </div>
-      </div>
-    </t>
-</template>
-
-<template id="rutas_not_update" name="Ruta No Actualizada">
-    <t t-call="mi_carro_tu_carro_idu.layout">
-      <div id="wrap">
-        <div class="oe_structure"/>
-        <div class="container">
-            <h1>Ruta No Actualizada!</h1>
-            <div class="row">
-                <div class="col-md-8">
-                    <div class="alert alert-success">
-                        Tu Ruta no ha podido ser actualizada.
-                        <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
-                    </div>
-            </div>
         </div>
-        <div class="oe_structure"/>
-      </div>
-      </div>
-    </t>
-</template>
-<!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
+      </t>
+  </template>
+
+  <template id="rutas_not_update" name="Ruta No Actualizada">
+      <t t-call="mi_carro_tu_carro_idu.layout">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+              <h1>Ruta No Actualizada!</h1>
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="alert alert-success">
+                          Tu Ruta no ha podido ser actualizada.
+                          <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                      </div>
+              </div>
+          </div>
+          <div class="oe_structure"/>
+        </div>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
 
 
 
