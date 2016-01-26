@@ -251,7 +251,9 @@
                 <div class="form-group">
                   <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
                   <div class="col-md-7 col-sm-8">
-                      <textarea  class="form-control" name="comentarios" style="min-height: 60px" required="True" t-att-value="person.comentario" t-attf-value="#{comentarios or ''}"/>
+                      <textarea  class="form-control" name="comentarios" style="min-height: 60px" required="True" t-attf-value="#{comentarios or ''}">
+                      <t t-esc="person.comentario"/>
+                      </textarea>
                   </div>
                 </div>
                 <!-- Para que este campo -->
