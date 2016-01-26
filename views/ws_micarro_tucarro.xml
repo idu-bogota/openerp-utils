@@ -24,22 +24,14 @@
         require('qweb').default_dict.csrf_token = token;
         });
     </script>
-    <!--
-    <script type="text/javascript" src="http://maps.google.com/maps/api/js?"></script>
-    <link href="https://developers.google.com/_static/acc879e135/css/devsite-google-blue.css" rel="stylesheet" type="text/css" />
-    <script style="" type="text/javascript" src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlHZT6yGwsMKmsUeLpnnJLgcv06cfYXmA"></script>
-    <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?libraries=places&sensor=false"></script>
-    <script style="" type="text/javascript" src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyBlHZT6yGwsMKmsUeLpnnJLgcv06cfYXmA&sensor=false"></script>
-    <script style="" type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/draggable.js"></script>
-    -->
     <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_wp.js"></script>
-    <!-- <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_crear.js"></script> -->
     </xpath>
   </template>
 
 <!-- ################## Index  ##################### -->
 <template id="index" name="Introducción">
-    <t t-call="website.layout">
+   <t t-call="mi_carro_tu_carro_idu.layout">
+    <!--  <t t-call="website.layout">-->
       <div id="wrap">
         <div class="oe_structure"/>
 
@@ -147,7 +139,7 @@
 
   <!-- ################## Detalle Ruta [Listado/]  ##################### -->
   <template id="descripcion">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Detalle Ruta</t>
       <div class="oe_structure">
         <div class="container">
@@ -194,7 +186,7 @@
 
 <!-- ################## Mis_Rutas [misrutas] ##################### -->
 <template id="misrutas">
-  <t t-call="website.layout">
+  <t t-call="mi_carro_tu_carro_idu.layout">
     <t t-set="title">Mis Rutas</t>
     <div class="oe_structure">
       <div class="container">
@@ -237,7 +229,7 @@
 
 <!-- ################## Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
 <template id="showrutas">
-  <t t-call="website.layout">
+  <t t-call="mi_carro_tu_carro_idu.layout">
     <t t-set="title">Detalle Mis Rutas</t>
     <div class="oe_structure">
       <div class="container">
@@ -359,7 +351,7 @@
 <!-- ################## Fin Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
 
 <template id="rutas_update" name="Ruta Actualizada">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
       <div id="wrap">
         <div class="oe_structure"/>
         <div class="container">
@@ -379,7 +371,7 @@
 </template>
 
 <template id="rutas_not_update" name="Ruta No Actualizada">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
       <div id="wrap">
         <div class="oe_structure"/>
         <div class="container">
@@ -403,7 +395,7 @@
 
 <!-- ################## Creación Ruta [crear] ##################### -->
 <template id="crear_ruta_form" name="Crear una nueva Ruta" customize_show="True">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
     <t t-set="title">Crear Rutas</t>
       <div class="oe_structure"/>
         <div class="container">
@@ -495,7 +487,7 @@
 
   <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
   <template id="ruta_creada" name="La Ruta ha sido creada">
-      <t t-call="website.layout">
+      <t t-call="mi_carro_tu_carro_idu.layout">
         <div id="wrap">
           <div class="oe_structure"/>
           <div class="container">
@@ -518,7 +510,7 @@
 
   <!-- ################## Buscar Ruta [buscar] ##################### -->
   <template id="buscar_ruta_form" name="Buscar Ruta" customize_show="True">
-      <t t-call="website.layout">
+      <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Buscar Rutas</t>
         <div class="oe_structure"/>
           <div class="container">
@@ -553,7 +545,7 @@
 
   <!-- ################## Resultado Buscar Ruta [buscar_ruta] ##################### -->
   <template id="lista_rutas_ofertar">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Rutas Adyacentes</t>
       <div class="oe_structure">
         <div class="container">
@@ -592,7 +584,7 @@
 <!-- ################## Ofertar Ruta  ##################### -->
 
   <template id="ruta_ofertar_form">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Offer</t>
       <div class="oe_structure"/>
       <div class="oe_structure">
@@ -665,7 +657,7 @@
   </template>
 
 <template id="ruta_no_ofertada" name="La Ruta no pudo ser ofertada">
-    <t t-call="website.layout">
+    <t t-call="mi_carro_tu_carro_idu.layout">
       <div id="wrap">
         <div class="oe_structure"/>
         <div class="container">
