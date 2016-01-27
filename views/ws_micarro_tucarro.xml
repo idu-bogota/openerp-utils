@@ -689,6 +689,12 @@
               <div>
                   <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
               </div>
+              <div t-attf-class="form-group #{error and 'celular' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-6 control-label" for="celular">Por favor indique su número de celular.</label>
+                <div class="col-md-7 col-sm-6">
+                  <input type="text" class="form-control" name="celular" required="True" t-attf-value="#{celular or ''}"/>
+                </div>
+              </div>
               <t t-foreach="kwargs" t-as="kwarg">
                   <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
               </t>
