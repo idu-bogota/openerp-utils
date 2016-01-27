@@ -685,23 +685,25 @@
                 </div>
             </body>
             <!-- Fin Mapa -->
-            <div class="form-group">
+            <div class="form-group margen_vertical">
               <div>
                   <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
               </div>
+
               <div t-attf-class="form-group #{error and 'celular' in error and 'has-error' or ''}">
-                <label class="col-md-3 col-sm-6 control-label" for="celular">Por favor indique su número de celular.</label>
-                <div class="col-md-7 col-sm-6">
+                <label class="col-md-3 col-sm-4 control-label" for="celular">Ingrese su número de celular:</label>
+                <div class="col-md-7 col-sm-8">
                   <input type="text" class="form-control" name="celular" required="True" t-attf-value="#{celular or ''}"/>
                 </div>
               </div>
+
               <t t-foreach="kwargs" t-as="kwarg">
                   <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
               </t>
-              <div class="form-group">
-                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                    <button class="btn btn-primary btn-lg">Solicitar</button>
-                </div>
+            </div>
+            <div class="form-group">
+              <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                  <button class="btn btn-primary btn-lg">Solicitar</button>
               </div>
             </div>
           </form>
