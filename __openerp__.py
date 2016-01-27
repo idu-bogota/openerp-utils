@@ -19,9 +19,11 @@ https://github.com/acsone/odoo/commit/676e4b8d9eb0b1cda663532f59fdb10d59f3af40
         'security/security.xml',
         'security/ir.model.access.csv',
         'views/movilidad_sostenible_view.xml',
-        'views/ws_micarro_tucarro.xml',
-        #'views/movilidad_sostenible_demo.xml',
+        'views/movilidad_sostenible_templates.xml',
     ],
+    "demo": [
+        'views/movilidad_sostenible_demo.xml',
+    ]
     "test": [
     ],
     "installable" : True,

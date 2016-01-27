@@ -1,3 +1,3 @@
 id,active,name,group_id/id,model_id/id,perm_create,perm_read,perm_write,perm_unlink
-movilidad_sostenible_oferta_usuario_micarro,True,tucarro.oferta.usuario_micarro,movilidad_sostenible_idu.usuario_micarro,mi_carro_tu_carro_idu.model_mi_carro_tu_carro_oferta,1,1,1,1
-movilidad_sostenible_users_usuario_micarro,True,tucarro.users.usuario_micarro,movilidad_sostenible_idu.usuario_micarro,model_res_users,0,1,1,0
+movilidad_sostenible_oferta_usuario,True,tucarro.oferta.usuario,movilidad_sostenible.usuario,movilidad_sostenible.model_movilidad_sostenible_oferta,1,1,1,1
+movilidad_sostenible_users_usuario,True,tucarro.users.usuario,movilidad_sostenible.usuario,model_res_users,0,1,1,0
