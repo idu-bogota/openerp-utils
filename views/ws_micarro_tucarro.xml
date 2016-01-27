@@ -680,17 +680,40 @@
   </template>
   <!-- ################## Detalle y solicitar Ruta [ofertar/] ##################### -->
 
-  <!-- ################## Error al Solicitar Ruta  ##################### -->
-  <template id="ruta_no_ofertada" name="La Ruta no pudo ser ofertada">
-      <t t-call="mi_carro_tu_carro_idu.layout">
+  <!-- ################## Solicitar Ruta Exitosa ##################### -->
+  <template id="ruta_solicitada_success" name="La Ruta fue ofertada">
+      <t t-call="mi_carro_tu_carro_idu.layout_3">
         <div id="wrap">
           <div class="oe_structure"/>
           <div class="container">
-            <h1>La ruta no pudo ser ofertada!</h1>
+            <h1>Ha sido vinculado a la Ruta exitosamente!</h1>
             <div class="row">
               <div class="col-md-8">
                 <div class="alert alert-success">
-                    Tu Ruta no pudo ser ofertada!, por favor verifica que ya no estes registrado en la ruta o que existan vacantes disponibles.
+                    Usted ha sido vinculado existosamente a la ruta solicitada.
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Solicitar Ruta Exitosa  ##################### -->
+
+  <!-- ################## Error al Solicitar Ruta  ##################### -->
+  <template id="ruta_no_solicitada" name="La Ruta no pudo ser solicitada">
+      <t t-call="mi_carro_tu_carro_idu.layout_3">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+            <h1>La ruta no pudo ser solicitada!</h1>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="alert alert-success">
+                    Tu Ruta no pudo ser solicitada!, por favor verifica que ya 
+                    no estes registrado en la ruta o que existan vacantes 
+                    disponibles.
                     <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
                 </div>
               </div>

@@ -114,9 +114,28 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         self.integrantes = self.integrantes + 1
         return True
 
-#     @api.model
-#     def create(self,vals):
-# #         if self.search([('user_id','=',self._context.get('uid', False))]):
-# #             raise exceptions.Warning('Este Usuario ya esta dentro de una oferta.')
-#         vals['pasajeros_ids'] = [self._context.get('uid', False)]
-#         return super(mi_carro_tu_carro_oferta, self).create(vals)
+    @api.multi
+    def validar_hay_vacantes(self):
+        vacantes = self.vacantes
+        integrante_actuales = len(self.pasajeros_ids)
+        diferencia = vacantes - integrante_actuales
+        if diferencia > 0:
+            return True
+        else:
+            return False
+
+    @api.multi
+    def existe_usuario_en_ruta(self):
+        usuario_id = self._context.get('uid', False)
+        usuario = self.env['res.users'].browse(usuario_id)
+        if usuario in self.pasajeros_ids:
+            return True
+        else:
+            return False
+
+    @api.multi
+    def add_user_a_ruta(self):
+        usuario = self._context.get('uid', False)
+        usuario = self.env['res.users'].browse(usuario)
+        self.pasajeros_ids = [(4, usuario.id, 0)]
+        self.integrantes = self.integrantes + 1

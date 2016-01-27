@@ -178,21 +178,18 @@ class Rutas(http.Controller):
         values = {}
         rutas_ids = request.env['mi_carro_tu_carro.oferta']
         rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
-        if rutas.tipo_transporte == 'bici':
-            result = rutas.compute_integrantes()
-            if result==True:
-                return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
-                                'person': rutas,
-                                'kwargs': values,
-                                })
-            else:
-                return request.website.render("mi_carro_tu_carro_idu.ruta_no_ofertada")
+
+        esta = rutas.existe_usuario_en_ruta()
+
+        if esta:
+            return request.website.render("mi_carro_tu_carro_idu.ruta_no_solicitada")
         else:
-            if not rutas.vacantes <=0:
-                rutas.compute_vacantes()
-                return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
-                    'person': rutas,
-                    'kwargs': values
-                    })
+            if rutas.tipo_transporte == 'bici':
+                rutas.add_user_a_ruta()
+                return request.website.render("mi_carro_tu_carro_idu.ruta_solicitada_success")
             else:
-                return request.website.render("mi_carro_tu_carro_idu.ruta_no_ofertada")
+                if rutas.validar_hay_vacantes():
+                    rutas.add_user_a_ruta()
+                    return request.website.render("mi_carro_tu_carro_idu.ruta_solicitada_success")
+                else:
+                    return request.website.render("mi_carro_tu_carro_idu.ruta_no_solicitada")
