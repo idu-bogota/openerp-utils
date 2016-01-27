@@ -1,7 +1,10 @@
-function test() {
-    if (document.getElementById('transporteselect').value == 'bici') {
-        document.getElementById('vacantes').style.display = 'none';
-    } else {
-        document.getElementById('vacantes').style.display = 'block';
-    }
-}
+$(document).ready(function (){
+            $("#transporteselect").change(function() {
+                // vacantes is the id of the input field 
+                if ($(this).val() != "bici") {
+                    $("#vacantes").show();
+                }else{
+                    $("#vacantes").hide();
+                } 
+            });
+});

@@ -48,6 +48,7 @@
     <link href="/mi_carro_tu_carro_idu/static/src/css/style.css" rel="stylesheet" type="text/css"/>
     <!-- Script -->
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
     <script type="text/javascript">
         odoo.define('web.csrf', function (require) {
         var token = "<t t-esc="request.csrf_token(None)"/>";
@@ -57,6 +58,7 @@
     </script>
     <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_wp.js"></script>
     <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/hidden_form_field.js"></script>
+
     </xpath>
   </template>
 
@@ -290,7 +292,7 @@
                 <div class="form-group">
                   <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
                   <div class="col-md-7 col-sm-8">
-                    <select id="transporteselect" name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True" onclick='test()'>
+                    <select id="transporteselect" name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True">
                         <option value="carro" >Carro </option>
                         <option value="moto" >Moto</option>
                         <option value="taxi" >Taxi</option>
@@ -459,7 +461,7 @@
               <div t-attf-class="form-group #{error and 'transporteselect' in error and 'has-error' or ''}">
                 <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Tipo Transporte</label>
                 <div class="col-md-7 col-sm-8">
-                  <select name="transporteselect" id="transporteselect" class="form-control" required="True" onclick='test()'>
+                  <select name="transporteselect" id="transporteselect" class="form-control" required="True">
                       <option value="carro" >Carro </option>
                       <option value="moto" >Moto</option>
                       <option value="taxi" >Taxi</option>
