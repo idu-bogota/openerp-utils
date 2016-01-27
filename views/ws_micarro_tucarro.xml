@@ -136,7 +136,7 @@
 </template>
 <!-- ################## Fin Index  ##################### -->
 
-  <!-- ################## Ver Rutas [Listado] ##################### -->
+  <!-- ################## Rutas Ofertadas [rutas/ofertadas/] ##################### -->
   <template id="rutas_ofertadas">
     <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Rutas Ofertadas</t>
@@ -173,7 +173,7 @@
       </div>
     </t>
   </template>
-  <!-- ################## Fin Ver Rutas [Listado] ##################### -->
+  <!-- ################## Fin Rutas Ofertadas [rutas/ofertadas/] ##################### -->
 
   <!-- ################## Mis_Rutas [misrutas] ##################### -->
   <template id="misrutas">
