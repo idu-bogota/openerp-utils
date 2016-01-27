@@ -181,13 +181,15 @@
       <t t-set="title">Mis Rutas</t>
       <div class="oe_structure">
         <div class="container">
-        <div class="well">Esta página contiene el listado de las rutas creadas por cada persona.</div>
+        <div class="well">Esta página contiene el listado de las rutas creadas 
+        y solicitadas por cada persona.</div>
+          <h3>Creadas</h3>
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
               <tr>
                 <th>Descripción</th>
                 <th>Fecha</th>
-                <th>Tipo Trasnporte</th>
+                <th>Tipo Transporte</th>
                 <th>Estado</th>
                 <th>Usuario</th>
                 <th>Comentarios</th>
@@ -195,6 +197,35 @@
             </thead>
             <tbody>
               <t t-foreach="ofertas" t-as="offer">
+                <tr>
+                 <td>
+                   <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
+                     <t t-esc="offer.descripcion"/>
+                   </a>
+                 </td>
+                 <td><t t-esc="offer.hora_viaje"/></td>
+                 <td><t t-esc="offer.tipo_transporte"/></td>
+                 <td><t t-esc="offer.state"/></td>
+                 <td><t t-esc="offer.user_id.name"/></td>
+                 <td><t t-esc="offer.comentario"/></td>
+                 </tr>
+              </t>
+            </tbody>
+          </table>
+          <h3>Solicitadas</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Transporte</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="solicitadas" t-as="offer">
                 <tr>
                  <td>
                    <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
@@ -514,7 +545,6 @@
             inicio y fin para que el sistema le arroje las mejores alternativas.</div>
             <form action="/movilidad_sostenible/rutas/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
                 <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
-                <h3>Buscar Ruta</h3>
                 <script type="text/javascript">
                     var aDiv = document.getElementById("DivContenedor");
                 </script>
