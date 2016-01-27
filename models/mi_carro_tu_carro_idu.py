@@ -80,7 +80,10 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         ],
         default="inactivo",
     )
-    route = fields.Char('Ruta Completa',default="",)
+    route = fields.Char(
+        'Ruta Completa',
+        default="",
+    )
     # Campo det tipo ruta
     shape = geo_fields.GeoLine(
         string='Ruta',
