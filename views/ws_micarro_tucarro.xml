@@ -290,7 +290,7 @@
                 <div class="form-group">
                   <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
                   <div class="col-md-7 col-sm-8">
-                    <select name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True">
+                    <select id="transporteselect" name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True" onclick='test()'>
                         <option value="carro" >Carro </option>
                         <option value="moto" >Moto</option>
                         <option value="taxi" >Taxi</option>
@@ -300,7 +300,7 @@
                 </div>
               </div>
               <div class="col-md-4">
-                <div class="form-group">
+                <div id="vacantes" class="form-group">
                   <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
                   <div class="col-md-7 col-sm-8">
                       <input type="text" class="form-control" name="vacantes" t-att-value="person.vacantes" required="True" t-attf-value="#{descripcion or ''}"/>

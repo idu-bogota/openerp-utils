@@ -54,7 +54,10 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         'Vacantes',
         default=0,
     )
-    integrantes = fields.Integer('Integrantes')
+    integrantes = fields.Integer(
+        'Integrantes',
+        default=0,
+    )
     pasajeros_ids = fields.One2many(
         string='Pasajeros',
         comodel_name='res.users',
