@@ -230,7 +230,7 @@
               <t t-foreach="solicitadas" t-as="offer">
                 <tr>
                  <td>
-                   <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
+                   <a t-attf-href="/movilidad_sostenible/misrutas/solicitadas/{{ slug(offer) }}">
                      <t t-esc="offer.descripcion"/>
                    </a>
                  </td>
@@ -374,6 +374,54 @@
     </t>
   </template>
   <!-- ################## Fin Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
+
+  <!-- ################## Mis Rutas solicitadas Detalle [misrutas/solicitadas/] ##################### -->
+  <template id="mis_rutas_solicitadas">
+    <t t-call="mi_carro_tu_carro_idu.layout">
+      <t t-set="title">Detalle Ruta Solicitadas jj</t>
+      <div class="oe_structure">
+        <div class="container">
+          <div class="well">Esta página contiene la descripción general de la ruta escogida</div>
+          <b><p>Detalle Ruta: <span t-field="mis_rutas_solicitadas.descripcion"/></p></b>
+          <!-- Mapa -->
+          <script type="text/javascript">
+              var aDiv = document.getElementById("DivContenedor");
+              var prueba = "<t t-esc="mis_rutas_solicitadas.route"/>";
+          </script>
+          <body onLoad="ofertar()">
+            <div class="container">
+              <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+            </div>
+          </body>
+          <!-- Fin Mapa -->
+          <h3>Pasajeros:</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Celular</th>
+              </tr>
+            </thead>
+            <tbody>
+            <t t-set="i" t-value="1"/>
+            <t t-foreach="mis_rutas_solicitadas.pasajeros_ids" t-as="pasajero">
+              <tr>
+                <td><t t-esc="i"/></td>
+                <td><t t-esc="pasajero.name"/></td>
+                <td><t t-esc="pasajero.login"/></td>
+                <td><t t-esc="pasajero.partner_id.phone"/></td>
+              </tr>
+             <t t-set="i" t-value="i+1"/>
+            </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Mis Rutas solicitadas Detalle [misrutas/solicitadas/] ##################### -->
 
   <!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
   <template id="rutas_update" name="Ruta Actualizada">

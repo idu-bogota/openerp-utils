@@ -41,6 +41,12 @@ class Rutas(http.Controller):
             'kwargs': values
         })
 
+    @http.route('/movilidad_sostenible/misrutas/solicitadas/<model("mi_carro_tu_carro.oferta"):offer>/', auth='public', website=True)
+    def offer(self, offer,**kwargs):
+        return http.request.render('mi_carro_tu_carro_idu.mis_rutas_solicitadas', {
+            'mis_rutas_solicitadas': offer,
+        })
+
     @http.route(['/movilidad_sostenible/misrutas/info_extended/'], type='http', auth="public", website=True)
     def info_extended(self, **kwargs):
         #import pudb; pu.db
