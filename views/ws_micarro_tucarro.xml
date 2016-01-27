@@ -151,7 +151,6 @@
                     <th>Descripción</th>
                     <th>Fecha</th>
                     <th>Tipo Transporte</th>
-                    <th>Usuario</th>
                     <th>Comentarios</th>
                   </tr>
                 </thead>
@@ -165,7 +164,6 @@
                       </td>
                       <td><t t-esc="offer.hora_viaje"/></td>
                       <td><t t-esc="offer.tipo_transporte"/></td>
-                      <td><t t-esc="offer.user_id.name"/></td>
                       <td><t t-esc="offer.comentario"/></td>
                     </tr>
                   </t>
@@ -701,22 +699,22 @@
               </div>
             </div>
           </form>
-          <h3>Lider Ruta</h3>
+          <h3>Detalle de la Ruta</h3>
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
               <tr>
-                <th>No.</th>
-                <th>Nombre</th>
-                <th>Usuario</th>
+                <th>Líder</th>
                 <th>Celular</th>
+                <th>Fecha Ruta</th>
+                <th>Comentarios</th>
               </tr>
             </thead>
             <tbody>
               <tr>
-                <td>1</td>
                 <td><t t-esc="person.user_id.name"/></td>
-                <td><t t-esc="person.user_id.login"/></td>
                 <td><t t-esc="person.user_id.partner_id.mobile"/></td>
+                <td><t t-esc="person.hora_viaje"/></td>
+                <td><t t-esc="person.comentario"/></td>
               </tr>
             </tbody>
           </table>
