@@ -26,6 +26,21 @@
     </t>
   </template>
 
+  <template id="layout_3" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+          <li><a href="/movilidad_sostenible/rutas/listado/">Rutas Ofertadas</a></li>
+          <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+      </div>
+      <t t-raw="0"/>
+    </t>
+  </template>
+
+
   <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
     <xpath expr="." position="inside">
     <!-- CSS -->
@@ -565,7 +580,7 @@
 
   <!-- ################## Detalle y solicitar Ruta  ##################### -->
   <template id="ruta_ofertar_form">
-    <t t-call="mi_carro_tu_carro_idu.layout_2">
+    <t t-call="mi_carro_tu_carro_idu.layout_3">
       <t t-set="title">Detalle Ruta</t>
       <div class="oe_structure">
         <div class="container">
