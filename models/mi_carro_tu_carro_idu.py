@@ -62,7 +62,6 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         string='Pasajeros',
         comodel_name='res.users',
         inverse_name='ruta_oferta_id',
-        default=lambda self: [self._context.get('uid', False)],
         help='Usuarios integrantes.',
         ondelete = 'SET DEFAULT',
     )
