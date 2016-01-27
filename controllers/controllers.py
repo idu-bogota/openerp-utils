@@ -184,7 +184,8 @@ class Rutas(http.Controller):
         values = {}
         rutas_ids = request.env['mi_carro_tu_carro.oferta']
         rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
-
+        celular = kwargs['celular']
+        rutas.mobile_update(celular)
         esta = rutas.existe_usuario_en_ruta()
 
         if esta:

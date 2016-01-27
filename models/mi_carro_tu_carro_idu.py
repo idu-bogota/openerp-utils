@@ -90,8 +90,7 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
 
     @api.multi
     def compute_vacantes(self):
-        usuario = self._context.get('uid', False)
-        usuario = self.env['res.users'].browse(usuario)
+        usuario = self.env.user
         if usuario in self.pasajeros_ids:
             return False
 #            raise exceptions.Warning('Usted ya esta en esta ruta')
@@ -106,8 +105,7 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
 
     @api.multi
     def compute_integrantes(self):
-        usuario = self._context.get('uid', False)
-        usuario = self.env['res.users'].browse(usuario)
+        usuario = self.env.user
         if usuario in self.pasajeros_ids:
             raise exceptions.Warning('Usted ya esta en esta ruta')
         self.pasajeros_ids = [(4, usuario.id, 0)]    #[(4, usuario, 0)]
@@ -126,8 +124,7 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
 
     @api.multi
     def existe_usuario_en_ruta(self):
-        usuario_id = self._context.get('uid', False)
-        usuario = self.env['res.users'].browse(usuario_id)
+        usuario = self.env.user
         if usuario in self.pasajeros_ids:
             return True
         else:
@@ -135,7 +132,12 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
 
     @api.multi
     def add_user_a_ruta(self):
-        usuario = self._context.get('uid', False)
-        usuario = self.env['res.users'].browse(usuario)
+        usuario = self.env.user
         self.pasajeros_ids = [(4, usuario.id, 0)]
         self.integrantes = self.integrantes + 1
+
+    @api.one
+    def mobile_update(self, celular):
+        usuario = self.env.user
+        partner = usuario.partner_id
+        partner.mobile = celular
