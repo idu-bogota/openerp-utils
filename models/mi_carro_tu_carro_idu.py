@@ -35,8 +35,8 @@ TIPO_TRANSPORTE = [
     ('bici', 'Bicicleta'),
 ]
 
-class mi_carro_tu_carro_oferta(geo_model.GeoModel):
-    _name = 'mi_carro_tu_carro.oferta'
+class movilidad_sostenible_oferta(geo_model.GeoModel):
+    _name = 'movilidad_sostenible.oferta'
     _description = 'Mi carro tu carro Oferta'
 
     #Fields

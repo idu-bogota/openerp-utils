@@ -45,7 +45,7 @@
     <xpath expr="." position="inside">
     <!-- CSS -->
     <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
-    <link href="/mi_carro_tu_carro_idu/static/src/css/style.css" rel="stylesheet" type="text/css"/>
+    <link href="/movilidad_sostenible/static/src/css/style.css" rel="stylesheet" type="text/css"/>
     <!-- Script -->
     <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
     <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
@@ -56,15 +56,15 @@
         require('qweb').default_dict.csrf_token = token;
         });
     </script>
-    <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_wp.js"></script>
-    <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/hidden_form_field.js"></script>
+    <script type="text/javascript" src="/movilidad_sostenible/static/src/js/maps_wp.js"></script>
+    <script type="text/javascript" src="/movilidad_sostenible/static/src/js/hidden_form_field.js"></script>
 
     </xpath>
   </template>
 
 <!-- ################## Index  ##################### -->
 <template id="index" name="Introducción">
-   <t t-call="mi_carro_tu_carro_idu.layout">
+   <t t-call="movilidad_sostenible.layout">
     <!--  <t t-call="website.layout">-->
       <div id="wrap">
         <div class="oe_structure"/>
@@ -73,7 +73,7 @@
          <div class="row">
             <div class="col-md-12" style="text-align: center;">
          <h1 style="text-align: center;">Bienvenidos a Movilidad Sostenible</h1>
-         <img src="/mi_carro_tu_carro_idu/static/src/images/logo_movilidad.png" alt="moviliad-sostenible" class="img-rounded" style="width: 100%; text-align: center;"/>
+         <img src="/movilidad_sostenible/static/src/images/logo_movilidad.png" alt="moviliad-sostenible" class="img-rounded" style="width: 100%; text-align: center;"/>
          </div>
          </div>
 
@@ -91,14 +91,14 @@
 
       <div class="row">
         <div class="col-lg-3" style="text-align: center;">
-          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/location.png" alt="Location" height="140"/>
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/location.png" alt="Location" height="140"/>
           <h2>Crear Ruta</h2>
           <p>Crear una ruta: Si quieres armar un parche para viajar
              en bici o compartir tu carro, lo primero es crear una ruta.</p>
           <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/crear" role="button">Crear Ruta »</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-3" style="text-align: center;">
-          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/compass.png" alt="Compass" height="140"/>
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/compass.png" alt="Compass" height="140"/>
           <h2>Buscar Ruta</h2>
           <p>Pegarme a una ruta: Si quieres hacer parte de un parche
              para viajar o utilizar un carro que alguien esta compartiendo,
@@ -106,14 +106,14 @@
           <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/buscar/" role="button">Buscar Ruta »</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-3" style="text-align: center;">
-          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/map.png" alt="Map" height="140"/>
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/map.png" alt="Map" height="140"/>
           <h2>Listado de Rutas</h2>
           <p>A continuación podrá acceder al listado completo de rutas
            ofrecidas por los funcionarios del IDU.</p>
           <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/ofertadas" role="button">Listado Rutas »</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-3" style="text-align: center;">
-          <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/bike.png" alt="Bike" height="140"/>
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/bike.png" alt="Bike" height="140"/>
           <h2>Mis Rutas</h2>
           <p>En esta sección podrá revisar las rutas que ha ofrecido y observar
            que nuevos integrantes tiene en su ruta.</p>
@@ -138,7 +138,7 @@
 
   <!-- ################## Rutas Ofertadas [rutas/ofertadas/] ##################### -->
   <template id="rutas_ofertadas">
-    <t t-call="mi_carro_tu_carro_idu.layout">
+    <t t-call="movilidad_sostenible.layout">
       <t t-set="title">Rutas Ofertadas</t>
       <div class="oe_structure">
         <div class="container">
@@ -177,7 +177,7 @@
 
   <!-- ################## Mis_Rutas [misrutas] ##################### -->
   <template id="misrutas">
-    <t t-call="mi_carro_tu_carro_idu.layout">
+    <t t-call="movilidad_sostenible.layout">
       <t t-set="title">Mis Rutas</t>
       <div class="oe_structure">
         <div class="container">
@@ -249,7 +249,7 @@
 
   <!-- ################## Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
   <template id="showrutas">
-    <t t-call="mi_carro_tu_carro_idu.layout_2">
+    <t t-call="movilidad_sostenible.layout_2">
       <t t-set="title">Detalle Mis Rutas</t>
       <div class="oe_structure">
         <div class="container">
@@ -375,7 +375,7 @@
 
   <!-- ################## Mis Rutas solicitadas Detalle [misrutas/solicitadas/] ##################### -->
   <template id="mis_rutas_solicitadas">
-    <t t-call="mi_carro_tu_carro_idu.layout">
+    <t t-call="movilidad_sostenible.layout">
       <t t-set="title">Detalle Ruta Solicitadas jj</t>
       <div class="oe_structure">
         <div class="container">
@@ -423,7 +423,7 @@
 
   <!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
   <template id="rutas_update" name="Ruta Actualizada">
-      <t t-call="mi_carro_tu_carro_idu.layout">
+      <t t-call="movilidad_sostenible.layout">
         <div id="wrap">
           <div class="oe_structure"/>
           <div class="container">
@@ -443,7 +443,7 @@
   </template>
 
   <template id="rutas_not_update" name="Ruta No Actualizada">
-      <t t-call="mi_carro_tu_carro_idu.layout">
+      <t t-call="movilidad_sostenible.layout">
         <div id="wrap">
           <div class="oe_structure"/>
           <div class="container">
@@ -467,7 +467,7 @@
 
 <!-- ################## Creación Ruta [crear] ##################### -->
 <template id="crear_ruta_form" name="Crear una nueva Ruta" customize_show="True">
-    <t t-call="mi_carro_tu_carro_idu.layout">
+    <t t-call="movilidad_sostenible.layout">
     <t t-set="title">Crear Rutas</t>
       <div class="oe_structure"/>
         <div class="container">
@@ -561,7 +561,7 @@
 
   <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
   <template id="ruta_creada" name="La Ruta ha sido creada">
-      <t t-call="mi_carro_tu_carro_idu.layout">
+      <t t-call="movilidad_sostenible.layout">
         <div id="wrap">
           <div class="oe_structure"/>
           <div class="container">
@@ -584,7 +584,7 @@
 
   <!-- ################## Buscar Ruta [buscar] ##################### -->
   <template id="buscar_ruta_form" name="Buscar Ruta" customize_show="True">
-      <t t-call="mi_carro_tu_carro_idu.layout">
+      <t t-call="movilidad_sostenible.layout">
       <t t-set="title">Buscar Rutas</t>
         <div class="oe_structure"/>
           <div class="container">
@@ -621,7 +621,7 @@
 
   <!-- ################## Resultado Buscar Ruta [buscar_ruta] ##################### -->
   <template id="lista_rutas_ofertar">
-    <t t-call="mi_carro_tu_carro_idu.layout">
+    <t t-call="movilidad_sostenible.layout">
       <t t-set="title">Rutas Adyacentes</t>
       <div class="oe_structure">
         <div class="container">
@@ -659,7 +659,7 @@
 
   <!-- ################## Detalle y solicitar Ruta [ofertar/] ##################### -->
   <template id="ruta_ofertar_form">
-    <t t-call="mi_carro_tu_carro_idu.layout_3">
+    <t t-call="movilidad_sostenible.layout_3">
       <t t-set="title">Detalle Ruta</t>
       <div class="oe_structure">
         <div class="container">
@@ -760,7 +760,7 @@
 
   <!-- ################## Solicitar Ruta Exitosa ##################### -->
   <template id="ruta_solicitada_success" name="La Ruta fue ofertada">
-      <t t-call="mi_carro_tu_carro_idu.layout_3">
+      <t t-call="movilidad_sostenible.layout_3">
         <div id="wrap">
           <div class="oe_structure"/>
           <div class="container">
@@ -781,7 +781,7 @@
 
   <!-- ################## Error al Solicitar Ruta  ##################### -->
   <template id="ruta_no_solicitada" name="La Ruta no pudo ser solicitada">
-      <t t-call="mi_carro_tu_carro_idu.layout_3">
+      <t t-call="movilidad_sostenible.layout_3">
         <div id="wrap">
           <div class="oe_structure"/>
           <div class="container">

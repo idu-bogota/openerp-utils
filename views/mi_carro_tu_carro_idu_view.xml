@@ -1,9 +1,9 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-    <menuitem id="mi_carro_tu_carro_nav" name="Mi Carro Tu Carro IDU"/>
-    <menuitem id="mi_carro_tu_carro_menu" name="Compartir Transporte"
-        parent="mi_carro_tu_carro_nav"
+    <menuitem id="movilidad_sostenible_nav" name="Mi Carro Tu Carro IDU"/>
+    <menuitem id="movilidad_sostenible_menu" name="Compartir Transporte"
+        parent="movilidad_sostenible_nav"
     />
 
     <!--
@@ -15,7 +15,7 @@
     <!-- GeoEngine views -->
     <record id="ir_ui_view_geo_ruta" model="ir.ui.view">
         <field name="name">Geo Ruta</field>
-        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="model">movilidad_sostenible.oferta</field>
         <field eval="16" name="priority" />
         <field name="default_extent">-8258256.53593,499200.178597,-8236867.077879,522048.507704</field>
         <field name="arch" type="xml">
@@ -28,7 +28,7 @@
 
     <record id="geoengine_vector_layer_geo_ruta" model="geoengine.vector.layer">
         <field name="geo_field_id"
-            ref="mi_carro_tu_carro_idu.field_mi_carro_tu_carro_oferta_shape"/>
+            ref="movilidad_sostenible.field_movilidad_sostenible_oferta_shape"/>
         <field name="name">Geo - Ruta</field>
         <field eval="6" name="sequence"/>
         <field name="view_id" ref="ir_ui_view_geo_ruta"/>
@@ -47,11 +47,11 @@
 
     <!--
     =================================================================
-    mi_carro_tu_carro.oferta
+    movilidad_sostenible.oferta
     =================================================================
     -->
     <record model="ir.ui.view" id="mi_oferta_form">
-        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="model">movilidad_sostenible.oferta</field>
         <field name="arch" type="xml">
             <form>
                 <header>
@@ -83,7 +83,7 @@
     </record>
 
     <record model="ir.ui.view" id="mi_oferta_tree">
-        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="model">movilidad_sostenible.oferta</field>
         <field name="arch" type="xml">
             <tree>
                 <field name="descripcion"/>
@@ -99,21 +99,21 @@
 
     <record model="ir.actions.act_window" id="mi_oferta_action">
         <field name="name">Mi Carro Tu Carro</field>
-        <field name="res_model">mi_carro_tu_carro.oferta</field>
+        <field name="res_model">movilidad_sostenible.oferta</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="mi_oferta_tree"/>
-        <field name="context">{'form_view_ref': 'mi_carro_tu_carro_idu.mi_oferta_form'}</field>
+        <field name="context">{'form_view_ref': 'movilidad_sostenible.mi_oferta_form'}</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
-    <menuitem id="mi_oferta_menu" parent="mi_carro_tu_carro_menu" name="Mi Ruta" action="mi_oferta_action"/>
+    <menuitem id="mi_oferta_menu" parent="movilidad_sostenible_menu" name="Mi Ruta" action="mi_oferta_action"/>
 
     <!--
     =================================================================
-    mi_carro_tu_carro.oferta  Todas Ofertas Y sin poder modificar
+    movilidad_sostenible.oferta  Todas Ofertas Y sin poder modificar
     =================================================================
     -->
     <record model="ir.ui.view" id="ofertas_form">
-        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="model">movilidad_sostenible.oferta</field>
         <field name="arch" type="xml">
             <form create="false" edit="false">
                 <header>
@@ -144,7 +144,7 @@
     </record>
 
     <record model="ir.ui.view" id="ofertas_tree">
-        <field name="model">mi_carro_tu_carro.oferta</field>
+        <field name="model">movilidad_sostenible.oferta</field>
         <field name="arch" type="xml">
             <tree create="false">
                 <field name="user_id"/>
@@ -159,13 +159,13 @@
 
     <record model="ir.actions.act_window" id="ofertas_action">
         <field name="name">Ofertas de Viaje</field>
-        <field name="res_model">mi_carro_tu_carro.oferta</field>
+        <field name="res_model">movilidad_sostenible.oferta</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="ofertas_tree"/>
-        <field name="context">{'form_view_ref':'mi_carro_tu_carro_idu.ofertas_form'}</field>
+        <field name="context">{'form_view_ref':'movilidad_sostenible.ofertas_form'}</field>
         <field name="domain">[('state','=','activo')]</field>
     </record>
-    <menuitem id="ofertas_menu" parent="mi_carro_tu_carro_menu" name="Ofertas de Viaje" action="ofertas_action"/>
+    <menuitem id="ofertas_menu" parent="movilidad_sostenible_menu" name="Ofertas de Viaje" action="ofertas_action"/>
 
 </data>
 </openerp>

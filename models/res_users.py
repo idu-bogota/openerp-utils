@@ -30,5 +30,5 @@ class res_users(models.Model):
 
     ruta_oferta_id = fields.Many2one(
         string='Ofertas de Rutas',
-        comodel_name='mi_carro_tu_carro.oferta',
+        comodel_name='movilidad_sostenible.oferta',
     )
