@@ -653,6 +653,26 @@
               </div>
             </div>
           </form>
+          <h3>Lider Ruta</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>No.</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Celular</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><t t-esc="person.user_id.name"/></td>
+                <td><t t-esc="person.user_id.login"/></td>
+                <td><t t-esc="person.user_id.partner_id.mobile"/></td>
+              </tr>
+            </tbody>
+          </table>
+
           <h3>Pasajeros:</h3>
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
@@ -664,13 +684,13 @@
               </tr>
             </thead>
             <tbody>
-            <t t-set="i" t-value="1"/>
+            <t t-set="i" t-value="2"/>
             <t t-foreach="person.pasajeros_ids" t-as="pasajero">
               <tr>
                 <td><t t-esc="i"/></td>
                 <td><t t-esc="pasajero.name"/></td>
                 <td><t t-esc="pasajero.login"/></td>
-                <td><t t-esc="pasajero.partner_id.phone"/></td>
+                <td><t t-esc="pasajero.partner_id.mobile"/></td>
               </tr>
              <t t-set="i" t-value="i+1"/>
             </t>
