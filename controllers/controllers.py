@@ -31,15 +31,13 @@ class Rutas(http.Controller):
     @http.route('/movilidad_sostenible/misrutas/<model("mi_carro_tu_carro.oferta"):offer>/', auth='public', website=True)
     def showrutas(self, offer,**kwargs):
         values = {}
-        page = ["Mis Rutas", '/movilidad_sostenible/misrutas/']
         for field in ['rutas_id', 'rutas_wp']:
             if kwargs.get(field):
                 values[field] = kwargs.pop(field)
         values.update(kwargs=kwargs.items())
         return http.request.render('mi_carro_tu_carro_idu.showrutas', {
             'person': offer,
-            'kwargs': values,
-            'page_data': page,
+            'kwargs': values
         })
 
     @http.route(['/movilidad_sostenible/misrutas/info_extended/'], type='http', auth="public", website=True)
@@ -165,15 +163,13 @@ class Rutas(http.Controller):
     @http.route('/movilidad_sostenible/rutas/ofertar/<model("mi_carro_tu_carro.oferta"):oferta>/', auth='public', website=True)
     def ruta_ofertar_form(self, oferta,**kwargs):
         values = {}
-        page = ["Mis Ofertadas", '/movilidad_sostenible/rutas/listado/']
         for field in ['rutas_id', 'rutas_wp']:
             if kwargs.get(field):
                 values[field] = kwargs.pop(field)
         values.update(kwargs=kwargs.items())
         return http.request.render('mi_carro_tu_carro_idu.ruta_ofertar_form', {
             'person': oferta,
-            'kwargs': values,
-            'page_data': page,
+            'kwargs': values
         })
 
     @http.route(['/movilidad_sostenible/rutas/ofertar/info_extended/'], type='http', auth="public", website=True)

@@ -17,7 +17,7 @@
       <div class="container">
         <ol class="breadcrumb">
           <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
-          <li><a t-att-href="page_data[1]"> <t t-esc="page_data[0]"/> </a></li>
+          <li><a href="/movilidad_sostenible/misrutas/">Mis Rutas</a></li>
           <li class="active"><t t-esc="title"/></li>
         </ol>
         <h1><t t-esc="title"/></h1>
