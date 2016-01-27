@@ -703,6 +703,7 @@
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
               <tr>
+                <th>No</th>
                 <th>Líder</th>
                 <th>Celular</th>
                 <th>Fecha Ruta</th>
@@ -711,6 +712,7 @@
             </thead>
             <tbody>
               <tr>
+                <td>1</td>
                 <td><t t-esc="person.user_id.name"/></td>
                 <td><t t-esc="person.user_id.partner_id.mobile"/></td>
                 <td><t t-esc="person.hora_viaje"/></td>
