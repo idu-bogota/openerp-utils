@@ -72,8 +72,8 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
     )
     state = fields.Selection(
         [
-           ('inactivo', 'Desactivar Oferta'),
-           ('activo', 'Activar Oferta'),
+           ('inactivo', 'Inactivo'),
+           ('activo', 'Activo'),
         ],
         default="inactivo",
     )

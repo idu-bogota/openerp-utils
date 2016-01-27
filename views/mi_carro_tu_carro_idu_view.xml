@@ -86,6 +86,7 @@
         <field name="model">mi_carro_tu_carro.oferta</field>
         <field name="arch" type="xml">
             <tree>
+                <field name="descripcion"/>
                 <field name="state" string="Estado"/>
                 <field name="origen"/>
                 <field name="destino"/>
