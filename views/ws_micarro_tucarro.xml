@@ -31,7 +31,7 @@
       <div class="container">
         <ol class="breadcrumb">
           <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
-          <li><a href="/movilidad_sostenible/rutas/listado/">Rutas Ofertadas</a></li>
+          <li><a href="/movilidad_sostenible/rutas/ofertadas/">Rutas Ofertadas</a></li>
           <li class="active"><t t-esc="title"/></li>
         </ol>
         <h1><t t-esc="title"/></h1>
@@ -110,7 +110,7 @@
           <h2>Listado de Rutas</h2>
           <p>A continuación podrá acceder al listado completo de rutas
            ofrecidas por los funcionarios del IDU.</p>
-          <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/listado" role="button">Listado Rutas »</a></p>
+          <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/ofertadas" role="button">Listado Rutas »</a></p>
         </div><!-- /.col-lg-4 -->
         <div class="col-lg-3" style="text-align: center;">
           <img class="img-circle" src="/mi_carro_tu_carro_idu/static/src/images/bike.png" alt="Bike" height="140"/>
@@ -137,7 +137,7 @@
 <!-- ################## Fin Index  ##################### -->
 
   <!-- ################## Ver Rutas [Listado] ##################### -->
-  <template id="rutas">
+  <template id="rutas_ofertadas">
     <t t-call="mi_carro_tu_carro_idu.layout">
       <t t-set="title">Rutas Ofertadas</t>
       <div class="oe_structure">

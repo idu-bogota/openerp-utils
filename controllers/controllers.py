@@ -14,10 +14,10 @@ class Rutas(http.Controller):
                 "mi_carro_tu_carro_idu.index"
                 )
 
-    @http.route('/movilidad_sostenible/rutas/listado/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/rutas/ofertadas/', auth='public', website=True)
     def rutas(self):
         Oferta = http.request.env['mi_carro_tu_carro.oferta']
-        return http.request.render('mi_carro_tu_carro_idu.rutas', {
+        return http.request.render('mi_carro_tu_carro_idu.rutas_ofertadas', {
             'ofertas': Oferta.search([('state', '=', 'activo'),]),
         })
 
