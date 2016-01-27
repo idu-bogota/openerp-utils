@@ -27,7 +27,7 @@ class Rutas(http.Controller):
         return http.request.render('mi_carro_tu_carro_idu.misrutas', {
             'ofertas': Oferta.search([('user_id','=', http.request.uid)]),
         })
-        
+
     @http.route('/movilidad_sostenible/misrutas/<model("mi_carro_tu_carro.oferta"):offer>/', auth='public', website=True)
     def showrutas(self, offer,**kwargs):
         values = {}
