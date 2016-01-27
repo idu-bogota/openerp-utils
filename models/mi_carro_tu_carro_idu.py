@@ -40,9 +40,9 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
     _description = 'Mi carro tu carro Oferta'
 
     #Fields
-    descripcion = fields.Char('Descripcion')  # minimo de ruta 
-    origen = fields.Char('Origen')  # minimo de ruta
-    destino = fields.Char('Destino') # max de ruta
+    descripcion = fields.Char('Descripcion')
+    origen = fields.Char('Origen')
+    destino = fields.Char('Destino')
     hora_viaje = fields.Datetime('Hora inicio de viaje')
     tipo_transporte = fields.Selection(
         TIPO_TRANSPORTE,
@@ -50,7 +50,10 @@ class mi_carro_tu_carro_oferta(geo_model.GeoModel):
         default="carro",
         required=True,
     )
-    vacantes = fields.Integer('Vacantes')
+    vacantes = fields.Integer(
+        'Vacantes',
+        default=0,
+    )
     integrantes = fields.Integer('Integrantes')
     pasajeros_ids = fields.One2many(
         string='Pasajeros',
