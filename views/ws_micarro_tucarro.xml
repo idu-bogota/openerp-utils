@@ -56,6 +56,7 @@
         });
     </script>
     <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/maps_wp.js"></script>
+    <script type="text/javascript" src="/mi_carro_tu_carro_idu/static/src/js/hidden_form_field.js"></script>
     </xpath>
   </template>
 
@@ -427,7 +428,7 @@
               <div t-attf-class="form-group #{error and 'transporteselect' in error and 'has-error' or ''}">
                 <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Tipo Transporte</label>
                 <div class="col-md-7 col-sm-8">
-                  <select name="transporteselect" class="form-control" required="True">
+                  <select name="transporteselect" id="transporteselect" class="form-control" required="True" onclick='test()'>
                       <option value="carro" >Carro </option>
                       <option value="moto" >Moto</option>
                       <option value="taxi" >Taxi</option>
@@ -437,10 +438,10 @@
               </div>
             </div>
             <div class="col-md-4">
-              <div t-attf-class="form-group #{error and 'vacantes' in error and 'has-error' or ''}">
+              <div t-attf-class="form-group #{error and 'vacantes' in error and 'has-error' or ''}" id="vacantes">
                 <label class="col-md-3 col-sm-4 control-label" for="vacantes">Vacantes</label>
                 <div class="col-md-7 col-sm-8">
-                  <input type="text" class="form-control" name="vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
+                  <input type="text" class="form-control" name="vacantes" t-attf-value="#{descripcion or ''}"/>
                 </div>
               </div>
               <div t-attf-class="form-group #{error and 'stateselect' in error and 'has-error' or ''}">
