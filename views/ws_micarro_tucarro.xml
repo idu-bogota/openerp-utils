@@ -578,7 +578,7 @@
   </template>
   <!-- ################## Fin Resultado Buscar Ruta [buscar_ruta] ##################### -->
 
-  <!-- ################## Detalle y solicitar Ruta  ##################### -->
+  <!-- ################## Detalle y solicitar Ruta [ofertar/] ##################### -->
   <template id="ruta_ofertar_form">
     <t t-call="mi_carro_tu_carro_idu.layout_3">
       <t t-set="title">Detalle Ruta</t>
@@ -647,7 +647,7 @@
       </div>
     </t>
   </template>
-  <!-- ################## Detalle y solicitar Ruta  ##################### -->
+  <!-- ################## Detalle y solicitar Ruta [ofertar/] ##################### -->
 
   <!-- ################## Error al Solicitar Ruta  ##################### -->
   <template id="ruta_no_ofertada" name="La Ruta no pudo ser ofertada">
