@@ -8,7 +8,7 @@ import pyproj
 
 class Rutas(http.Controller):
 
-    @http.route('/movilidad_sostenible/', auth='user', website=True)
+    @http.route('/movilidad_sostenible/', auth='public', website=True)
     def movilidad_sostenible(self):
         return request.website.render(
                 "movilidad_sostenible.index"
@@ -117,10 +117,6 @@ class Rutas(http.Controller):
                 'route': json.dumps(the_dict),
                 'shape': json.dumps(shape),
             })
-        
-        
-
-
         values = ruta_created
         return request.website.render("movilidad_sostenible.ruta_creada", {
                             'person': values
