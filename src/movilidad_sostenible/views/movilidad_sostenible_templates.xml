@@ -376,10 +376,10 @@
   <!-- ################## Mis Rutas solicitadas Detalle [misrutas/solicitadas/] ##################### -->
   <template id="mis_rutas_solicitadas">
     <t t-call="movilidad_sostenible.layout">
-      <t t-set="title">Detalle Ruta Solicitadas jj</t>
+      <t t-set="title">Detalle Ruta Solicitadas</t>
       <div class="oe_structure">
         <div class="container">
-          <div class="well">Esta página contiene la descripción general de la ruta escogida</div>
+          <div class="well">Esta página contiene la descripción general de la ruta en la que estoy inscrito</div>
           <b><p>Detalle Ruta: <span t-field="mis_rutas_solicitadas.descripcion"/></p></b>
           <!-- Mapa -->
           <script type="text/javascript">
