@@ -26,7 +26,7 @@ class Rutas(http.Controller):
         Oferta = http.request.env['movilidad_sostenible.oferta']
         return http.request.render('movilidad_sostenible.misrutas', {
             'ofertas': Oferta.search([('user_id','=', http.request.uid)]),
-            'solicitadas': Oferta.search([('pasajeros_ids','in', http.request.uid)]),
+            'solicitadas': Oferta.search([('pasajeros_ids','in', http.request.uid), ('state', '=', 'activo')]),
         })
 
     @http.route('/movilidad_sostenible/misrutas/<model("movilidad_sostenible.oferta"):offer>/', auth='user', website=True)
