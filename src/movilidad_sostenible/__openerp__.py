@@ -23,7 +23,7 @@ https://github.com/acsone/odoo/commit/676e4b8d9eb0b1cda663532f59fdb10d59f3af40
     ],
     "demo": [
         'views/movilidad_sostenible_demo.xml',
-    ]
+    ],
     "test": [
     ],
     "installable" : True,
