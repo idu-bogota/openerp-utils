@@ -1,0 +1,805 @@
+<openerp><data>
+  <template id="layout" name="Layout Movilidad Urbana">
+<t t-call="website.layout">
+  <div class="container">
+    <ol class="breadcrumb">
+      <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+      <li class="active"><t t-esc="title"/></li>
+    </ol>
+    <h1><t t-esc="title"/></h1>
+   </div>
+   <t t-raw="0"/>
+</t>
+  </template>
+
+  <template id="layout_2" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+          <li><a href="/movilidad_sostenible/misrutas/">Mis Rutas</a></li>
+          <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+      </div>
+      <t t-raw="0"/>
+    </t>
+  </template>
+
+  <template id="layout_3" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+          <li><a href="/movilidad_sostenible/rutas/ofertadas/">Rutas Ofertadas</a></li>
+          <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+      </div>
+      <t t-raw="0"/>
+    </t>
+  </template>
+
+
+  <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
+    <xpath expr="." position="inside">
+    <!-- CSS -->
+    <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
+    <link href="/movilidad_sostenible/static/src/css/style.css" rel="stylesheet" type="text/css"/>
+    <!-- Script -->
+    <script type="text/javascript" src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+    <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.5.1/jquery.min.js"></script>
+    <script type="text/javascript">
+        odoo.define('web.csrf', function (require) {
+        var token = "<t t-esc="request.csrf_token(None)"/>";
+        require('web.core').csrf_token = token;
+        require('qweb').default_dict.csrf_token = token;
+        });
+    </script>
+    <script type="text/javascript" src="/movilidad_sostenible/static/src/js/maps_wp.js"></script>
+    <script type="text/javascript" src="/movilidad_sostenible/static/src/js/hidden_form_field.js"></script>
+
+    </xpath>
+  </template>
+
+<!-- ################## Index  ##################### -->
+<template id="index" name="Introducción">
+   <t t-call="movilidad_sostenible.layout">
+    <!--  <t t-call="website.layout">-->
+      <div id="wrap">
+        <div class="oe_structure"/>
+
+         <div class="container">
+         <div class="row">
+            <div class="col-md-12" style="text-align: center;">
+         <h1 style="text-align: center;">Bienvenidos a Movilidad Sostenible</h1>
+         <img src="/movilidad_sostenible/static/src/images/logo_movilidad.png" alt="moviliad-sostenible" class="img-rounded" style="width: 100%; text-align: center;"/>
+         </div>
+         </div>
+
+      <hr class="featurette-divider">
+
+      <div class="row featurette">
+        <div class="col-md-12">
+          <h2 class="featurette-heading">Movilidad Sostenible. <span class="text-muted">Por una movilidad mejor para todos.</span></h2>
+          <p class="lead">Este espacio permite que los funcionarios y contratistas del IDU
+            participemos de la movilidad sostenible compartiendo nuestro carro,
+            o creando parches para viajar en bicicleta.</p>
+        </div>
+        </div>
+        </hr>
+
+      <div class="row">
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/location.png" alt="Location" height="140"/>
+          <h2>Crear Ruta</h2>
+          <p>Crear una ruta: Si quieres armar un parche para viajar
+             en bici o compartir tu carro, lo primero es crear una ruta.</p>
+          <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/crear" role="button">Crear Ruta »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/compass.png" alt="Compass" height="140"/>
+          <h2>Buscar Ruta</h2>
+          <p>Pegarme a una ruta: Si quieres hacer parte de un parche
+             para viajar o utilizar un carro que alguien esta compartiendo,
+             usar la ruta que te sirve e inscribirte.</p>
+          <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/buscar/" role="button">Buscar Ruta »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/map.png" alt="Map" height="140"/>
+          <h2>Listado de Rutas</h2>
+          <p>A continuación podrá acceder al listado completo de rutas
+           ofrecidas por los funcionarios del IDU.</p>
+          <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/ofertadas" role="button">Listado Rutas »</a></p>
+        </div><!-- /.col-lg-4 -->
+        <div class="col-lg-3" style="text-align: center;">
+          <img class="img-circle" src="/movilidad_sostenible/static/src/images/bike.png" alt="Bike" height="140"/>
+          <h2>Mis Rutas</h2>
+          <p>En esta sección podrá revisar las rutas que ha ofrecido y observar
+           que nuevos integrantes tiene en su ruta.</p>
+          <p><a class="btn btn-primary" href="/movilidad_sostenible/misrutas/" role="button">Mis Rutas »</a></p>
+        </div><!-- /.col-lg-4 -->
+      </div><!-- /.row -->
+            </div>
+            <main>
+                <div class="container">
+                    <t t-raw="0"/>
+                </div>
+            </main>
+            <footer>
+                <div id="footer">
+                </div>
+            </footer>
+        <div class="oe_structure"/>
+        </div>
+    </t>
+</template>
+<!-- ################## Fin Index  ##################### -->
+
+  <!-- ################## Rutas Ofertadas [rutas/ofertadas/] ##################### -->
+  <template id="rutas_ofertadas">
+    <t t-call="movilidad_sostenible.layout">
+      <t t-set="title">Rutas Ofertadas</t>
+      <div class="oe_structure">
+        <div class="container">
+              <div class="well">Esta página contiene las rutas ofertadas por 
+              otros usuarios para que usted pueda seleccionar una de ellas y 
+              acompañar el grupo en el viaje</div>
+              <table class="table table-bordered table-striped margen_arriba_tabla">
+                <thead>
+                  <tr>
+                    <th>Descripción</th>
+                    <th>Fecha</th>
+                    <th>Tipo Transporte</th>
+                    <th>Comentarios</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <t t-foreach="ofertas" t-as="offer">
+                    <tr>
+                      <td>
+                        <a t-attf-href="/movilidad_sostenible/rutas/ofertar/{{ slug(offer) }}">
+                          <t t-esc="offer.descripcion"/>
+                        </a>
+                      </td>
+                      <td><t t-esc="offer.hora_viaje"/></td>
+                      <td><t t-esc="offer.tipo_transporte"/></td>
+                      <td><t t-esc="offer.comentario"/></td>
+                    </tr>
+                  </t>
+                </tbody>
+              </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Fin Rutas Ofertadas [rutas/ofertadas/] ##################### -->
+
+  <!-- ################## Mis_Rutas [misrutas] ##################### -->
+  <template id="misrutas">
+    <t t-call="movilidad_sostenible.layout">
+      <t t-set="title">Mis Rutas</t>
+      <div class="oe_structure">
+        <div class="container">
+        <div class="well">Esta página contiene el listado de las rutas creadas 
+        y solicitadas por cada persona.</div>
+          <h3>Creadas</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Transporte</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="ofertas" t-as="offer">
+                <tr>
+                 <td>
+                   <a t-attf-href="/movilidad_sostenible/misrutas/{{ slug(offer) }}">
+                     <t t-esc="offer.descripcion"/>
+                   </a>
+                 </td>
+                 <td><t t-esc="offer.hora_viaje"/></td>
+                 <td><t t-esc="offer.tipo_transporte"/></td>
+                 <td><t t-esc="offer.state"/></td>
+                 <td><t t-esc="offer.user_id.name"/></td>
+                 <td><t t-esc="offer.comentario"/></td>
+                 </tr>
+              </t>
+            </tbody>
+          </table>
+          <h3>Solicitadas</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Transporte</th>
+                <th>Estado</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="solicitadas" t-as="offer">
+                <tr>
+                 <td>
+                   <a t-attf-href="/movilidad_sostenible/misrutas/solicitadas/{{ slug(offer) }}">
+                     <t t-esc="offer.descripcion"/>
+                   </a>
+                 </td>
+                 <td><t t-esc="offer.hora_viaje"/></td>
+                 <td><t t-esc="offer.tipo_transporte"/></td>
+                 <td><t t-esc="offer.state"/></td>
+                 <td><t t-esc="offer.user_id.name"/></td>
+                 <td><t t-esc="offer.comentario"/></td>
+                 </tr>
+              </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Fin Mis_Rutas [misrutas] ##################### -->
+
+  <!-- ################## Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
+  <template id="showrutas">
+    <t t-call="movilidad_sostenible.layout_2">
+      <t t-set="title">Detalle Mis Rutas</t>
+      <div class="oe_structure">
+        <div class="container">
+          <div class="well">Esta página contiene el detalle de cada ruta creada,
+           además podrá editar los detalles iniciales con los que se creo 
+           la ruta.</div>
+          <b><p>Detalle Ruta: <span t-field="person.descripcion"/></p></b>
+          <form action="/movilidad_sostenible/misrutas/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <!-- Mapa -->
+            <script type="text/javascript">
+               var aDiv = document.getElementById("DivContenedor");
+               var prueba = "<t t-esc="person.route"/>";
+            </script>
+            <body onLoad="load()">
+              <div class="container">
+                <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                <div>
+                  <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                </div>
+              </div>
+            </body>
+            <!-- Fin Mapa -->
+            <div class="row margen_vertical">
+              <div class="col-md-4">
+                <div class="form-group">
+                    <label class="col-md-3 col-sm-4 control-label">Descripción</label>
+                    <div class="col-md-7 col-sm-8">
+                        <input type="text" class="form-control" name="descripcion" t-att-value="person.descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
+                    </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Fecha/Hora Viaje</label>
+                  <div class="col-md-7 col-sm-8">
+                      <input type="datetime-local" class="form-control" name="fecha_viaje" t-att-value="person.hora_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Tipo Transporte</label>
+                  <div class="col-md-7 col-sm-8">
+                    <select id="transporteselect" name="transporteselect" class="form-control" t-att-value="person.tipo_transporte" required="True">
+                        <option value="carro" >Carro </option>
+                        <option value="moto" >Moto</option>
+                        <option value="taxi" >Taxi</option>
+                        <option value="bici" >Bicicleta</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div class="col-md-4">
+                <div id="vacantes" class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
+                  <div class="col-md-7 col-sm-8">
+                      <input type="text" class="form-control" name="vacantes" t-att-value="person.vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Estado</label>
+                  <div class="col-md-7 col-sm-8">
+                    <select name="stateselect" class="form-control" t-att-value="person.state" required="True">
+                        <option value="activo" >Activo </option>
+                        <option value="inactivo" >Inactivo</option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label class="col-md-3 col-sm-4 control-label">Comentarios</label>
+                  <div class="col-md-7 col-sm-8">
+                      <textarea  class="form-control" name="comentarios" style="min-height: 60px" required="True" t-attf-value="#{comentarios or ''}">
+                      <t t-esc="person.comentario"/>
+                      </textarea>
+                  </div>
+                </div>
+                <!-- Para que este campo -->
+                <div>
+                    <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
+                </div>
+                <!-- Para que este campo -->
+                <t t-foreach="kwargs" t-as="kwarg">
+                  <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                </t>
+              </div>
+              <div class="col-md-4">
+                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                   <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
+                </div>
+                <div class="form-group">
+                  <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                    <button class="btn btn-primary btn-lg">Actualizar Ruta</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </form>
+          <h3>Pasajeros:</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+           <thead>
+             <tr>
+               <th>No</th>
+               <th>Nombre</th>
+               <th>Usuario</th>
+               <th>Celular</th>
+             </tr>
+           </thead>
+           <tbody>
+           <t t-set="i" t-value="1"/>
+           <t t-foreach="person.pasajeros_ids" t-as="pasajero">
+             <tr>
+               <td><t t-esc="i"/></td>
+               <td><t t-esc="pasajero.name"/></td>
+               <td><t t-esc="pasajero.login"/></td>
+               <td><t t-esc="pasajero.partner_id.phone"/></td>
+             </tr>
+            <t t-set="i" t-value="i+1"/>
+           </t>
+           </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Fin Ver y Actualizar Mis_Rutas [misrutas/] ##################### -->
+
+  <!-- ################## Mis Rutas solicitadas Detalle [misrutas/solicitadas/] ##################### -->
+  <template id="mis_rutas_solicitadas">
+    <t t-call="movilidad_sostenible.layout">
+      <t t-set="title">Detalle Ruta Solicitadas jj</t>
+      <div class="oe_structure">
+        <div class="container">
+          <div class="well">Esta página contiene la descripción general de la ruta escogida</div>
+          <b><p>Detalle Ruta: <span t-field="mis_rutas_solicitadas.descripcion"/></p></b>
+          <!-- Mapa -->
+          <script type="text/javascript">
+              var aDiv = document.getElementById("DivContenedor");
+              var prueba = "<t t-esc="mis_rutas_solicitadas.route"/>";
+          </script>
+          <body onLoad="ofertar()">
+            <div class="container">
+              <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+            </div>
+          </body>
+          <!-- Fin Mapa -->
+          <h3>Pasajeros:</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Celular</th>
+              </tr>
+            </thead>
+            <tbody>
+            <t t-set="i" t-value="1"/>
+            <t t-foreach="mis_rutas_solicitadas.pasajeros_ids" t-as="pasajero">
+              <tr>
+                <td><t t-esc="i"/></td>
+                <td><t t-esc="pasajero.name"/></td>
+                <td><t t-esc="pasajero.login"/></td>
+                <td><t t-esc="pasajero.partner_id.phone"/></td>
+              </tr>
+             <t t-set="i" t-value="i+1"/>
+            </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Mis Rutas solicitadas Detalle [misrutas/solicitadas/] ##################### -->
+
+  <!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
+  <template id="rutas_update" name="Ruta Actualizada">
+      <t t-call="movilidad_sostenible.layout">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+              <h1>Ruta Actualizada!</h1>
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="alert alert-success">
+                          Tu Ruta ha sido actualizada correctamente!.
+                          <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                      </div>
+              </div>
+          </div>
+          <div class="oe_structure"/>
+        </div>
+        </div>
+      </t>
+  </template>
+
+  <template id="rutas_not_update" name="Ruta No Actualizada">
+      <t t-call="movilidad_sostenible.layout">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+              <h1>Ruta No Actualizada!</h1>
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="alert alert-success">
+                          Tu Ruta no ha podido ser actualizada.
+                          <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                      </div>
+              </div>
+          </div>
+          <div class="oe_structure"/>
+        </div>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Notificación de Actualizar Mis_Rutas [misrutas/] ##################### -->
+
+
+
+<!-- ################## Creación Ruta [crear] ##################### -->
+<template id="crear_ruta_form" name="Crear una nueva Ruta" customize_show="True">
+    <t t-call="movilidad_sostenible.layout">
+    <t t-set="title">Crear Rutas</t>
+      <div class="oe_structure"/>
+        <div class="container">
+        <div class="well">Esta página le permitirá crear de forma fácil y rápida
+         una nueva ruta, especificando el tipo de transporte, la fecha,
+          la descripción, vacantes y demás datos que tiene la oferta.</div>
+        <form action="/movilidad_sostenible/rutas/crear_ruta/" method="post" class="form-horizontal" enctype="multipart/form-data">
+        <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+          <!-- Mapa -->
+          <script type="text/javascript">
+              var aDiv = document.getElementById("DivContenedor");
+          </script>
+          <body onLoad="crear()">
+            <div class="container">
+              <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                <div>
+                  <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                </div>
+              </div>
+          </body>
+          <!-- Fin Mapa -->
+
+          <div class="row margen_vertical">
+            <div class="col-md-4">
+              <div t-attf-class="form-group #{error and 'descripcion' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="descripcion">Descripción</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="text" class="form-control" name="descripcion" required="True" t-attf-value="#{descripcion or ''}"/>
+                </div>
+              </div>
+              <div t-attf-class="form-group #{error and 'fecha_viaje' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="fecha_viaje">Fecha/Hora Viaje</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="datetime-local" class="form-control" name="fecha_viaje" required="True" t-attf-value="#{fecha_viaje or ''}"/>
+                </div>
+              </div>
+              <div t-attf-class="form-group #{error and 'transporteselect' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Tipo Transporte</label>
+                <div class="col-md-7 col-sm-8">
+                  <select name="transporteselect" id="transporteselect" class="form-control" required="True">
+                      <option value="carro" >Carro </option>
+                      <option value="moto" >Moto</option>
+                      <option value="taxi" >Taxi</option>
+                      <option value="bici" >Bicicleta</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div t-attf-class="form-group #{error and 'vacantes' in error and 'has-error' or ''}" id="vacantes">
+                <label class="col-md-3 col-sm-4 control-label" for="vacantes">Vacantes</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="text" class="form-control" name="vacantes" t-attf-value="#{descripcion or ''}"/>
+                </div>
+              </div>
+              <div t-attf-class="form-group #{error and 'stateselect' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="pqrs_type">Estado</label>
+                <div class="col-md-7 col-sm-8">
+                  <select name="stateselect" class="form-control" required="True">
+                      <option value="activo" >Activo </option>
+                      <option value="inactivo" >Inactivo</option>
+                  </select>
+                </div>
+              </div>
+              <div t-attf-class="form-group #{error and 'comentarios' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="comentarios">Comentarios</label>
+                <div class="col-md-7 col-sm-8">
+                  <textarea  class="form-control" name="comentarios" style="min-height: 60px" required="True" t-attf-value="#{comentarios or ''}"/>
+                </div>
+              </div>
+              <t t-foreach="kwargs" t-as="kwarg">
+                <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+              </t>
+            </div>
+            <div class="col-md-4">
+              <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                <input type="button" class="btn btn-primary btn-lg" value="Borrar Cruces" onClick="setroute()"/>
+              </div>
+              <div class="form-group">
+                <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                  <button class="btn btn-primary btn-lg">Crear Ruta</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+    </t>
+</template>
+<!-- ################## Fin Creación Ruta [crear] ##################### -->
+
+  <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
+  <template id="ruta_creada" name="La Ruta ha sido creada">
+      <t t-call="movilidad_sostenible.layout">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+              <h1>Ruta Creada!</h1>
+              <div class="row">
+                  <div class="col-md-8">
+                      <div class="alert alert-success">
+                          Tu Ruta ha sido creada exitosamente!.
+                          <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                      </div>
+              </div>
+          </div>
+          <div class="oe_structure"/>
+        </div>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Inicio Notificación Creación Ruta [ruta_creada] ##################### -->
+
+
+  <!-- ################## Buscar Ruta [buscar] ##################### -->
+  <template id="buscar_ruta_form" name="Buscar Ruta" customize_show="True">
+      <t t-call="movilidad_sostenible.layout">
+      <t t-set="title">Buscar Rutas</t>
+        <div class="oe_structure"/>
+          <div class="container">
+          <div class="well">Esta página le permitirá hacer una busqueda de las
+           rutas que estan cercanas a su ruta deseada, usted deberá colocar su
+            inicio y fin para que el sistema le arroje las mejores alternativas.</div>
+            <form action="/movilidad_sostenible/rutas/buscar_ruta/" method="post" class="form-horizontal mt32" enctype="multipart/form-data">
+                <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+                <script type="text/javascript">
+                    var aDiv = document.getElementById("DivContenedor");
+                </script>
+                <body onLoad="crear()">
+                  <div class="container">
+                    <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                    <div><p><span id="str"></span></p></div>
+                    <div>
+                      <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                    </div>
+                  </div>
+                </body>
+                <t t-foreach="kwargs" t-as="kwarg">
+                  <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+                </t>
+                <div class="form-group">
+                  <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                      <button class="btn btn-primary btn-lg">Buscar Ruta</button>
+                  </div>
+                </div>
+            </form>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Fin Buscar Ruta [buscar] ##################### -->
+
+  <!-- ################## Resultado Buscar Ruta [buscar_ruta] ##################### -->
+  <template id="lista_rutas_ofertar">
+    <t t-call="movilidad_sostenible.layout">
+      <t t-set="title">Rutas Adyacentes</t>
+      <div class="oe_structure">
+        <div class="container">
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>Descripción</th>
+                <th>Fecha</th>
+                <th>Tipo Transporte</th>
+                <th>Usuario</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <t t-foreach="lista_ofertas" t-as="offer">
+                <tr>
+                  <td>
+                    <a t-attf-href="/movilidad_sostenible/rutas/ofertar/{{ slug(offer) }}">
+                      <t t-esc="offer.descripcion"/>
+                    </a>
+                  </td>
+                  <td><t t-esc="offer.hora_viaje"/></td>
+                  <td><t t-esc="offer.tipo_transporte"/></td>
+                  <td><t t-esc="offer.user_id.name"/></td>
+                  <td><t t-esc="offer.comentario"/></td>
+                </tr>
+              </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Fin Resultado Buscar Ruta [buscar_ruta] ##################### -->
+
+  <!-- ################## Detalle y solicitar Ruta [ofertar/] ##################### -->
+  <template id="ruta_ofertar_form">
+    <t t-call="movilidad_sostenible.layout_3">
+      <t t-set="title">Detalle Ruta</t>
+      <div class="oe_structure">
+        <div class="container">
+          <div class="well">
+            En esta página usted podrá solicitar ser parte de esta
+            ruta si esta de acuerdo con la ruta y los tiempos de partida..
+          </div>
+          <b><p>Descripción: <span t-field="person.descripcion"/></p></b>
+          <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
+            <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
+            <!-- Mapa -->
+            <script type="text/javascript">
+                var aDiv = document.getElementById("DivContenedor");
+                var prueba = "<t t-esc="person.route"/>";
+            </script>
+            <div id="DivContenedor"></div>
+            <body onLoad="ofertar()">
+                <div class="container">
+                    <div class="span4" id="mappy" style="width: 100%; height: 500px"></div>
+                    <div>
+                        <input type="hidden" class="form-control" name="rutas_wp" id="otraprueba" value="Primera prueba"></input>
+                    </div>
+                </div>
+            </body>
+            <!-- Fin Mapa -->
+            <div class="form-group margen_vertical">
+              <div>
+                  <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
+              </div>
+
+              <div t-attf-class="form-group #{error and 'celular' in error and 'has-error' or ''}">
+                <label class="col-md-3 col-sm-4 control-label" for="celular">Ingrese su número de celular:</label>
+                <div class="col-md-7 col-sm-8">
+                  <input type="text" class="form-control" name="celular" required="True" t-attf-value="#{celular or ''}"/>
+                </div>
+              </div>
+
+              <t t-foreach="kwargs" t-as="kwarg">
+                  <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
+              </t>
+            </div>
+            <div class="form-group">
+              <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
+                  <button class="btn btn-primary btn-lg">Solicitar</button>
+              </div>
+            </div>
+          </form>
+          <h3>Detalle de la Ruta</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Líder</th>
+                <th>Celular</th>
+                <th>Fecha Ruta</th>
+                <th>Comentarios</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td>1</td>
+                <td><t t-esc="person.user_id.name"/></td>
+                <td><t t-esc="person.user_id.partner_id.mobile"/></td>
+                <td><t t-esc="person.hora_viaje"/></td>
+                <td><t t-esc="person.comentario"/></td>
+              </tr>
+            </tbody>
+          </table>
+
+          <h3>Pasajeros:</h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla">
+            <thead>
+              <tr>
+                <th>No</th>
+                <th>Nombre</th>
+                <th>Usuario</th>
+                <th>Celular</th>
+              </tr>
+            </thead>
+            <tbody>
+            <t t-set="i" t-value="2"/>
+            <t t-foreach="person.pasajeros_ids" t-as="pasajero">
+              <tr>
+                <td><t t-esc="i"/></td>
+                <td><t t-esc="pasajero.name"/></td>
+                <td><t t-esc="pasajero.login"/></td>
+                <td><t t-esc="pasajero.partner_id.mobile"/></td>
+              </tr>
+             <t t-set="i" t-value="i+1"/>
+            </t>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Detalle y solicitar Ruta [ofertar/] ##################### -->
+
+  <!-- ################## Solicitar Ruta Exitosa ##################### -->
+  <template id="ruta_solicitada_success" name="La Ruta fue ofertada">
+      <t t-call="movilidad_sostenible.layout_3">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+            <h1>Ha sido vinculado a la Ruta exitosamente!</h1>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="alert alert-success">
+                    Usted ha sido vinculado existosamente a la ruta solicitada.
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Solicitar Ruta Exitosa  ##################### -->
+
+  <!-- ################## Error al Solicitar Ruta  ##################### -->
+  <template id="ruta_no_solicitada" name="La Ruta no pudo ser solicitada">
+      <t t-call="movilidad_sostenible.layout_3">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+            <h1>La ruta no pudo ser solicitada!</h1>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="alert alert-success">
+                    Tu Ruta no pudo ser solicitada!, por favor verifica que ya 
+                    no estes registrado en la ruta o que existan vacantes 
+                    disponibles.
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Error al Solicitar Ruta  ##################### -->
+
+</data></openerp>

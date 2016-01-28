@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<openerp>
+<data>
+<!-- 
+=========================================================================
+ Groups Definition
+=========================================================================
+-->
+    <record model="ir.module.category" id="category_movilidad_sostenible">
+        <field name="name">Movilidad Sostenible</field>
+        <field name="sequence">0</field>
+        <field name="visible" eval="1" />
+    </record>
+    <record id="usuario" model="res.groups">
+        <field name="name">Usuario</field>
+        <field name="category_id" ref="movilidad_sostenible.category_movilidad_sostenible"/>
+        <field name="implied_ids"
+               eval="[
+                (4, ref('base.group_user'))
+            ]"
+        />
+    </record>
+</data>
+</openerp>
