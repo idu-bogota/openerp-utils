@@ -327,7 +327,7 @@
               </div>
             </div>
           </form>
-          <h3>Pasajeros:</h3>
+          <h3>Integrantes:</h3>
           <table class="table table-bordered table-striped margen_arriba_tabla">
            <thead>
              <tr>
@@ -398,7 +398,7 @@
             </tbody>
           </table>
 
-          <h3>Pasajeros:</h3>
+          <h3>Integrantes:</h3>
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
               <tr>
@@ -706,7 +706,7 @@
             </div>
             <div class="form-group">
               <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                  <button class="btn btn-primary btn-lg">Inscribete</button>
+                  <button class="btn btn-primary btn-lg">Inscríbete</button>
               </div>
             </div>
           </form>
@@ -734,7 +734,7 @@
             </tbody>
           </table>
 
-          <h3>Pasajeros:</h3>
+          <h3>Integrantes:</h3>
           <table class="table table-bordered table-striped margen_arriba_tabla">
             <thead>
               <tr>
