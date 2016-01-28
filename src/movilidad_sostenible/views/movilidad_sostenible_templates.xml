@@ -787,7 +787,7 @@
             <h1>La ruta no pudo ser solicitada!</h1>
             <div class="row">
               <div class="col-md-8">
-                <div class="alert alert-success">
+                <div class="alert alert-danger">
                     Tu Ruta no pudo ser solicitada!, por favor verifica que ya 
                     no estes registrado en la ruta o que existan vacantes 
                     disponibles.
