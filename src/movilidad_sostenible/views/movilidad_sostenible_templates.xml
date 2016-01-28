@@ -306,11 +306,9 @@
                       </textarea>
                   </div>
                 </div>
-                <!-- Para que este campo -->
                 <div>
                     <input type="hidden" class="form-control" name="rutas_id" t-att-value="person.id"/>
                 </div>
-                <!-- Para que este campo -->
                 <t t-foreach="kwargs" t-as="kwarg">
                   <input type="hidden" t-att-name="kwarg[0]" t-att-value="kwarg[1]"/>
                 </t>
@@ -333,7 +331,6 @@
              <tr>
                <th>No</th>
                <th>Nombre</th>
-               <th>Usuario</th>
                <th>Celular</th>
              </tr>
            </thead>
@@ -343,7 +340,6 @@
              <tr>
                <td><t t-esc="i"/></td>
                <td><t t-esc="pasajero.name"/></td>
-               <td><t t-esc="pasajero.login"/></td>
                <td><t t-esc="pasajero.partner_id.phone"/></td>
              </tr>
             <t t-set="i" t-value="i+1"/>
