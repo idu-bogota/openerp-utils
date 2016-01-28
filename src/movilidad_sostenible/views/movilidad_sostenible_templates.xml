@@ -692,7 +692,7 @@
               <div t-attf-class="form-group #{error and 'celular' in error and 'has-error' or ''}">
                 <label class="col-md-3 col-sm-4 control-label" for="celular">Ingrese su número de celular:</label>
                 <div class="col-md-7 col-sm-8">
-                  <input type="text" class="form-control" name="celular" required="True" t-att-value="user_sesion.partner_id.mobile"/>
+                  <input type="tel" pattern="^[3]\d{9}$" class="form-control" name="celular" required="True" t-att-value="user_sesion.partner_id.mobile"/>
                 </div>
               </div>
 
