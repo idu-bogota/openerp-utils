@@ -37,7 +37,7 @@ TIPO_TRANSPORTE = [
 
 class movilidad_sostenible_oferta(geo_model.GeoModel):
     _name = 'movilidad_sostenible.oferta'
-    _description = 'Mi carro tu carro Oferta'
+    _description = 'Movilidad SostenibleOferta'
 
     #Fields
     descripcion = fields.Char('Descripcion')

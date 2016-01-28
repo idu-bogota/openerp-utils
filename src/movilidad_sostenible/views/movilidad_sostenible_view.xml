@@ -1,7 +1,9 @@
 <?xml version="1.0"?>
 <openerp>
 <data>
-    <menuitem id="movilidad_sostenible_nav" name="Mi Carro Tu Carro IDU"/>
+    <menuitem id="movilidad_sostenible_nav" name="Movilidad Sostenible"
+        parent="base.menu_administration"
+    />
     <menuitem id="movilidad_sostenible_menu" name="Compartir Transporte"
         parent="movilidad_sostenible_nav"
     />
