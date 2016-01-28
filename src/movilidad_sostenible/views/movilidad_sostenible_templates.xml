@@ -1,48 +1,5 @@
 <openerp><data>
-  <template id="layout" name="Layout Movilidad Urbana">
-<t t-call="website.layout">
-  <div class="container">
-    <ol class="breadcrumb">
-      <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
-      <li class="active"><t t-esc="title"/></li>
-    </ol>
-    <h1><t t-esc="title"/></h1>
-   </div>
-   <t t-raw="0"/>
-</t>
-  </template>
-
-  <template id="layout_2" name="Layout Movilidad Urbana">
-    <t t-call="website.layout">
-      <div class="container">
-        <ol class="breadcrumb">
-          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
-          <li><a href="/movilidad_sostenible/misrutas/">Mis Rutas</a></li>
-          <li class="active"><t t-esc="title"/></li>
-        </ol>
-        <h1><t t-esc="title"/></h1>
-      </div>
-      <t t-raw="0"/>
-    </t>
-  </template>
-
-  <template id="layout_3" name="Layout Movilidad Urbana">
-    <t t-call="website.layout">
-      <div class="container">
-        <ol class="breadcrumb">
-          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
-          <li><a href="/movilidad_sostenible/rutas/ofertadas/">Rutas Ofertadas</a></li>
-          <li class="active"><t t-esc="title"/></li>
-        </ol>
-        <h1><t t-esc="title"/></h1>
-      </div>
-      <t t-raw="0"/>
-    </t>
-  </template>
-
-
-  <template id="assets_frontend_rutas" inherit_id="website.layout" name="Oferta">
-    <xpath expr="." position="inside">
+  <template id="assets_frontend" name="CSS-JS-movilidad_sostenible">
     <!-- CSS -->
     <link href="http://code.google.com/apis/maps/documentation/javascript/examples/default.css" rel="stylesheet" type="text/css" />
     <link href="/movilidad_sostenible/static/src/css/style.css" rel="stylesheet" type="text/css"/>
@@ -59,7 +16,49 @@
     <script type="text/javascript" src="/movilidad_sostenible/static/src/js/maps_wp.js"></script>
     <script type="text/javascript" src="/movilidad_sostenible/static/src/js/hidden_form_field.js"></script>
 
-    </xpath>
+  </template>
+  <template id="layout" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+    <div class="container">
+        <ol class="breadcrumb">
+        <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+        <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+    </div>
+    <t t-raw="0"/>
+    <t t-call="movilidad_sostenible.assets_frontend" />
+    </t>
+  </template>
+
+  <template id="layout_2" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+          <li><a href="/movilidad_sostenible/misrutas/">Mis Rutas</a></li>
+          <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+      </div>
+      <t t-raw="0"/>
+      <t t-call="movilidad_sostenible.assets_frontend" />
+    </t>
+  </template>
+
+  <template id="layout_3" name="Layout Movilidad Urbana">
+    <t t-call="website.layout">
+      <div class="container">
+        <ol class="breadcrumb">
+          <li><a href="/movilidad_sostenible/">Movilidad Sostenible</a></li>
+          <li><a href="/movilidad_sostenible/rutas/ofertadas/">Rutas Ofertadas</a></li>
+          <li class="active"><t t-esc="title"/></li>
+        </ol>
+        <h1><t t-esc="title"/></h1>
+      </div>
+      <t t-raw="0"/>
+      <t t-call="movilidad_sostenible.assets_frontend" />
+    </t>
   </template>
 
 <!-- ################## Index  ##################### -->
