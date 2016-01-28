@@ -141,3 +141,11 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
         usuario = self.env.user
         partner = usuario.partner_id
         partner.mobile = celular
+
+    @api.multi
+    def es_usuario_creador_de_ruta(self):
+        usuario = self.env.user
+        if usuario == self.user_id:
+            return True
+        else:
+            return False

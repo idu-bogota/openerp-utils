@@ -189,8 +189,11 @@ class Rutas(http.Controller):
         celular = kwargs['celular']
         rutas.mobile_update(celular)
         esta = rutas.existe_usuario_en_ruta()
+        es_propietario = rutas.es_usuario_creador_de_ruta()
 
         if esta:
+            return request.website.render("movilidad_sostenible.ruta_no_solicitada")
+        elif es_propietario:
             return request.website.render("movilidad_sostenible.ruta_no_solicitada")
         else:
             if rutas.tipo_transporte == 'bici':
