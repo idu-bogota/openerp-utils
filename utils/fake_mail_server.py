@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import smtpd
 import asyncore
 from email.parser import Parser
