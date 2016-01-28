@@ -146,7 +146,6 @@
                     <th>Descripción</th>
                     <th>Fecha</th>
                     <th>Tipo Transporte</th>
-                    <th>Comentarios</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -159,7 +158,6 @@
                       </td>
                       <td><t t-esc="offer.hora_viaje"/></td>
                       <td><t t-esc="offer.tipo_transporte"/></td>
-                      <td><t t-esc="offer.comentario"/></td>
                     </tr>
                   </t>
                 </tbody>
