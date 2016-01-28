@@ -391,15 +391,9 @@
                 <td><t t-esc="mis_rutas_solicitadas.user_id.partner_id.mobile"/></td>
                 <td><t t-esc="mis_rutas_solicitadas.hora_viaje"/></td>
               </tr>
-            </tbody>
-          </table>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <th style="text-align: center;">Comentarios</th>
-            </thead>
-            <tbody>
+              <th colspan="4" style="text-align: center;">Comentarios</th>
               <tr>
-                <td><t t-esc="mis_rutas_solicitadas.comentario"/></td>
+                <td colspan="4"><t t-esc="mis_rutas_solicitadas.comentario"/></td>
               </tr>
             </tbody>
           </table>
@@ -733,15 +727,9 @@
                 <td><t t-esc="person.user_id.partner_id.mobile"/></td>
                 <td><t t-esc="person.hora_viaje"/></td>
               </tr>
-            </tbody>
-          </table>
-          <table class="table table-bordered table-striped">
-            <thead>
-              <th style="text-align: center;">Comentarios</th>
-            </thead>
-            <tbody>
+              <th colspan="4" style="text-align: center;">Comentarios</th>
               <tr>
-                <td><t t-esc="person.comentario"/></td>
+                <td colspan="4"><t t-esc="person.comentario"/></td>
               </tr>
             </tbody>
           </table>
@@ -752,7 +740,6 @@
               <tr>
                 <th>No</th>
                 <th>Nombre</th>
-                <th>Usuario</th>
                 <th>Celular</th>
               </tr>
             </thead>
@@ -762,7 +749,6 @@
               <tr>
                 <td><t t-esc="i"/></td>
                 <td><t t-esc="pasajero.name"/></td>
-                <td><t t-esc="pasajero.login"/></td>
                 <td><t t-esc="pasajero.partner_id.mobile"/></td>
               </tr>
              <t t-set="i" t-value="i+1"/>
