@@ -662,7 +662,6 @@
             En esta página usted podrá solicitar ser parte de esta
             ruta si esta de acuerdo con la ruta y los tiempos de partida..
           </div>
-          <b><p>Descripción: <span t-field="person.descripcion"/></p></b>
           <form action="/movilidad_sostenible/rutas/ofertar/info_extended/" method="post" class="form-horizontal" enctype="multipart/form-data">
             <input type="hidden" name="csrf_token" t-att-value="request.csrf_token()"/>
             <!-- Mapa -->
@@ -698,19 +697,18 @@
             </div>
             <div class="form-group">
               <div style="width:100%; text-align:center; margin:0px auto 0px auto; margin-top:10px;">
-                  <button class="btn btn-primary btn-lg">Solicitar</button>
+                  <button class="btn btn-primary btn-lg">Inscribete</button>
               </div>
             </div>
           </form>
-          <h3>Detalle de la Ruta</h3>
-          <table class="table table-bordered table-striped margen_arriba_tabla">
+          <h3>Detalle de la Ruta: <span t-field="person.descripcion"/> </h3>
+          <table class="table table-bordered table-striped margen_arriba_tabla" id="unidos">
             <thead>
               <tr>
                 <th>No</th>
                 <th>Líder</th>
                 <th>Celular</th>
                 <th>Fecha Ruta</th>
-                <th>Comentarios</th>
               </tr>
             </thead>
             <tbody>
@@ -719,6 +717,15 @@
                 <td><t t-esc="person.user_id.name"/></td>
                 <td><t t-esc="person.user_id.partner_id.mobile"/></td>
                 <td><t t-esc="person.hora_viaje"/></td>
+              </tr>
+            </tbody>
+          </table>
+          <table class="table table-bordered table-striped">
+            <thead>
+              <th style="text-align: center;">Comentarios</th>
+            </thead>
+            <tbody>
+              <tr>
                 <td><t t-esc="person.comentario"/></td>
               </tr>
             </tbody>
