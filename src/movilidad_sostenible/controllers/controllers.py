@@ -168,6 +168,8 @@ class Rutas(http.Controller):
 
     @http.route('/movilidad_sostenible/rutas/ofertar/<model("movilidad_sostenible.oferta"):oferta>/', auth='user', website=True)
     def ruta_ofertar_form(self, oferta,**kwargs):
+        user_model = http.request.env['res.users']
+        user_sesion = user_model.search([('id','=', http.request.uid)])
         values = {}
         for field in ['rutas_id', 'rutas_wp']:
             if kwargs.get(field):
@@ -175,7 +177,8 @@ class Rutas(http.Controller):
         values.update(kwargs=kwargs.items())
         return http.request.render('movilidad_sostenible.ruta_ofertar_form', {
             'person': oferta,
-            'kwargs': values
+            'kwargs': values,
+            'user_sesion': user_sesion,
         })
 
     @http.route(['/movilidad_sostenible/rutas/ofertar/info_extended/'], type='http', auth='user', website=True)
