@@ -8,20 +8,20 @@ import pyproj
 
 class Rutas(http.Controller):
 
-    @http.route('/movilidad_sostenible/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/', auth='user', website=True)
     def movilidad_sostenible(self):
         return request.website.render(
                 "movilidad_sostenible.index"
                 )
 
-    @http.route('/movilidad_sostenible/rutas/ofertadas/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/rutas/ofertadas/', auth='user', website=True)
     def rutas(self):
         Oferta = http.request.env['movilidad_sostenible.oferta']
         return http.request.render('movilidad_sostenible.rutas_ofertadas', {
             'ofertas': Oferta.search([('state', '=', 'activo'),]),
         })
 
-    @http.route('/movilidad_sostenible/misrutas/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/misrutas/', auth='user', website=True)
     def misrutas(self):
         Oferta = http.request.env['movilidad_sostenible.oferta']
         return http.request.render('movilidad_sostenible.misrutas', {
@@ -29,7 +29,7 @@ class Rutas(http.Controller):
             'solicitadas': Oferta.search([('pasajeros_ids','in', http.request.uid)]),
         })
 
-    @http.route('/movilidad_sostenible/misrutas/<model("movilidad_sostenible.oferta"):offer>/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/misrutas/<model("movilidad_sostenible.oferta"):offer>/', auth='user', website=True)
     def showrutas(self, offer,**kwargs):
         values = {}
         for field in ['rutas_id', 'rutas_wp']:
@@ -41,13 +41,13 @@ class Rutas(http.Controller):
             'kwargs': values
         })
 
-    @http.route('/movilidad_sostenible/misrutas/solicitadas/<model("movilidad_sostenible.oferta"):offer>/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/misrutas/solicitadas/<model("movilidad_sostenible.oferta"):offer>/', auth='user', website=True)
     def offer(self, offer,**kwargs):
         return http.request.render('movilidad_sostenible.mis_rutas_solicitadas', {
             'mis_rutas_solicitadas': offer,
         })
 
-    @http.route(['/movilidad_sostenible/misrutas/info_extended/'], type='http', auth="public", website=True)
+    @http.route(['/movilidad_sostenible/misrutas/info_extended/'], type='http', auth='user', website=True)
     def info_extended(self, **kwargs):
         rutas_model = request.env['movilidad_sostenible.oferta']
         rutas = rutas_model.search([('id','=',kwargs['rutas_id'])])
@@ -77,7 +77,7 @@ class Rutas(http.Controller):
 #            return request.website.render("pqrs_idu.pqrs_not_update")
 
 
-    @http.route('/movilidad_sostenible/rutas/crear/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/rutas/crear/', auth='user', website=True)
     def get_crear(self, **kwargs):
         values = {}
         for field in ['ruta_number']:
@@ -86,7 +86,7 @@ class Rutas(http.Controller):
         values.update(kwargs=kwargs.items())
         return request.website.render("movilidad_sostenible.crear_ruta_form", values)
 
-    @http.route(['/movilidad_sostenible/rutas/crear_ruta/'], type='http', auth="public", website=True)
+    @http.route(['/movilidad_sostenible/rutas/crear_ruta/'], type='http', auth='user', website=True)
     def get_crear_ruta(self, **kwargs):
         rutas = request.env['movilidad_sostenible.oferta']
         if kwargs['rutas_wp']:
@@ -127,7 +127,7 @@ class Rutas(http.Controller):
                             })
 
 
-    @http.route('/movilidad_sostenible/rutas/buscar/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/rutas/buscar/', auth='user', website=True)
     def get_buscar(self, **kwargs):
         values = {}
         for field in ['ruta_number']:
@@ -136,7 +136,7 @@ class Rutas(http.Controller):
         values.update(kwargs=kwargs.items())
         return request.website.render("movilidad_sostenible.buscar_ruta_form", values)
 
-    @http.route('/movilidad_sostenible/rutas/buscar_ruta/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/rutas/buscar_ruta/', auth='user', website=True)
     def get_buscar_ruta(self, **kwargs):
         values = json.loads(kwargs['rutas_wp'])
         google = pyproj.Proj("+init=EPSG:3857")
@@ -166,7 +166,7 @@ class Rutas(http.Controller):
         })
         #return request.website.render("movilidad_sostenible.buscar_ruta_form", values)
 
-    @http.route('/movilidad_sostenible/rutas/ofertar/<model("movilidad_sostenible.oferta"):oferta>/', auth='public', website=True)
+    @http.route('/movilidad_sostenible/rutas/ofertar/<model("movilidad_sostenible.oferta"):oferta>/', auth='user', website=True)
     def ruta_ofertar_form(self, oferta,**kwargs):
         values = {}
         for field in ['rutas_id', 'rutas_wp']:
@@ -178,7 +178,7 @@ class Rutas(http.Controller):
             'kwargs': values
         })
 
-    @http.route(['/movilidad_sostenible/rutas/ofertar/info_extended/'], type='http', auth="public", website=True)
+    @http.route(['/movilidad_sostenible/rutas/ofertar/info_extended/'], type='http', auth='user', website=True)
     def ofertar(self, **kwargs):
         values = {}
         rutas_ids = request.env['movilidad_sostenible.oferta']
