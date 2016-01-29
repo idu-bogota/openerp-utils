@@ -173,6 +173,55 @@
     movilidad_sostenible.oferta Vista Para el Administrador
     =================================================================
     -->
+    <!-- Inicio Filtros -->
+    <record model="ir.ui.view" id="oferta_search">
+        <field name="model">movilidad_sostenible.oferta</field>
+        <field name="arch" type="xml">
+            <search string="Movilidad Sostenible">
+                <!-- Filtros -->
+                <filter name="state" string="Estado Activo"
+                    domain="[('state','=','activo')]"
+                    help="Estado Activo"
+                />
+                <filter name="state" string="Estado Inactivo"
+                    domain="[('state','=','inactivo')]"
+                    help="Estado Inactivo"
+                />
+                <filter name="tipo_transporte" string="Trasporte Bici"
+                    domain="[('tipo_transporte','=','bici')]"
+                    help="Trasporte Bici"
+                />
+                <filter name="tipo_transporte" string="Trasporte Carro"
+                    domain="[('tipo_transporte','=','carro')]"
+                    help="Trasporte Carro"
+                />
+                <!-- Busquedas -->
+                <separator/>
+                    <field name="descripcion" string="Descripción"/>
+                    <field name="hora_viaje" string="Hora Viaje"/>
+                    <field name="tipo_transporte" string="Tipo Trasporte"/>
+                    <field name="user_id" string="Usuario"/>
+                    <field name="state" string="Estado"/>
+                <separator/>
+                <!-- Agrupaciones -->
+                <group expand="0" string="Group By...">
+                    <filter string="Estado" name="group_by_stage"
+                        context="{'group_by':'state'}"
+                    />
+                    <filter string="Hora" name="group_by_hora_viaje"
+                        context="{'group_by':'hora_viaje'}"
+                    />
+                    <filter string="Usuario" name="group_by_user_id"
+                        context="{'group_by':'user_id'}"
+                    />
+                    <filter string="Tipo Trasporte" name="group_by_tipo_transporte"
+                        context="{'group_by':'tipo_transporte'}"
+                    />
+                </group>
+            </search>
+        </field>
+    </record>
+    <!-- Fin Filtros -->
     <record model="ir.ui.view" id="ofertas_form_admin">
         <field name="model">movilidad_sostenible.oferta</field>
         <field name="arch" type="xml">
