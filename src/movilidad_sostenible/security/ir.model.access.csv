@@ -1,3 +1,2 @@
 id,active,name,group_id/id,model_id/id,perm_create,perm_read,perm_write,perm_unlink
 movilidad_sostenible_oferta_usuario,True,movilidad_sostenible.oferta.usuario,movilidad_sostenible.usuario,movilidad_sostenible.model_movilidad_sostenible_oferta,1,1,1,0
-movilidad_sostenible_res_users_usuario,True,movilidad_sostenible.res_users.usuario,movilidad_sostenible.usuario,model_res_users,0,1,1,0
