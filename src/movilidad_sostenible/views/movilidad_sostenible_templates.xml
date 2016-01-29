@@ -97,7 +97,7 @@
               <h2>Crear Ruta</h2>
               <p>Crear una ruta: Si quieres armar un parche para viajar
                  en bici o compartir tu carro, lo primero es crear una ruta.</p>
-              <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/crear" role="button">Crear Ruta »</a></p>
+              <p><a class="btn btn-primary" href="/movilidad_sostenible/rutas/nocrear" role="button">Crear Ruta »</a></p>
             </div>
             <div class="col-lg-3" style="text-align: center;">
               <img class="img-circle" src="/movilidad_sostenible/static/src/images/compass.png" alt="Compass" height="140"/>
@@ -800,5 +800,24 @@
       </t>
   </template>
   <!-- ################## Error al Solicitar Ruta  ##################### -->
+
+  <!-- ################## Pagina Temporal Para no Agregar Rutas ##################### -->
+  <template id="no_crear_temporal">
+    <t t-call="movilidad_sostenible.layout">
+      <div class="oe_structure">
+        <div class="container">
+          <h1>Queremos que uses las rutas proporcionadas por el IDU</h1>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="alert alert-danger">
+                    Por tal motivo esta opción está temporalmente deshabilitada.
+                </div>
+              </div>
+            </div>
+        </div>
+      </div>
+    </t>
+  </template>
+  <!-- ################## Pagina Temporal Para no Agregar Rutas  ##################### -->
 
 </data></openerp>

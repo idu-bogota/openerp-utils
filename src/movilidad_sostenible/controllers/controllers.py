@@ -8,6 +8,12 @@ import pyproj
 
 class Rutas(http.Controller):
 
+    @http.route('/movilidad_sostenible/rutas/nocrear/', auth='public', website=True)
+    def temporal_no_crear(self):
+        return request.website.render(
+                "movilidad_sostenible.no_crear_temporal"
+        )
+
     @http.route('/movilidad_sostenible/', auth='public', website=True)
     def movilidad_sostenible(self):
         return request.website.render(
