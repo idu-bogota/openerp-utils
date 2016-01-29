@@ -106,8 +106,7 @@
         <field name="context">{'form_view_ref': 'movilidad_sostenible.mi_oferta_form'}</field>
         <field name="domain">[('user_id','=',uid)]</field>
     </record>
-    <menuitem id="mi_oferta_menu" parent="movilidad_sostenible_menu" name="Mi Ruta" action="mi_oferta_action"/>
-
+<!-- <menuitem id="mi_oferta_menu" parent="movilidad_sostenible_menu" name="Mi Ruta" action="mi_oferta_action"/> -->
     <!--
     =================================================================
     movilidad_sostenible.oferta  Todas Ofertas Y sin poder modificar
@@ -118,8 +117,8 @@
         <field name="arch" type="xml">
             <form create="false" edit="false">
                 <header>
-                    <button name="compute_vacantes" string="Ofertar" type="object" attrs="{'invisible':[('tipo_transporte','=','bici')]}"/>
-                    <button name="compute_integrantes" string="Ofertar" type="object" attrs="{'invisible':[('tipo_transporte','!=','bici')]}"/>
+                    <!-- <button name="compute_vacantes" string="Ofertar" type="object" attrs="{'invisible':[('tipo_transporte','=','bici')]}"/>
+                    <button name="compute_integrantes" string="Ofertar" type="object" attrs="{'invisible':[('tipo_transporte','!=','bici')]}"/> -->
                 </header>
                 <sheet>
                     <group colspan="2" col="2">
@@ -167,7 +166,62 @@
         <field name="context">{'form_view_ref':'movilidad_sostenible.ofertas_form'}</field>
         <field name="domain">[('state','=','activo')]</field>
     </record>
-    <menuitem id="ofertas_menu" parent="movilidad_sostenible_menu" name="Ofertas de Viaje" action="ofertas_action"/>
+<!--<menuitem id="ofertas_menu" parent="movilidad_sostenible_menu" name="Ofertas de Viaje" action="ofertas_action"/> -->
+
+    <!--
+    =================================================================
+    movilidad_sostenible.oferta Vista Para el Administrador
+    =================================================================
+    -->
+    <record model="ir.ui.view" id="ofertas_form_admin">
+        <field name="model">movilidad_sostenible.oferta</field>
+        <field name="arch" type="xml">
+            <form>
+                <header>
+                    <field name="state" widget="statusbar" clickable="1"/>
+                </header>
+                <sheet>
+                    <group name="Datos Oferta" colspan="1">
+                        <field name="user_id"/>
+                        <field name="descripcion"/>
+                        <field name="origen"/>
+                        <field name="destino"/>
+                        <field name="hora_viaje"/>
+                        <field name="tipo_transporte"/>
+                        <field name="vacantes" attrs="{'invisible':[('tipo_transporte','=','bici')]}"/>
+                        <field name="integrantes"/>
+                        <field name="pasajeros_ids" />
+                        <field name="comentario"/>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <record model="ir.ui.view" id="ofertas_tree_admin">
+        <field name="model">movilidad_sostenible.oferta</field>
+        <field name="arch" type="xml">
+            <tree>
+                <field name="descripcion"/>
+                <field name="user_id"/>
+                <field name="state" string="Estado"/>
+                <field name="origen"/>
+                <field name="destino"/>
+                <field name="hora_viaje"/>
+                <field name="tipo_transporte"/>
+                <field name="comentario"/>
+            </tree>
+        </field>
+    </record>
+
+    <record model="ir.actions.act_window" id="todas_las_ofertas_action">
+        <field name="name">Todas las Ofertas para Admin</field>
+        <field name="res_model">movilidad_sostenible.oferta</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="ofertas_tree_admin"/>
+        <field name="context">{'form_view_ref':'movilidad_sostenible.ofertas_form_admin'}</field>
+    </record>
+    <menuitem id="todas_las_oferta_menu" parent="movilidad_sostenible_menu" name="Administrar Rutas" action="todas_las_ofertas_action"/>
 
 </data>
 </openerp>
