@@ -89,11 +89,16 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
         string='Ruta',
     )
 
-
+    # -------------------
+    # methods
+    # -------------------
     @api.one
     def compute_integrantes(self):
         self.integrantes = len(self.pasajeros_ids)
 
+    # -------------------
+    # methods website
+    # -------------------
     @api.multi
     def validar_hay_vacantes(self):
         vacantes = self.vacantes
