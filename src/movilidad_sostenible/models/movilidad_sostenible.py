@@ -57,6 +57,7 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
     integrantes = fields.Integer(
         'Integrantes',
         default=0,
+        compute="compute_integrantes",
     )
     pasajeros_ids = fields.One2many(
         string='Pasajeros',
@@ -88,29 +89,10 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
         string='Ruta',
     )
 
-    @api.multi
-    def compute_vacantes(self):
-        usuario = self.env.user
-        if usuario in self.pasajeros_ids:
-            return False
-#            raise exceptions.Warning('Usted ya esta en esta ruta')
-        if self.vacantes > 0:
-            self.pasajeros_ids = [(4, usuario.id, 0)]#usuario.id    #[(4, usuario, 0)]
-            self.vacantes = self.vacantes - 1
-            return True
-        else:
-            res = {'value':{}}
-            res.update({'warning': {'title': _('Warning !'), 'message': _('No hay Vacantes en esta Ruta.')}})
-            return res
 
-    @api.multi
+    @api.one
     def compute_integrantes(self):
-        usuario = self.env.user
-        if usuario in self.pasajeros_ids:
-            raise exceptions.Warning('Usted ya esta en esta ruta')
-        self.pasajeros_ids = [(4, usuario.id, 0)]    #[(4, usuario, 0)]
-        self.integrantes = self.integrantes + 1
-        return True
+        self.integrantes = len(self.pasajeros_ids)
 
     @api.multi
     def validar_hay_vacantes(self):
@@ -134,7 +116,6 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
     def add_user_a_ruta(self):
         usuario = self.env.user
         self.pasajeros_ids = [(4, usuario.id, 0)]
-        self.integrantes = self.integrantes + 1
 
     @api.one
     def mobile_update(self, celular):
