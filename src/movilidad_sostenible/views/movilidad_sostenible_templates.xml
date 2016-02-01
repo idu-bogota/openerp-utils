@@ -69,8 +69,7 @@
           <div class="container">
             <div class="row">
               <div class="col-md-12" style="text-align: center;">
-                <h1 style="text-align: center;">Bienvenidos a Movilidad Sostenible</h1>
-                <img src="/movilidad_sostenible/static/src/images/logo_movilidad.png" alt="moviliad-sostenible" class="img-rounded" style="width: 100%; text-align: center;"/>
+                <img src="/movilidad_sostenible/static/src/images/logo_movilidad.png" alt="moviliad-sostenible" class="img-rounded" style="width: 70%; text-align: center;"/>
              </div>
             </div>
             <hr class="featurette-divider">
