@@ -74,6 +74,12 @@ class Rutas(http.Controller):
             }
             the_dict.pop('steps', None) # Eliminando
             rutas.write({
+                'descripcion': kwargs['descripcion'],
+                'hora_viaje':kwargs['fecha_viaje'],
+                'tipo_transporte':kwargs['transporteselect'],
+                'vacantes':0 if kwargs['transporteselect'] == 'bici' else kwargs['vacantes'],
+                'state':kwargs['stateselect'],
+                'comentario':kwargs['comentarios'],
                 'route': json.dumps(the_dict),
                 'shape': json.dumps(shape),
             })
