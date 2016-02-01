@@ -286,7 +286,7 @@
                 <div id="vacantes" class="form-group">
                   <label class="col-md-3 col-sm-4 control-label">Vacantes</label>
                   <div class="col-md-7 col-sm-8">
-                      <input type="text" class="form-control" name="vacantes" t-att-value="person.vacantes" required="True" t-attf-value="#{descripcion or ''}"/>
+                      <input type="text" class="form-control" name="vacantes" t-att-value="person.vacantes" t-attf-value="#{descripcion or ''}"/>
                   </div>
                 </div>
                 <div class="form-group">
