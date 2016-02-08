@@ -59,12 +59,10 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
         default=0,
         compute="compute_integrantes",
     )
-    pasajeros_ids = fields.One2many(
+    pasajeros_ids = fields.Many2many(
         string='Pasajeros',
         comodel_name='res.users',
-        inverse_name='ruta_oferta_id',
         help='Usuarios integrantes.',
-        ondelete = 'SET DEFAULT',
     )
     costo = fields.Integer('Costo')
     comentario = fields.Text('Comentario')

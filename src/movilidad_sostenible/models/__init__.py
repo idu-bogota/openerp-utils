@@ -1,2 +1,1 @@
-import res_users
 import movilidad_sostenible
