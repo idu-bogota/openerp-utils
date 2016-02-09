@@ -80,6 +80,8 @@
     {{ text(field) }}
 {%- endmacro %}
 
+{% macro binary(field) -%}{%- endmacro %}
+
 
 {% macro compute_method(field) %}
         {%- if field.arguments['depends'] %}

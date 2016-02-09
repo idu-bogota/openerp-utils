@@ -151,6 +151,10 @@
     {{ field.name }} = fields.Date({{ arguments(field) }})
 {%- endmacro %}
 
+{% macro binary(field) -%}
+    {{ field.name }} = fields.Binary({{ arguments(field) }})
+{%- endmacro %}
+
 {% macro datetime(field) -%}
     {{ field.name }} = fields.Datetime({{ arguments(field) }})
 {%- endmacro %}
