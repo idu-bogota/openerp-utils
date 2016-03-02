@@ -124,7 +124,7 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
     def mobile_update(self, celular):
         usuario = self.env.user
         partner = usuario.partner_id
-        partner.mobile = celular
+        partner.sudo().write({'mobile' : celular})
 
     @api.multi
     def es_usuario_creador_de_ruta(self):
