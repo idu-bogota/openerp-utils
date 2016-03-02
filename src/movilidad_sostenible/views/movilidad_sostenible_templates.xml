@@ -800,6 +800,27 @@
   </template>
   <!-- ################## Error al Solicitar Ruta  ##################### -->
 
+  <!-- ################## Error al Solicitar Ruta Telefono ya existente  ##################### -->
+  <template id="ruta_no_solicitada_telefono_ya_existe" name="La Ruta no pudo ser solicitada">
+      <t t-call="movilidad_sostenible.layout_3">
+        <div id="wrap">
+          <div class="oe_structure"/>
+          <div class="container">
+            <h1>La ruta no pudo ser solicitada!</h1>
+            <div class="row">
+              <div class="col-md-8">
+                <div class="alert alert-danger">
+                    El teléfono ingresado ya está asociado a otro usuario en el sistema.
+                    <button type="button" class="close" data-dismiss="alert">&amp;times;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </t>
+  </template>
+  <!-- ################## Error al Solicitar Ruta Telefono ya existente  ##################### -->
+
   <!-- ################## Pagina Temporal Para no Agregar Rutas ##################### -->
   <template id="no_crear_temporal">
     <t t-call="movilidad_sostenible.layout">

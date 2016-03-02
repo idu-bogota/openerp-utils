@@ -120,12 +120,6 @@ class movilidad_sostenible_oferta(geo_model.GeoModel):
         usuario = self.env.user
         self.pasajeros_ids = [(4, usuario.id, 0)]
 
-    @api.one
-    def mobile_update(self, celular):
-        usuario = self.env.user
-        partner = usuario.partner_id
-        partner.sudo().write({'mobile' : celular})
-
     @api.multi
     def es_usuario_creador_de_ruta(self):
         usuario = self.env.user

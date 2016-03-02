@@ -1,6 +1,7 @@
 from openerp import http
 from openerp.http import request
 from openerp import fields
+from psycopg2 import IntegrityError
 import json
 import pyproj
 
@@ -195,7 +196,14 @@ class Rutas(http.Controller):
         rutas_ids = request.env['movilidad_sostenible.oferta']
         rutas = rutas_ids.search([('id','=',kwargs['rutas_id'])])
         celular = kwargs['celular']
-        rutas.mobile_update(celular)
+        # update mobile
+        partner = request.env.user.partner_id
+        try:
+            partner.sudo().write({'mobile' : celular})
+        except IntegrityError:
+            http.request._cr.rollback()
+            return request.website.render("movilidad_sostenible.ruta_no_solicitada_telefono_ya_existe")
+        # Fin update mobile
         esta = rutas.existe_usuario_en_ruta()
         es_propietario = rutas.es_usuario_creador_de_ruta()
 
