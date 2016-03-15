@@ -65,7 +65,7 @@ def update_templates(elements, odoo, options):
             'name = {0}'.format(record_id),
         ]).res_id
         if not view_id:
-            _logger.error('No se encontró la vista a actualizar {1}.{2}'.format(options.module_name, record_id))
+            _logger.error('No se encontró la vista a actualizar {0}.{1}'.format(options.module_name, record_id))
         view_arch = ET.tostring(record)
         view_arch = view_arch.strip()
         view_arch = re.sub('^<template.*>', '', view_arch)
