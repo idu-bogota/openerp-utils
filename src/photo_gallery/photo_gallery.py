@@ -63,18 +63,18 @@ class photo_gallery_photo(osv.osv):
             attachment_model.unlink(cr, uid, attachment_ids, context=context)
 
     _columns={
-        'name': fields.char('Caption',size=255, required=True),
+        'name': fields.char('Resumen',size=255, required=True),
         'active':fields.boolean('Active',),
         'sequence': fields.integer('Sequence', help="Gives the sequence order when displaying a list."),
         'photo': fields.function(_get_binary_filesystem,
             fnct_inv=_set_binary_filesystem,
             type='binary',
-            string='File',
+            string='Archivo',
         ),
-        'description': fields.text('Description', size=255),
-        'location': fields.text('Location', size=255),
-        'photographer': fields.text('Photographer', size=255),
-        'datetime': fields.datetime('Date and time'),
+        'description': fields.text('Descripción', size=255),
+        'location': fields.text('Localización', size=255),
+        'photographer': fields.text('Fotografo', size=255),
+        'datetime': fields.datetime('Fecha y Hora'),
         'url': fields.char('URL', size=255),
     }
 
