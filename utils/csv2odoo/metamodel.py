@@ -514,6 +514,11 @@ class Field(object):
         elif default == '_CURRENT_USER_DEPARTMENT_':
             return "lambda self: self.env.user.department_id.id"
         elif default == '_CONTEXT_':
+            if self.type in ['many2one']:
+                return "lambda self: self._context.get('{0}', self.env['{1}'].browse())".format(
+                    self.name,
+                    self._arguments['comodel'],
+                )
             return "lambda self: self._context.get('{0}', None)".format(self.name)
         elif default == '_NOW_' and self.type == 'date':
             return "fields.Date.today"
