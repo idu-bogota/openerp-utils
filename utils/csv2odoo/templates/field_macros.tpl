@@ -84,6 +84,9 @@
     {% if field.arguments['compute'] %}
         compute='_compute_{{ field.name }}',
     {%- endif -%}
+    {% if field.arguments['store'] %}
+        store={{field.arguments['store']}},
+    {%- endif -%}
     {% if field.arguments['help'] %}
         help='''{{field.arguments['help']}}''',
     {%- endif -%}
