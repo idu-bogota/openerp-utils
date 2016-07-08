@@ -84,6 +84,8 @@ class soft_delete_mixin(models.AbstractModel):
 
     @api.multi
     def unlink(self):
+        if self.env.uid == 1 and self.env.context.get('force_unlink', False):
+            return super(soft_delete_mixin, self).unlink()
         self.check_access_rights('unlink')
         self.check_access_rule('unlink')
-        self.write({ 'active': False })
+        return self.write({ 'active': False })
