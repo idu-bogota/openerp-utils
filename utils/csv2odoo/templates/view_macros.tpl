@@ -32,7 +32,7 @@
     {%- elif field.view_arguments['form_param'] or widget -%}
         <field name="{{field.name}}" widget="{{ field.view_arguments['form_param'] or widget }}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %}{% if field.arguments['invisible']%} invisible="1"{% endif %} />
     {%- else -%}
-        <field name="{{field.name}}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %}{% if field.arguments['invisible']%} invisible="1"{% endif %} />
+        <field name="{{field.name}}"{% if field.arguments['delegated'] and field.arguments['string'] %} string="{{ field.arguments['string'] }}"{% endif %}{% if field.arguments['invisible']%} invisible="1"{% endif %}{% if field.type == 'binary'%} filename="{{field.name}}_filename"{% endif %} />
     {%- endif -%}
 {%- endmacro -%}
 

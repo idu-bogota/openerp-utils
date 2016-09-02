@@ -1,5 +1,16 @@
+# -*- coding: utf-8 -*-
 import random
 from faker import Factory #pip install fake-factory
+class dict_dot_access(dict):
+    """Extension to make dict attributes be accesible with dot notation
+    """
+    def __getattr__(self, attr):
+        try:
+            return self.__getitem__(attr)
+        except KeyError:
+            _logger.error('No se encontró {} en la línea'.format(attr))
+            sys.exit(1)
+
 
 class Module(object):
     def __init__(self, name, namespace, string):
@@ -246,6 +257,13 @@ class Model(object):
         if not name in self._fields:
             Field.sequence += 1
             self._fields[name] = Field(name, self, Field.sequence)
+            if line['type'] == 'binary': # Binary fields create a char field for storing filename
+                fname = name + '_filename'
+                self._fields[fname] = Field(fname, self, Field.sequence)
+                args = dict.fromkeys(line.keys(), '')
+                args.update({'type': 'char', 'string': line.get('name', 'Filename'), 'params':'invisible:True', 'view_form': 1})
+                args = dict_dot_access(args)
+                self._fields[fname].arguments = args
         field = self._fields[name]
         field.arguments = line
         return field
@@ -497,6 +515,8 @@ class Field(object):
             return '"{0}"'.format(fake.date())
         elif self.type in ['datetime']:
             return '"{0}"'.format(fake.date_time())
+        elif self.type in ['binary']:
+            return 'None'
         elif self.type in ['selection']:
             if self.arguments['selection']:
                 return '"{}"'.format(random.choice(self.arguments['selection'])[0])

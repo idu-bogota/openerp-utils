@@ -4,23 +4,13 @@ import os, sys
 import logging
 import csv
 from jinja2 import Environment, FileSystemLoader
-from metamodel import Module
+from metamodel import Module, dict_dot_access
 from cookiecutter.main import cookiecutter
 
 from optparse import OptionParser
 
 logging.basicConfig()
 _logger = logging.getLogger('csv2model')
-
-class dict_dot_access(dict):
-    """Extension to make dict attributes be accesible with dot notation
-    """
-    def __getattr__(self, attr):
-        try:
-            return self.__getitem__(attr)
-        except KeyError:
-            _logger.error('No se encontró {} en la línea'.format(attr))
-            sys.exit(1)
 
 def trim_vals(vals):
     for key, value in vals.items():
