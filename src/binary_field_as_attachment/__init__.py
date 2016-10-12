@@ -82,5 +82,5 @@ def set_attachment(record, field_name, name, filename, binary, env):
                 'datas_fname':filename,
                 'active': False, # don't display it in the attachments list
             })
-    else:
-        record.with_context(force_unlink=True).unlink()
+    elif attachment:
+        attachment.with_context(force_unlink=True).unlink()
